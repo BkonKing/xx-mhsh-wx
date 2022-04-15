@@ -1,0 +1,242 @@
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+
+/* 颜色变量 */
+
+/* 行为相关颜色 */
+$uni-color-primary: #eb5841;
+$uni-color-success: #55b862;
+$uni-color-warning: #ffa110;
+$uni-color-error: #dd524d;
+
+/* 文字基本颜色 */
+$uni-text-color:#333;//基本色
+$uni-text-color-inverse:#fff;//反色
+$uni-text-color-grey:#999;//辅助灰色，如加载更多的提示信息
+$uni-text-color-placeholder: #808080;
+$uni-text-color-disable:#c0c0c0;
+
+/* 背景颜色 */
+$uni-bg-color:#ffffff;
+$uni-bg-color-grey:#f8f8f8;
+$uni-bg-color-hover:#f1f1f1;//点击状态颜色
+$uni-bg-color-mask:rgba(0, 0, 0, 0.4);//遮罩颜色
+
+/* 边框颜色 */
+$uni-border-color:#c8c7cc;
+
+/* 尺寸变量 */
+
+/* 文字尺寸 */
+$uni-font-size-sm:24rpx;
+$uni-font-size-base:28rpx;
+$uni-font-size-lg:32rpx;
+
+/* 图片尺寸 */
+$uni-img-size-sm:40rpx;
+$uni-img-size-base:52rpx;
+$uni-img-size-lg:80rpx;
+
+/* Border Radius */
+$uni-border-radius-sm: 4rpx;
+$uni-border-radius-base: 6rpx;
+$uni-border-radius-lg: 12rpx;
+$uni-border-radius-circle: 50%;
+
+/* 水平间距 */
+$uni-spacing-row-sm: 10px;
+$uni-spacing-row-base: 20rpx;
+$uni-spacing-row-lg: 30rpx;
+
+/* 垂直间距 */
+$uni-spacing-col-sm: 8rpx;
+$uni-spacing-col-base: 16rpx;
+$uni-spacing-col-lg: 24rpx;
+
+/* 透明度 */
+$uni-opacity-disabled: 0.3; // 组件禁用态的透明度
+
+/* 文章场景相关 */
+$uni-color-title: #2C405A; // 文章标题颜色
+$uni-font-size-title:40rpx;
+$uni-color-subtitle: #555555; // 二级标题颜色
+$uni-font-size-subtitle:36rpx;
+$uni-color-paragraph: #3F536E; // 文章段落颜色
+$uni-font-size-paragraph:30rpx;
+
+// Color Palette
+$black: #000;
+$white: #fff;
+$gray-1: #f8f8f8;
+$gray-2: #f0f0f0; // 分割线
+$gray-3: #ebedf0;
+$gray-4: #dcdee0;
+$gray-5: #c8c7cc;
+$gray-6: #aaa;
+$gray-7: #8F8F94; // text-grey
+$gray-8: #383838;
+$red: #f9866b;
+$red-dark: #eb5841;
+$blue: #019aff;
+$blue-dark: #448fe4;
+$orange: #ffc017;
+$orange-dark: #ffa110;
+$orange-light: #fffbe8;
+$green: #55ff7f;
+$green-dark: #55b862;
+$primary: $red-dark;
+
+// Gradient Colors
+$gradient-red: linear-gradient(to right, $red, $red-dark);
+$gradient-orange: linear-gradient(to right, $orange, $orange-dark);
+
+// Component Colors
+$text-color: #222;
+$active-color: #222;
+$active-opacity: 0.7;
+$disabled-opacity: 0.5;
+$background-color: #f2f2f4;
+$background-color-light: #fff;
+$text-link-color: #576b95;
+
+// Padding
+$padding-base: 5px;
+$padding-xs: $padding-base * 2;
+$padding-sm: $padding-base * 3;
+$padding-md: $padding-base * 4;
+$padding-lg: $padding-base * 6;
+$padding-xl: $padding-base * 8;
+
+// Font
+$font-size-xs: 10px;
+$font-size-sm: 22px;
+$font-size-md: 28px;
+$font-size-lg: 30px;
+$font-weight-bold: 500;
+$base-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+  Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'Hiragino Sans GB',
+  'Microsoft Yahei', sans-serif;
+$price-integer-font-family: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial,
+  sans-serif;
+
+// Animation
+$animation-duration-base: 0.3s;
+$animation-duration-fast: 0.2s;
+$animation-timing-function-enter: ease-out;
+$animation-timing-function-leave: ease-in;
+
+// Border
+$border-color: $gray-5;
+$border-width-base: 2px;
+$border-radius-sm: 6px;
+$border-radius-md: 10px;
+$border-radius-lg: 16px;
+$border-radius-max: 999px;
+
+$divider-color: $gray-2;
+
+// Tabbar
+$tabbar-height: 98px;
+
+// TabbarItem
+$tabbar-item-active-color: $primary;
+$tabbar-item-icon-size: 36px;
+$tabbar-item-margin-bottom: 10px;
+
+// NavBar
+$nav-bar-height: 88px;
+$nav-bar-arrow-size: 30px;
+$nav-bar-icon-color: $gray-8;
+$nav-bar-text-color: $gray-8;
+$nav-bar-title-font-size: 34px;
+
+// Button
+$button-mini-height: 48px;
+$button-mini-font-size: $font-size-xs;
+$button-small-height: 66px;
+$button-large-height: 100px;
+$button-default-height: 88px;
+$button-default-line-height: 1.2;
+$button-primary-background-color: $red-dark;
+$button-primary-border-color: $red-dark;
+$button-danger-background-color: $red-dark;
+$button-danger-border-color: $red-dark;
+$button-warning-background-color: $orange-dark;
+$button-warning-border-color: $orange-dark;
+
+// Search
+$search-padding: $padding-md;
+$search-content-background-color: $background-color;
+$search-input-height: 46px;
+
+// Picker
+$picker-toolbar-height: 88px;
+$picker-title-line-height: 88px;
+
+// Tab
+$tab-text-color: $gray-7;
+
+// Tabs
+$tabs-line-height: 98px;
+$tabs-card-height: 30px;
+$tabs-bottom-bar-height: 4px;
+
+// DropdownMenu
+$dropdown-menu-height: 66px;
+$dropdown-menu-title-font-size: $font-size-lg;
+$dropdown-menu-title-text-color: $gray-7;
+$dropdown-menu-title-active-text-color: $red-dark;
+$dropdown-menu-title-padding: 0 $padding-lg;
+$dropdown-menu-title-line-height: 66px;
+$dropdown-menu-option-active-color: $red-dark;
+$dropdown-menu-content-max-height: 90%;
+
+// PasswordInput
+$password-input-height: 90px;
+$password-input-margin: 0 $padding-md;
+$password-input-border-radius: 4px;
+$password-input-background-color: $background-color;
+$password-input-dot-size: 22px;
+
+// NumberKeyboard
+$number-keyboard-key-height: 80px;
+
+// Dialog
+$dialog-header-line-height: 48px;
+$dialog-message-line-height: 40px;
+
+// Toast
+$toast-default-width: auto;
+
+// Swipe
+$swipe-indicator-size: 10px;
+$swipe-indicator-margin: 34px;
+$swipe-indicator-inactive-opacity: 0.4;
+
+// NumberKeyboard 
+$number-keyboard-button-background-color: $red-dark;
+
+// checkbox
+$checkbox-size: 34px;
+$checkbox-checked-icon-color: $red-dark;
+
+// empty
+$empty-image-size: 300px;
+$empty-description-font-size: 30px;
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "phone-van-count-down-default": "/pages/personage/information/phone-van-count-down-default",
+    "uni-nav-bar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar"
+  }
+}

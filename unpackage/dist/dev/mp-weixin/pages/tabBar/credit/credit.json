@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "uni-nav-bar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
+    "tf-calendar": "/components/TfCalendar/index",
+    "sign-alert": "/pages/tabBar/credit/components/SignAlert",
+    "sign-rule-dialog": "/pages/tabBar/credit/components/SignRuleDialog",
+    "get-coupon-list": "/pages/tabBar/credit/components/GetCouponList",
+    "task-list": "/pages/tabBar/credit/components/TaskList"
+  }
+}

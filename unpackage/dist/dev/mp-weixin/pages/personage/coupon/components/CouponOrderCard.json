@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "explain-popover": "/pages/personage/coupon/components/ExplainPopover"
+  }
+}

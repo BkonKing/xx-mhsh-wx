@@ -1,0 +1,628 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+@font-face {
+  font-family: 'tficonfont';
+  src: url('https://live.tosolomo.com/wap/fonts/iconfont.8d553f66.ttf') format('truetype');
+  /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+}
+.tf-icon {
+  font-family: 'tficonfont' !important;
+  font-size: 24rpx;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.tf-icon-dianhua1:before {
+  content: "\e673";
+}
+.tf-icon-renwushenhe:before {
+  content: "\e66b";
+}
+.tf-icon-renwushixiao:before {
+  content: "\e66e";
+}
+.tf-icon-renwutousu:before {
+  content: "\e66f";
+}
+.tf-icon-yijiaofu:before {
+  content: "\e670";
+}
+.tf-icon-renwuchaoshi:before {
+  content: "\e671";
+}
+.tf-icon-renwufabu:before {
+  content: "\e672";
+}
+.tf-icon-ziyuan2:before {
+  content: "\e664";
+}
+.tf-icon-dizhi:before {
+  content: "\e65f";
+}
+.tf-icon-pingjia:before {
+  content: "\e663";
+}
+.tf-icon-didian:before {
+  content: "\e669";
+}
+.tf-icon-lianxi:before {
+  content: "\e660";
+}
+.tf-icon-xiaoxi1:before {
+  content: "\e666";
+}
+.tf-icon-tiwen:before {
+  content: "\e668";
+}
+.tf-icon-fenxiang:before {
+  content: "\e661";
+}
+.tf-icon-fenxiang2:before {
+  content: "\e662";
+}
+.tf-icon-pinglun1:before {
+  content: "\e665";
+}
+.tf-icon-dianzan1:before {
+  content: "\e66a";
+}
+.tf-icon-gengduo1:before {
+  content: "\e66c";
+}
+.tf-icon-tupian1:before {
+  content: "\e66d";
+}
+.tf-icon-yiwancheng:before {
+  content: "\e65e";
+}
+.tf-icon-xingfubi1:before {
+  content: "\e65d";
+}
+.tf-icon-lifepaymessage:before {
+  content: "\e600";
+}
+.tf-icon-renwutiwen:before {
+  content: "\e604";
+}
+.tf-icon-renwuzanting:before {
+  content: "\e605";
+}
+.tf-icon-renwuqun:before {
+  content: "\e606";
+}
+.tf-icon-yitaotai:before {
+  content: "\e607";
+}
+.tf-icon-weiwancheng:before {
+  content: "\e608";
+}
+.tf-icon-yijiedan:before {
+  content: "\e609";
+}
+.tf-icon-renwuyanqi:before {
+  content: "\e61b";
+}
+.tf-icon-renwupingjia:before {
+  content: "\e65a";
+}
+.tf-icon-yizhongzhi:before {
+  content: "\e65b";
+}
+.tf-icon-yifangqi:before {
+  content: "\e65c";
+}
+.tf-icon-shangcheng:before {
+  content: "\e60b";
+}
+.tf-icon-guanjia:before {
+  content: "\e60c";
+}
+.tf-icon-linli:before {
+  content: "\e60d";
+}
+.tf-icon-wode:before {
+  content: "\e60e";
+}
+.tf-icon-shouye:before {
+  content: "\e610";
+}
+.tf-icon-bianxie:before {
+  content: "\e612";
+}
+.tf-icon-dingwei:before {
+  content: "\e613";
+}
+.tf-icon-shezhi:before {
+  content: "\e614";
+}
+.tf-icon-lishijilu:before {
+  content: "\e615";
+}
+.tf-icon-tongxunlu:before {
+  content: "\e616";
+}
+.tf-icon-saoyisao:before {
+  content: "\e617";
+}
+.tf-icon-erweima:before {
+  content: "\e618";
+}
+.tf-icon-zhushishuoming:before {
+  content: "\e619";
+}
+.tf-icon-xiaoxi:before {
+  content: "\e61a";
+}
+.tf-icon-bianji:before {
+  content: "\e61c";
+}
+.tf-icon-fabu:before {
+  content: "\e61e";
+}
+.tf-icon-dingwei1:before {
+  content: "\e61f";
+}
+.tf-icon-fenlei:before {
+  content: "\e620";
+}
+.tf-icon-guanbi:before {
+  content: "\e622";
+}
+.tf-icon-sousuo:before {
+  content: "\e624";
+}
+.tf-icon-zhuanfa:before {
+  content: "\e627";
+}
+.tf-icon-tupian:before {
+  content: "\e628";
+}
+.tf-icon-xiangmuwancheng:before {
+  content: "\e629";
+}
+.tf-icon-pingfenwancheng:before {
+  content: "\e62a";
+}
+.tf-icon-kefu:before {
+  content: "\e61d";
+}
+.tf-icon-gouwuche:before {
+  content: "\e621";
+}
+.tf-icon-pinglun:before {
+  content: "\e623";
+}
+.tf-icon-gengduo:before {
+  content: "\e625";
+}
+.tf-icon-zan:before {
+  content: "\e626";
+}
+.tf-icon-dianzan:before {
+  content: "\e62b";
+}
+.tf-icon-biaoyang:before {
+  content: "\e62c";
+}
+.tf-icon-tousu:before {
+  content: "\e62d";
+}
+.tf-icon-sousuo1:before {
+  content: "\e62e";
+}
+.tf-icon-shanchu:before {
+  content: "\e62f";
+}
+.tf-icon-gonggao:before {
+  content: "\e630";
+}
+.tf-icon-shijian:before {
+  content: "\e631";
+}
+.tf-icon-bukejian:before {
+  content: "\e632";
+}
+.tf-icon-kejian:before {
+  content: "\e633";
+}
+.tf-icon-gou:before {
+  content: "\e634";
+}
+.tf-icon-guanbi1:before {
+  content: "\e635";
+}
+.tf-icon-baojia:before {
+  content: "\e636";
+}
+.tf-icon-baozhang:before {
+  content: "\e637";
+}
+.tf-icon-buji:before {
+  content: "\e638";
+}
+.tf-icon-daichuli:before {
+  content: "\e639";
+}
+.tf-icon-daijiean:before {
+  content: "\e63a";
+}
+.tf-icon-daifenpai:before {
+  content: "\e63b";
+}
+.tf-icon-yijiean:before {
+  content: "\e63c";
+}
+.tf-icon-huodongkaishi:before {
+  content: "\e63d";
+}
+.tf-icon-huodongbaoming:before {
+  content: "\e63e";
+}
+.tf-icon-biaoyangtousu:before {
+  content: "\e63f";
+}
+.tf-icon-baoshibaoxiu:before {
+  content: "\e640";
+}
+.tf-icon-gonggao1:before {
+  content: "\e641";
+}
+.tf-icon-guihuan:before {
+  content: "\e642";
+}
+.tf-icon-dianhua:before {
+  content: "\e643";
+}
+.tf-icon-pingfen:before {
+  content: "\e644";
+}
+.tf-icon-gouxuan:before {
+  content: "\e645";
+}
+.tf-icon-renshu:before {
+  content: "\e646";
+}
+.tf-icon-kaisuo:before {
+  content: "\e647";
+}
+.tf-icon-daifenpai1:before {
+  content: "\e648";
+}
+.tf-icon-daichuli1:before {
+  content: "\e649";
+}
+.tf-icon-yijiean1:before {
+  content: "\e64a";
+}
+.tf-icon-daijiean1:before {
+  content: "\e64b";
+}
+.tf-icon-right:before {
+  content: "\e856";
+}
+.tf-icon-left:before {
+  content: "\e857";
+}
+.tf-icon-up:before {
+  content: "\e858";
+}
+.tf-icon-down:before {
+  content: "\e859";
+}
+.tf-icon-doubleleft:before {
+  content: "\e85c";
+}
+.tf-icon-doubleright:before {
+  content: "\e85d";
+}
+.tf-icon-caret-down:before {
+  content: "\e999";
+}
+.tf-icon-caret-up:before {
+  content: "\e99b";
+}
+.tf-icon-caret-right:before {
+  content: "\e99c";
+}
+.tf-icon-caret-left:before {
+  content: "\e99d";
+}
+.tf-icon-close-circle-fill:before {
+  content: "\e89d";
+}
+.tf-icon-plus-circle-fill:before {
+  content: "\e8a1";
+}
+.tf-icon-xingfubi:before {
+  content: "\e64c";
+}
+.tf-icon-dianfei:before {
+  content: "\e64d";
+}
+.tf-icon-gongtanfei:before {
+  content: "\e64e";
+}
+.tf-icon-shuifei:before {
+  content: "\e64f";
+}
+.tf-icon-ranqifei:before {
+  content: "\e650";
+}
+.tf-icon-shuibiao:before {
+  content: "\e651";
+}
+.tf-icon-dianbiao:before {
+  content: "\e652";
+}
+.tf-icon-shengjiangpaixu:before {
+  content: "\e653";
+}
+.tf-icon-qitajiaofei:before {
+  content: "\e654";
+}
+.tf-icon-xiangji:before {
+  content: "\e655";
+}
+.tf-icon-shuoming:before {
+  content: "\e656";
+}
+.tf-icon-xingbie:before {
+  content: "\e60f";
+}
+.tf-icon-xingbie1:before {
+  content: "\e611";
+}
+.tf-icon-yishiming:before {
+  content: "\e667";
+}
+.tf-icon-weishiming:before {
+  content: "\e657";
+}
+.tf-icon-shoucang:before {
+  content: "\e658";
+}
+.tf-icon-yishoucang:before {
+  content: "\e659";
+}
+page {
+  width: 100%;
+  min-height: 100%;
+  background-color: #f2f2f4;
+  font-size: 28rpx;
+}
+button, input, view, text, scroll-view {
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+image {
+  width: initial;
+  height: initial;
+}
+button {
+  -webkit-tap-highlight-color: initial;
+}
+button::after {
+  border: none;
+}
+navigator {
+  display: inline-block;
+}
+.tf-bg-white {
+  background-color: #fff;
+}
+.tf-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.tf-flex {
+  display: flex;
+}
+.tf-flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.tf-flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.tf-flex-1 {
+  flex: 1;
+}
+.tf-row-justify-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.tf-row-justify-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.tf-row-justify-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.tf-row-justify-around {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.tf-row-items-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.tf-column-justify-around {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.tf-column-justify-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tf-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tf-p-10 {
+  padding: 10rpx;
+}
+.tf-p-20 {
+  padding: 20rpx;
+}
+.tf-p-30 {
+  padding: 30rpx;
+}
+.tf-p-30-20 {
+  padding: 30rpx 20rpx;
+}
+.tf-mt-10 {
+  margin-top: 10rpx;
+}
+.tf-mt-20 {
+  margin-top: 20rpx;
+}
+.tf-mt-30 {
+  margin-top: 30rpx;
+}
+.tf-mr-10 {
+  margin-right: 10rpx;
+}
+.tf-mr-20 {
+  margin-right: 20rpx;
+}
+.tf-mr-30 {
+  margin-right: 30rpx;
+}
+.tf-mb-10 {
+  margin-bottom: 10rpx;
+}
+.tf-mb-20 {
+  margin-bottom: 20rpx;
+}
+.tf-mb-30 {
+  margin-bottom: 30rpx;
+}
+.tf-ml-10 {
+  margin-left: 10rpx;
+}
+.tf-ml-20 {
+  margin-left: 20rpx;
+}
+.tf-ml-30 {
+  margin-left: 30rpx;
+}
+.tf-w-full {
+  width: 100%;
+}
+.tf-h-full {
+  height: 100%;
+}
+.tf-w-h-full {
+  width: 100%;
+  height: 100%;
+}
+.tf-text-lg {
+  font-size: 30rpx;
+}
+.tf-text-sm {
+  font-size: 24rpx;
+}
+.tf-text {
+  font-size: 28rpx;
+}
+.tf-text-strong {
+  font-weight: bold;
+}
+.tf-text-align-center {
+  text-align: center;
+}
+.tf-text-align-right {
+  text-align: right;
+}
+.tf-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tf-text-color {
+  color: #222;
+}
+.tf-text-gray-7 {
+  color: #8F8F94;
+}
+.tf-text-primary {
+  color: #eb5841 !important;
+}
+.tf-text-link {
+  color: #019aff;
+}
+.tf-btn-primary {
+  background-color: #eb5841;
+  color: #fff;
+}
+page {
+  --tag-primary-color: #448fe4;
+  --tag-warning-color: #ffc017;
+  --tag-danger-color: #eb5841;
+}
+page .tf-uni-list {
+  background-color: #fff;
+  border-radius: 8rpx;
+}
+page .tf-uni-list  .uni-list {
+  background-color: #fff;
+  border-radius: 8rpx;
+}
+page .tf-uni-list  .uni-list--border {
+  left: 30rpx;
+  right: 30rpx;
+}
+page .tf-uni-list  .uni-list-item {
+  background-color: initial;
+}
+page  .uni-list-item__extra-text {
+  font-size: 28rpx;
+  color: #000;
+}
+page  .uni-card {
+  margin: 30rpx 20rpx 0 !important;
+  padding: 0 30rpx !important;
+}
+page  .uni-card .uni-card__header,
+page  .uni-card .uni-card__content {
+  padding: 20rpx 0 !important;
+}
+page  .uni-navbar .uni-nav-bar-text {
+  font-size: 32rpx;
+}
+

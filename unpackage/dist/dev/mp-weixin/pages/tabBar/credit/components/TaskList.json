@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "sign-rule-v2-dialog": "/pages/tabBar/credit/components/SignRuleV2Dialog"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "login-van-count-down-default": "/pages/index/login-van-count-down-default",
+    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "uni-easyinput": "/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput",
+    "agree-popup": "/module/AgreePopup/index",
+    "tf-dialog": "/components/TfDialog/index"
+  }
+}

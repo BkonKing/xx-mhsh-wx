@@ -1,0 +1,125 @@
+{
+  "description": "项目配置文件，详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "minified": true,
+    "postcss": true,
+    "minifyWXML": true,
+    "coverView": true,
+    "lazyloadPlaceholderEnable": false,
+    "preloadBackgroundData": false,
+    "autoAudits": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "enhance": true,
+    "useMultiFrameRuntime": true,
+    "showShadowRootInWxmlPanel": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "useStaticServer": true,
+    "showES6CompileOption": false,
+    "checkInvalidKey": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "disableUseStrict": false,
+    "useCompilerPlugins": false
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.23.4",
+  "appid": "wxb11b9ccc5b1c6d0f",
+  "projectname": "mhsh",
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "幸福币",
+          "pathName": "pages/tabBar/credit/credit",
+          "query": ""
+        },
+        {
+          "name": "幸福币明细",
+          "pathName": "pages/credit/creditRecord",
+          "query": ""
+        },
+        {
+          "name": "支付",
+          "pathName": "pages/credit/payment",
+          "query": ""
+        },
+        {
+          "name": "推荐购房",
+          "pathName": "pages/credit/recomBuyHouse",
+          "query": ""
+        },
+        {
+          "name": "推荐记录",
+          "pathName": "pages/credit/recomRecord",
+          "query": ""
+        },
+        {
+          "name": "店铺资料",
+          "pathName": "pages/personage/shop/introduce",
+          "query": ""
+        },
+        {
+          "name": "我的",
+          "pathName": "pages/tabBar/personage/personage",
+          "query": ""
+        },
+        {
+          "name": "我的消息",
+          "pathName": "pages/personage/message/index",
+          "query": ""
+        },
+        {
+          "name": "意见反馈",
+          "pathName": "pages/personage/feedback/index",
+          "query": ""
+        },
+        {
+          "name": "优惠券",
+          "pathName": "pages/personage/coupon/list",
+          "query": ""
+        },
+        {
+          "name": "购买优惠券",
+          "pathName": "pages/personage/coupon/purchaseRecord",
+          "query": ""
+        },
+        {
+          "name": "优惠券详情",
+          "pathName": "pages/personage/coupon/detail",
+          "query": "id=1496&type=1"
+        },
+        {
+          "name": "我的资料",
+          "pathName": "pages/personage/information/index",
+          "query": ""
+        },
+        {
+          "name": "个人信息",
+          "pathName": "pages/personage/information/personInfo",
+          "query": ""
+        },
+        {
+          "name": "支付密码",
+          "pathName": "pages/personage/information/paymentCode",
+          "query": ""
+        }
+      ]
+    }
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  }
+}

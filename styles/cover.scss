@@ -1,0 +1,35 @@
+page {
+  --tag-primary-color: #448fe4;
+  --tag-warning-color: #ffc017;
+  --tag-danger-color: #eb5841;
+  .tf-uni-list {
+    background-color: #fff;
+    border-radius: 8rpx;
+    ::v-deep .uni-list {
+      background-color: #fff;
+      border-radius: 8rpx;
+    }
+    ::v-deep .uni-list--border {
+      left: 30rpx;
+      right: 30rpx;
+    }
+    ::v-deep .uni-list-item {
+      background-color: initial;
+    }
+  }
+  ::v-deep .uni-list-item__extra-text {
+    font-size: 28rpx;
+    color: #000;
+  }
+  ::v-deep .uni-card {
+    margin: 30rpx 20rpx 0 !important;
+    padding: 0 30rpx !important;
+    .uni-card__header,
+    .uni-card__content {
+      padding: 20rpx 0 !important;
+    }
+  }
+  ::v-deep .uni-navbar .uni-nav-bar-text {
+    font-size: 32rpx;
+  }
+}

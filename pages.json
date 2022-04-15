@@ -1,0 +1,204 @@
+{
+  "pages": [ {
+    "path": "pages/tabBar/home/home"
+  }, {
+    "path": "pages/index/login"
+  }, {
+    "path": "pages/index/agreement"
+  },{
+    "path": "pages/tabBar/personage/personage"
+  }, {
+    "path": "pages/tabBar/credit/credit"
+  }],
+  "subPackages": [{
+    "root": "pages/personage",
+    "pages": [{
+      "path": "setting/index"
+    }, {
+      "path": "feedback/index"
+    }, {
+      "path": "feedback/list",
+      "style": {
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "feedback/detail"
+    }, {
+      "path": "question/index"
+    }, {
+      "path": "scanCode/index"
+    }, {
+      "path": "message/index"
+    }, {
+      "path": "coupon/list",
+      "style": {
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "coupon/detail"
+    }, {
+      "path": "coupon/purchaseRecord",
+      "style": {
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "information/index"
+    }, {
+      "path": "information/phone"
+    }, {
+      "path": "information/paymentCode"
+    }, {
+      "path": "information/loginPassword"
+    }, {
+      "path": "information/forgetCode"
+    }, {
+      "path": "information/personInfo"
+    }, {
+      "path": "house/attestation"
+    }, {
+      "path": "house/selectCommunity"
+    }, {
+      "path": "house/selectHoust"
+    }, {
+      "path": "shop/introduce"
+    }, {
+      "path": "shop/location"
+    }]
+  }, {
+    "root": "pages/credit",
+    "pages": [{
+      "path": "creditRecord",
+      "style": {
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "creditDetail"
+    }, {
+      "path": "recomRecord",
+      "style": {
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "recomBuyHouse"
+    }, {
+      "path": "payment"
+    }]
+  }],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "美好生活家园",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#f2f2f4",
+    "navigationStyle": "custom",
+    "usingComponents": {
+      "van-count-down": "/wxcomponents/vant/count-down/index",
+      "van-dropdown-menu": "/wxcomponents/vant/dropdown-menu/index",
+      "van-dropdown-item": "/wxcomponents/vant/dropdown-item/index",
+      "van-empty": "/wxcomponents/vant/empty/index",
+      "van-tag": "/wxcomponents/vant/tag/index",
+      "van-tab": "/wxcomponents/vant/tab/index",
+      "van-tabs": "/wxcomponents/vant/tabs/index"
+    }
+  },
+  "tabBar": {
+    "color": "#8F8F94",
+    "selectedColor": "#eb5841",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [{
+        "pagePath": "pages/tabBar/home/home",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/tabBar/credit/credit",
+        "iconPath": "static/tabbar/credit.png",
+        "selectedIconPath": "static/tabbar/credit-active.png",
+        "text": "幸福币"
+      }, {
+        "pagePath": "pages/tabBar/personage/personage",
+        "iconPath": "static/tabbar/personage.png",
+        "selectedIconPath": "static/tabbar/personage-active.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "condition": { //模式配置，仅开发期间生效
+    "current": 0, //当前激活的模式(list 的索引项)
+    "list": [{
+        "name": "幸福币",
+        "path": "pages/tabBar/credit/credit",
+        "query": ""
+      },
+      {
+        "name": "幸福币明细",
+        "path": "pages/credit/creditRecord",
+        "query": ""
+      },
+      {
+        "name": "支付",
+        "path": "pages/credit/payment",
+        "query": ""
+      }, {
+        "name": "推荐购房",
+        "path": "pages/credit/recomBuyHouse",
+        "query": ""
+      }, {
+        "name": "推荐记录",
+        "path": "pages/credit/recomRecord",
+        "query": ""
+      },
+      {
+        "name": "店铺资料",
+        "path": "pages/personage/shop/introduce",
+        "query": ""
+      },
+      {
+        "name": "我的",
+        "path": "pages/tabBar/personage/personage",
+        "query": ""
+      },
+      {
+        "name": "我的消息",
+        "path": "pages/personage/message/index",
+        "query": ""
+      },
+      {
+        "name": "意见反馈",
+        "path": "pages/personage/feedback/index",
+        "query": ""
+      },
+      {
+        "name": "优惠券",
+        "path": "pages/personage/coupon/list",
+        "query": ""
+      },
+      {
+        "name": "购买优惠券",
+        "path": "pages/personage/coupon/purchaseRecord",
+        "query": ""
+      },
+      {
+        "name": "优惠券详情",
+        "path": "pages/personage/coupon/detail",
+        "query": "id=1496&type=1"
+      },
+      {
+        "name": "我的资料",
+        "path": "pages/personage/information/index",
+        "query": ""
+      },
+      {
+        "name": "个人信息",
+        "path": "pages/personage/information/personInfo",
+        "query": ""
+      },
+      {
+        "name": "支付密码",
+        "path": "pages/personage/information/paymentCode",
+        "query": ""
+      }
+    ]
+  }
+}
