@@ -46,10 +46,12 @@
   margin-bottom: 20rpx;
   font-size: 28rpx;
   font-weight: bold;
+  line-height: 1;
   color: #000000;
 }
 .task-item__remarks.data-v-34834b24 {
   font-size: 24rpx;
+  line-height: 1;
   color: #bbbbbb;
 }
 .task-item__remarks + .task-item__remarks.data-v-34834b24 {

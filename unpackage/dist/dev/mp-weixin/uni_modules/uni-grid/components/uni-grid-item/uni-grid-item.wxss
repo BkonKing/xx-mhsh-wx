@@ -46,7 +46,4 @@
   border-top: 1px #D2D2D2 solid;
   z-index: 0;
 }
-.uni-highlight.data-v-7b4a3849:active {
-  background-color: #f1f1f1;
-}
 

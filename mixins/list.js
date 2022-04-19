@@ -16,21 +16,17 @@ export default {
   },
   onLoad() {
     setTimeout(() => {
-      this.handleLoad();
+      this.handleLoad(true);
     }, 0)
   },
   onReachBottom() {
-    if (this.isFinish) {
-      return;
-    }
-    this.pageNum++;
-    this.handleLoad();
+    !this.isFinish && this.getNextPage()
   },
   onPullDownRefresh() {
     this.refreshLoad();
   },
   methods: {
-    async handleLoad() {
+    async handleLoad(isContinuous = false) {
       if (this.isFinish) {
         return;
       }
@@ -43,12 +39,17 @@ export default {
         this.listData.push(...data);
       }
       this.isFinish = !data || data.length < 10;
+      !this.isFinish && isContinuous && this.getNextPage()
     },
     refreshLoad() {
       this.pageNum = 1;
       this.listData = [];
       this.isFinish = false;
-      this.handleLoad();
+      this.handleLoad(true);
     },
+    getNextPage() {
+      this.pageNum++;
+      this.handleLoad();
+    }
   }
 }

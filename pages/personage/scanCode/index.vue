@@ -303,7 +303,9 @@ export default {
     current(value) {
       if (value === 1) {
         handlePermission({
-          name: 'camera'
+          name: 'camera',
+          title: '摄像头未开启',
+          message: '为了提供更好服务，需要您摄像头'
         }).then(() => {
           this.scanCode();
         });

@@ -37,6 +37,7 @@
   position: fixed;
   left: 20rpx;
   top: 52rpx;
+  margin-top: 25px;
 }
 .login-page .logo-header.data-v-c3d8bbfa {
   position: fixed;
@@ -64,6 +65,10 @@
 .login-page .logo-container .logo.data-v-c3d8bbfa {
   width: 140rpx;
   height: 140rpx;
+}
+.login-page .tf-ptb-10.data-v-c3d8bbfa {
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
 }
 .form-container.data-v-c3d8bbfa {
   display: flex;
@@ -140,10 +145,16 @@
   color: #8f8f94;
   text-decoration: underline;
 }
+.data-v-c3d8bbfa .uni-easyinput .content-clear-icon {
+  padding: 0;
+}
+.data-v-c3d8bbfa .uni-easyinput .content-clear-icon .uni-icons {
+  padding: 10rpx 0;
+}
 .agreement.data-v-c3d8bbfa {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 20rpx 0;
   margin-top: 160rpx;
 }
@@ -155,7 +166,6 @@
   width: 30rpx;
   height: 28rpx;
   margin-top: 2rpx;
-  margin-right: 10rpx;
   border: 2rpx solid #aaa;
 }
 .agreement .agreement-checkbox-input .tf-icon-gou.data-v-c3d8bbfa {
@@ -169,9 +179,6 @@
 }
 .agreement .agreement-text .agreement-link.data-v-c3d8bbfa {
   color: #8f8f94;
-}
-.password-icon.data-v-c3d8bbfa {
-  position: absolute;
 }
 
 

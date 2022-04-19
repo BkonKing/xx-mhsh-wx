@@ -21,76 +21,85 @@
             src="@/static/main/touxiang.png"
           />
           <view class="personage-info--base">
-            <view class="user-info-box">
-              <view class="user-name">{{ userInfo.nickname }}</view>
-            </view>
-            <view class="user-role-box">
-              <image
-                v-if="shopData.is_reveal == 1 && isShop"
-                class="user-img"
-                src="@/static/personage/shangjia.png"
-              />
-              <image
-                v-if="shopData.is_clerk_reveal == 1 && isShopStaff"
-                class="user-img"
-                src="@/static/personage/dianyuan.png"
-              />
+            <template v-if="hasLogIn">
+              <view class="user-info-box">
+                <view class="user-name">{{ userInfo.nickname }}</view>
+              </view>
+              <view class="user-role-box">
+                <image
+                  v-if="shopData.is_reveal == 1 && isShop"
+                  class="user-img"
+                  src="@/static/personage/shangjia.png"
+                />
+                <image
+                  v-if="shopData.is_clerk_reveal == 1 && isShopStaff"
+                  class="user-img"
+                  src="@/static/personage/dianyuan.png"
+                />
 
-              <van-tag
-                v-if="userType != '0'"
-                class="user-role"
-                plain
-                :color="userType | houseRoleColor"
-                :text-color="userType | houseRoleColor"
-                :inverted="true"
-                size="small"
+                <van-tag
+                  v-if="userType != '0'"
+                  class="user-role"
+                  plain
+                  :color="userType | houseRoleColor"
+                  :text-color="userType | houseRoleColor"
+                  :inverted="true"
+                  size="small"
+                >
+                  {{ userType | houseRoleText }}
+                </van-tag>
+                <van-tag
+                  v-if="userInfo.position"
+                  class="user-role"
+                  plain
+                  :color="5 | houseRoleColor"
+                  :text-color="5 | houseRoleColor"
+                  :inverted="true"
+                  size="small"
+                >
+                  {{ userInfo.position }}
+                </van-tag>
+              </view>
+              <view
+                v-if="currentProject && currentProject.fc_info"
+                class="user-address"
               >
-                {{ userType | houseRoleText }}
-              </van-tag>
-              <van-tag
-                v-if="userInfo.position"
-                class="user-role"
-                plain
-                :color="5 | houseRoleColor"
-                :text-color="5 | houseRoleColor"
-                :inverted="true"
-                size="small"
+                {{ currentProject.fc_info }}
+              </view>
+              <view
+                v-else-if="
+                  userInfo.bsbx_allots === '1' && userInfo.project_name
+                "
+                class="user-address"
               >
-                {{ userInfo.position }}
-              </van-tag>
-            </view>
-            <view
-              v-if="currentProject && currentProject.fc_info"
-              class="user-address"
-            >
-              {{ currentProject.fc_info }}
-            </view>
-            <view
-              v-else-if="userInfo.bsbx_allots === '1' && userInfo.project_name"
-              class="user-address"
-            >
-              {{ userInfo.project_name }}
-            </view>
+                {{ userInfo.project_name }}
+              </view>
+            </template>
+            <template v-else>
+              <view class="user-info-box">
+                <view class="user-name">登录/注册</view>
+              </view>
+              <view class="user-address">登录后同步您的数据</view>
+            </template>
           </view>
         </view>
         <view class="tf-flex-row credit-box">
           <view class="tf-flex-1 tf-flex-col" @click="goCredit">
-            <view class="user-text--lg">{{ userInfo.credits || 0 }}</view>
+            <view class="user-text--lg">{{ userInfo.credits || '--' }}</view>
             <view class="user-text--grey">幸福币</view>
           </view>
           <view class="tf-flex-1 tf-flex-col" @click="goCouponList">
-            <view class="user-text--lg">{{ orderData.yhq_count || 0 }}</view>
+            <view class="user-text--lg">{{ orderData.yhq_count || '--' }}</view>
             <view class="user-text--grey">优惠券</view>
           </view>
           <view class="tf-flex-1 tf-column-justify-center">
             <button
-              v-preventReClick
               class="tf-flex-center"
               :class="[
                 'user-btn',
-                userInfo.signin_status === 0
-                  ? 'user-btn--signin'
-                  : 'user-btn--unsign'
+                userInfo.signin_status === 1
+                  ? 'user-btn--unsign'
+                  : 'user-btn--signin'
               ]"
               :loading="signLoading"
               @click="sign"
@@ -113,7 +122,8 @@
           <uni-list-item
             title="我的资料"
             showArrow="true"
-            to="/pages/personage/information/index"
+            clickable
+            @click="$router.push('/pages/personage/information/index')"
           >
             <template v-slot:header>
               <image
@@ -127,10 +137,11 @@
           <uni-list-item
             title="消息"
             showArrow="true"
+            badgeType="error"
+            clickable
             :showBadge="userInfo.message_mum != 0"
             :badgeText="userInfo.message_mum"
-            badgeType="error"
-            to="/pages/personage/message/index"
+            @click="$router.push('/pages/personage/message/index')"
           >
             <template v-slot:header>
               <text class="tf-icon tf-icon-xiaoxi list-item-image"></text>
@@ -139,7 +150,8 @@
           <uni-list-item
             title="常见问题"
             showArrow="true"
-            to="/pages/personage/question/index"
+            clickable
+            @click="$router.push('/pages/personage/question/index')"
           >
             <template v-slot:header>
               <image
@@ -151,7 +163,8 @@
           <uni-list-item
             title="意见反馈"
             showArrow="true"
-            to="/pages/personage/feedback/index"
+            clickable
+            @click="$router.push('/pages/personage/feedback/index')"
           >
             <template v-slot:header>
               <image
@@ -163,7 +176,8 @@
           <uni-list-item
             title="设置"
             showArrow="true"
-            to="/pages/personage/setting/index"
+            clickable
+            @click="$router.push('/pages/personage/setting/index')"
           >
             <template v-slot:header>
               <text class="tf-icon tf-icon-shezhi list-item-image"></text>
@@ -173,28 +187,29 @@
       </view>
       <tf-calendar v-model="showCalendar"></tf-calendar>
       <sign-rule-dialog v-model="signRuleVisible"></sign-rule-dialog>
-      <sign-alert
+      <sign-in-alert
         v-model="signAlertVisible"
         :message="signMessage"
         :credits="signOwnerCredits"
-      ></sign-alert>
+      ></sign-in-alert>
     </view>
   </view>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import TfCalendar from '@/components/TfCalendar';
+import TfCalendar from '@/modules/TfCalendar';
 import SignRuleDialog from '@/pages/tabBar/credit/components/SignRuleDialog';
-import SignAlert from '@/pages/tabBar/credit/components/SignAlert';
+import SignInAlert from '@/modules/SignInAlert';
 import { signin } from '@/api/personage';
+import { throttle } from '@/utils/util';
 import { handlePermission } from '@/utils/permission';
 export default {
   name: 'PersonagePage',
   components: {
     SignRuleDialog,
     TfCalendar,
-    SignAlert
+    SignInAlert
   },
   data() {
     return {
@@ -207,7 +222,8 @@ export default {
       signAlertVisible: false, // 游客认证提醒弹窗
       signMessage: '', // 签到成功提醒
       signOwnerCredits: '', // 业主签到幸福币
-      shopData: {}
+      shopData: {},
+      sign: throttle(this.handleSign)
     };
   },
   computed: {
@@ -219,21 +235,29 @@ export default {
     // 是否为商户店员
     isShopStaff() {
       return +this.shopData.is_shops_clerk;
+    },
+    hasLogIn() {
+      return this.userInfo && this.userInfo.id;
     }
   },
   onLoad() {},
   onShow() {
     // 重新获取用户信息
-    this.$store
-      .dispatch('getMyAccount')
-      .then(({ order_data, hb_banner_data, shops_data }) => {
-        this.orderData = order_data;
-        this.shopData = shops_data || {};
-      });
+    this.hasLogIn &&
+      this.$store
+        .dispatch('getMyAccount')
+        .then(({ order_data, hb_banner_data, shops_data }) => {
+          this.orderData = order_data;
+          this.shopData = shops_data || {};
+        });
   },
   methods: {
     // 签到
-    sign() {
+    handleSign() {
+      if (!this.hasLogIn) {
+        this.goLogin()
+        return
+      }
       if (this.userInfo.signin_status === 0) {
         // 签到一定要开启定位
         handlePermission({
@@ -279,6 +303,9 @@ export default {
     },
     goCouponList() {
       this.$router.push('/pages/personage/coupon/list');
+    },
+    goLogin() {
+      this.$router.push('/pages/index/login')
     }
   },
   filters: {

@@ -42,7 +42,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20rpx 0;
-  border-bottom: 2rpx solid #F0F0F0;
+  border-bottom: 2rpx solid #f0f0f0;
 }
 .payment-box__money text.data-v-0641ccae {
   font-size: 52rpx;

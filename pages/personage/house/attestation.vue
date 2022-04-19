@@ -112,10 +112,8 @@
               </navigator>
             </view>
             <button
-              class="tf-w-full"
-              v-preventReClick
+              class="tf-w-full tf-btn-primary"
               :loading="submitLoad"
-              type="warn"
               @click="submit"
             >
               提交
@@ -155,7 +153,7 @@ import {
   deleteMember
 } from '@/api/personage';
 import { getAgreementContent } from '@/api/user';
-import { validForm } from '@/utils/util';
+import { validForm, throttle } from '@/utils/util';
 
 export default {
   name: 'houseAttestation',
@@ -202,7 +200,8 @@ export default {
           name: '租户成员'
         }
       ],
-      submitLoad: false
+      submitLoad: false,
+      submit: throttle(this.handleSubmit)
     };
   },
   computed: {
@@ -326,7 +325,7 @@ export default {
       this.agreeValue = values && values.length ? true : false;
     },
     // 提交验证
-    submit() {
+    handleSubmit() {
       if (!+this.agreeValue && this.isMember) {
         uni.showToast({
           title: '请先阅读并同意会员协议',
@@ -557,7 +556,7 @@ export default {
       }
       if (this.isMember) {
         this.$router.push({
-          path: '/pages/personage/house/selectHoust',
+          path: '/pages/personage/house/selectHouse',
           query: {
             mode: 2,
             id: this.house_id

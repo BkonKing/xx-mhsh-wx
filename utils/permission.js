@@ -28,7 +28,7 @@ import {
  */
 export function handlePermission({
   name,
-  message,
+  message = '',
   title = '提示',
   confirmButtonText = '去开启'
 }) {
@@ -36,63 +36,44 @@ export function handlePermission({
     hasPermission(name).then(() => {
       resolve()
     }).catch(() => {
-      if (message) {
-        uni.showModal({
-          title,
-          content: message,
-          confirmText: confirmButtonText,
-          success: function(res) {
-            if (res.confirm) {
-              setPer(resolve, reject, name)
-            } else if (res.cancel) {
-              reject(new Error(false))
-            }
+      const scope = `scope.${name}`
+      uni.authorize({
+        scope,
+        success() {
+          if (name === 'userLocation') {
+            getCurrentLocation(resolve, reject)
+          } else {
+            resolve()
           }
-        });
-      } else {
-        setPer(resolve, reject, name)
-      }
+        },
+        fail() {
+          uni.showModal({
+            title,
+            content: message,
+            confirmText: confirmButtonText,
+            success: function(res) {
+              if (res.confirm) {
+                uni.openSetting({
+                  success(res) {
+                    if (res.authSetting[
+                        'scope.userLocation']) {
+                      getCurrentLocation(resolve, reject)
+                    } else {
+                      resolve()
+                    }
+                  },
+                  fail(e) {
+                    reject()
+                  }
+                })
+              } else if (res.cancel) {
+                reject(new Error(false))
+              }
+            }
+          });
+        }
+      })
     })
-  })
-}
-
-/**
- * 获取权限后调函数
- * @param {string} name 权限名称
- * @returns
- */
-function setPer(resolve, reject, name) {
-  const scope = `scope.${name}`
-  uni.authorize({
-    scope,
-    success() {
-      // 开启定位，则获取用户的定位信息保存在后端
-      const hasToken = uni.getStorageSync('access_token')
-      if (name === 'userLocation' && hasToken) {
-        bMapGetLocationInfo()
-          .then(data => {
-            const {
-              longitude,
-              latitude,
-            } = data
-            setUserPostion({
-              longitude,
-              latitude,
-            }).finally(() => {
-              resolve()
-            })
-          })
-          .catch(() => {
-            alert('error')
-            reject(new Error(false))
-          })
-      } else {
-        resolve()
-      }
-    },
-    fail() {
-      reject(new Error(false))
-    }
   })
 }
 
@@ -119,4 +100,27 @@ export async function hasPermission(perm) {
       }
     })
   })
+}
+
+
+function getCurrentLocation(resolve, reject) {
+  // 开启定位，则获取用户的定位信息保存在后端
+  const hasToken = uni.getStorageSync('access_token')
+  hasToken && bMapGetLocationInfo()
+    .then(data => {
+      const {
+        longitude,
+        latitude,
+      } = data
+      setUserPostion({
+        longitude,
+        latitude,
+      }).finally(() => {
+        resolve()
+      })
+    })
+    .catch(() => {
+      console.log('error')
+      reject(new Error(false))
+    })
 }

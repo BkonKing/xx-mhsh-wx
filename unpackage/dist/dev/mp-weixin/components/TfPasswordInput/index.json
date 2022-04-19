@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
-  "component": true
+  "component": true,
+  "usingComponents": {
+    "password-input": "/components/PasswordInput/index"
+  }
 }

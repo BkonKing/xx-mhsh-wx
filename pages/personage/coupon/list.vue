@@ -58,9 +58,11 @@
         </view>
       </template>
       <uni-load-more :status="loadMoreStatus" />
-      <button class="fixed-btn tf-btn-primary" @click="goCouponPurchaseRecords">
-        购买记录
-      </button>
+      <view class="fixed-placeholder">
+        <button class="fixed-btn tf-btn-primary" @click="goCouponPurchaseRecords">
+          购买记录
+        </button>
+      </view>
     </view>
     <tf-popup v-model="visible" class="coupon-qr-popup">
       <uni-icons
@@ -111,7 +113,7 @@ export default {
   methods: {
     getListData() {
       return getCoupon({
-        pages: this.pageNum,
+        page: this.pageNum,
         c_type: this.current
       })
     },
@@ -210,21 +212,26 @@ export default {
   font-size: 40rpx;
   line-height: 1;
 }
+.fixed-placeholder {
+    height: calc(100rpx + env(safe-area-inset-bottom));
+    height: calc(100rpx + constant(safe-area-inset-bottom));
+  }
 .fixed-btn {
   width: 200rpx;
   position: fixed;
   left: 275rpx;
-  bottom: 60rpx;
+  bottom: calc(30rpx + env(safe-area-inset-bottom));
+  bottom: calc(30rpx + constant(safe-area-inset-bottom));
   z-index: 2;
   border-radius: 36rpx;
 }
 .coupon-qr-popup {
-  width: 560rpx;
   // height: 811rpx;
   background: #ffffff;
   border-radius: 10rpx;
   overflow: initial;
   ::v-deep .uni-popup__wrapper {
+    width: 560rpx;
     border-radius: 10rpx 10rpx 0 0;
   }
   .tf-icon-guanbi-circle {

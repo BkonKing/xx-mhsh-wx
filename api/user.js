@@ -1,4 +1,5 @@
 import request from '@/utils/request.js'
+import apiConfig from '@/api/config'
 
 // 手机验证码登录
 export function yzmLogin (data) {
@@ -50,17 +51,6 @@ export function getMyAccount () {
   })
 }
 
-// 图片上传
-export function uImages (data) {
-  return request({
-    url: '/upload/uploads/uImages',
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    data
-  })
-}
-
 // 获取邻里使用协议（已改为带参可以请求所有协议）
 export function getAgreementContent (data) {
   return request({
@@ -72,7 +62,11 @@ export function getAgreementContent (data) {
 
 // 所有协议列表接口
 export function getAllAgreement () {
-  return request.get('/ulogin/agreement/allAgreement')
+  return request({
+    url: '/ulogin/agreement/allAgreement',
+    method: 'get',
+    noLoading: true
+  })
 }
 
 // 设置游客定位信息
@@ -97,7 +91,7 @@ export function cancelLogout (data) {
 export function wxLogin (data) {
   return request({
     url: '/wxLogin/xcx_authorize_new',
-    baseURL: 'https://develop.mhshjy.com/xcx/api/v1',
+    baseURL: `${apiConfig.baseUrl}/xcx/api/v1`,
     method: 'post',
     data
   })

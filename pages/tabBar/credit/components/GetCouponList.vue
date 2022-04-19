@@ -13,9 +13,8 @@
         <button v-if="!coupon.is_complete" class="btn-ing">已领取</button>
         <button
           v-if="coupon.is_complete"
-          v-preventReClick
           class="btn-click"
-          @click.stop="handleReceive(coupon, index, i)"
+          @click.stop="receive(coupon, index, i)"
         >
           <i
             v-if="coupon.pay_type === '1'"
@@ -47,7 +46,7 @@
 import TfPopup from '@/components/TfPopup/index';
 import CouponItem from './CouponItem';
 import { payOrderUp } from '@/api/personage';
-import { requestPayment } from '@/utils/util';
+import { requestPayment, throttle } from '@/utils/util';
 import { getCouponReceiveList, receiveCoupon } from '@/api/personage/shop';
 
 export default {
@@ -64,7 +63,8 @@ export default {
       payOrderInfo: {},
       data: [],
       activeShopIndex: 0,
-      activeCouponIndex: 0
+      activeCouponIndex: 0,
+      receive: throttle(this.handleReceive)
     };
   },
   filters: {
@@ -78,10 +78,13 @@ export default {
       }
     }
   },
-  created() {
-    this.getCouponReceiveList();
-  },
+  // created() {
+  //   this.init();
+  // },
   methods: {
+    init() {
+      this.getCouponReceiveList();
+    },
     async getCouponReceiveList() {
       const { data } = await getCouponReceiveList();
       this.data = data;

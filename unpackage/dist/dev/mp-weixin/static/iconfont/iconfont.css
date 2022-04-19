@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'tficonfont';
-  src: url('https://live.tosolomo.com/wap/fonts/iconfont.8d553f66.ttf') format('truetype');
+  src: url('/static/iconfont/iconfont.ttf') format('truetype');
   /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
 }
 

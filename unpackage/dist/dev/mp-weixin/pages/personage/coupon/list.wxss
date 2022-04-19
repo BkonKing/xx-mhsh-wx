@@ -94,21 +94,26 @@
   font-size: 40rpx;
   line-height: 1;
 }
+.fixed-placeholder.data-v-d296078e {
+  height: calc(100rpx + env(safe-area-inset-bottom));
+  height: calc(100rpx + constant(safe-area-inset-bottom));
+}
 .fixed-btn.data-v-d296078e {
   width: 200rpx;
   position: fixed;
   left: 275rpx;
-  bottom: 60rpx;
+  bottom: calc(30rpx + env(safe-area-inset-bottom));
+  bottom: calc(30rpx + constant(safe-area-inset-bottom));
   z-index: 2;
   border-radius: 36rpx;
 }
 .coupon-qr-popup.data-v-d296078e {
-  width: 560rpx;
   background: #ffffff;
   border-radius: 10rpx;
   overflow: initial;
 }
 .coupon-qr-popup.data-v-d296078e  .uni-popup__wrapper {
+  width: 560rpx;
   border-radius: 10rpx 10rpx 0 0;
 }
 .coupon-qr-popup .tf-icon-guanbi-circle.data-v-d296078e {

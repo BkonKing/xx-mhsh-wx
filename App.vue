@@ -8,21 +8,17 @@ export default {
           ? JSON.parse(userInfo)
           : userInfo;
       this.$store.commit('setUserInfo', userInfo);
-      if (userInfo.user_type != 0 && !this.$store.getters.currentProject) {
+      if (userInfo.user_type != 0) {
         // 获取当前项目
         this.$store.dispatch('getHouse');
       }
-    } else {
-      uni.reLaunch({
-        url: '/pages/index/login'
-      });
     }
   },
   onShow: function() {
-    console.log('App Show');
+    // console.log('App Show');
   },
   onHide: function() {
-    console.log('App Hide');
+    // console.log('App Hide');
   }
 };
 </script>

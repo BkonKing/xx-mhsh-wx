@@ -32,6 +32,7 @@
 .sign-popup .sign-btn.data-v-4c9f1308 {
   width: 560rpx;
   height: 80rpx;
+  line-height: 80rpx;
   background: #febf00;
   border-radius: 10rpx;
   font-size: 28rpx;

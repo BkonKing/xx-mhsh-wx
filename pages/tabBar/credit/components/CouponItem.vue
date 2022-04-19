@@ -35,7 +35,7 @@
     <view class="coupon-panel" :class="{ 'coupon-panel--expanded': expanded }">
       <view class="coupon-content" @click.stop="expanded = true">
         <template>
-          <view @click="goShopIntroduce">
+          <view>
             <text>
               优惠说明：{{ data.coupon_explain }} | {{ data.new_goods_type_name1 }}
             </text>
@@ -46,7 +46,12 @@
                   【{{ data.new_shops_name }}】
                 </text>
               </text>
-              <uni-icons class="tf-text-strong" type="right" size="12"></uni-icons>
+              <uni-icons
+                class="tf-text-strong"
+                type="right"
+                size="14"
+                @click="goShopIntroduce"
+              ></uni-icons>
             </template>
           </view>
           <view v-if="shopsAddress" class="tf-row-items-center">

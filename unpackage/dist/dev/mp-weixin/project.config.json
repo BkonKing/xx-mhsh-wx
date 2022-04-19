@@ -34,9 +34,9 @@
     "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.23.4",
+  "libVersion": "",
   "appid": "wxb11b9ccc5b1c6d0f",
-  "projectname": "mhsh",
+  "projectname": "美好生活",
   "condition": {
     "miniprogram": {
       "list": [

@@ -42,7 +42,7 @@
                           v-if="userInfo.gender == 1"
                           class="tf-icon tf-icon-xingbie1 nan"
                         ></text>
-                        {{ userInfo.birthday }}
+                        {{ userInfo.birthday || '' }}
                       </view>
                     </view>
                     <view class="r-left">
@@ -141,7 +141,7 @@
           </uni-card>
         </view>
         <view class="btn-placeholder">
-          <button class="tf-btn" type="warn" @click="addMember">
+          <button class="tf-btn tf-btn-primary" @click="addMember">
             新增成员
           </button>
         </view>
@@ -259,10 +259,10 @@ export default {
     // 添加成员
     addMember() {
       if (this.memberList.length >= 10) {
-        uni.showToast({
-          title: '一个房产最多只能绑定10个人（包括业主），超过只能解除后再添加',
-          icon: 'none'
-        });
+        uni.showModal({
+          content: '一个房产最多只能绑定10个人（包括业主），超过只能解除后再添加',
+          showCancel: false
+        })
       } else {
         this.goAttestation(0, 0);
       }

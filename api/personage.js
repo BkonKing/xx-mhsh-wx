@@ -1,4 +1,5 @@
 import request from '@/utils/request.js'
+import apiConfig from '@/api/config'
 
 // 常见问题列表
 export function getEqList (params) {
@@ -485,3 +486,22 @@ export function getOrderDetail (data) {
 }
 
 /* 生活 end */
+
+// 小程序首页
+export function getHomeSpecial (data) {
+  return request({
+    url: '/wxLogin/tj_thematic_info',
+    baseURL: `${apiConfig.baseUrl}/xcx/api/v1`,
+    method: 'post',
+    data
+  })
+}
+
+// 获取专题活动
+export function getSpecial (data) {
+  return request({
+    url: '/share/goods/thematic_info',
+    method: 'post',
+    data
+  })
+}

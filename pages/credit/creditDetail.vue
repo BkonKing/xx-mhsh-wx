@@ -9,9 +9,9 @@
       @click-left="$router.go(-1)"
     />
     <view class="tf-p-30-20">
-      <userInfo :avatar="info.avatar" :name="info.username"></userInfo>
+      <tf-user-info :avatar="info.avatar" :name="info.username"></tf-user-info>
       <view class="module-box money-box">
-        <view class="money-num">{{parseInt(info.credits) > 0 ? '+' : ''}}{{info.credits}}</view>
+        <view class="money-num">{{parseInt(info.credits) > 0 ? '+' : ''}}{{info.credits || 0}}</view>
         <!-- <view class="tf-text-lg tf-text-gray-7">退款成功</view> -->
       </view>
       <view class="module-box">
@@ -63,11 +63,11 @@
 </template>
 
 <script>
-import userInfo from '@/components/UserInfo/index.vue'
+import TfUserInfo from '@/modules/TfUserInfo/index'
 import { getCreditsInfo } from '@/api/personage'
 export default {
   components: {
-    userInfo
+    TfUserInfo
   },
   data () {
     return {

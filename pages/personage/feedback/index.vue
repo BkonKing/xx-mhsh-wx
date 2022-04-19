@@ -18,65 +18,62 @@
       <tf-radio-btn v-model="infoType" :data="items"></tf-radio-btn>
     </uni-card>
     <uni-card title="内容描述">
-      <input
-        class="uni-input"
+      <textarea
         v-model="content"
-        autosize
-        type="textarea"
+        class="uni-input"
         :maxlength="300"
         placeholder="请描述具体内容"
-        show-word-limit
+        auto-height
+        placeholder-style="color: #8F8F94;"
       />
+      <view class="tf-text-sm tf-text-gray-7 tf-text-align-right">
+        {{content.length || 0}} / 300
+      </view>
     </uni-card>
     <uni-card title="图片上传">
       <tf-uploader v-model="images" max-count="6"></tf-uploader>
     </uni-card>
     <view class="fixed-placeholder">
-      <button
-        v-preventReClick
-        class="fixed-btn tf-btn-primary"
-        @click="handleSubmit"
-      >
-        提交
-      </button>
+      <button class="fixed-btn tf-btn-primary" @click="submit">提交</button>
     </view>
   </view>
 </template>
 
 <script>
-import TfRadioBtn from '@/components/TfRadioBtn/index';
-import TfUploader from '@/components/TfUploader/index';
-import { addFeedback } from '@/api/personage.js';
-import { validForm } from '@/utils/util';
+import TfRadioBtn from '@/components/TfRadioBtn/index'
+import TfUploader from '@/components/TfUploader/index'
+import { addFeedback } from '@/api/personage.js'
+import { validForm, throttle } from '@/utils/util'
 export default {
   components: {
     TfRadioBtn,
-    TfUploader
+    TfUploader,
   },
   data() {
     return {
       items: [
         {
           value: 1,
-          name: '功能异常'
+          name: '功能异常',
         },
         {
           value: 2,
-          name: '功能改进'
+          name: '功能改进',
         },
         {
           value: 3,
-          name: '产品建议'
+          name: '产品建议',
         },
         {
           value: 4,
-          name: '其他'
-        }
+          name: '其他',
+        },
       ],
       infoType: '',
       content: '',
-      images: []
-    };
+      images: [],
+      submit: throttle(this.handleSubmit),
+    }
   },
   methods: {
     // 表单验证
@@ -84,45 +81,45 @@ export default {
       const validator = [
         {
           value: this.infoType,
-          message: '请选择类型'
+          message: '请选择类型',
         },
         {
           value: this.content,
-          message: '请输入反馈内容'
-        }
-      ];
-      validForm(validator).then(res => {
-        this.submitFeedback();
-      });
+          message: '请输入反馈内容',
+        },
+      ]
+      validForm(validator).then((res) => {
+        this.submitFeedback()
+      })
     },
     async submitFeedback() {
       const { success } = await addFeedback({
         content: this.content,
         images: this.images.join(','),
-        info_type: this.infoType
-      });
+        info_type: this.infoType,
+      })
       if (success) {
         uni.showModal({
           content: '感谢您的反馈',
           showCancel: false,
-          success: res => {
+          success: (res) => {
             if (res.confirm) {
-              this.$router.go(-1);
+              this.$router.go(-1)
             }
-          }
-        });
+          },
+        })
       } else {
         uni.showToast({
           title: '提交失败',
-          icon: 'error'
-        });
+          icon: 'error',
+        })
       }
     },
     goList() {
-      this.$router.push('/pages/personage/feedback/list');
-    }
-  }
-};
+      this.$router.push('/pages/personage/feedback/list')
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -133,9 +130,11 @@ export default {
 }
 
 .uni-input {
-  flex: 1;
-  font-size: 28rpx;
+  width: 100%;
+  min-height: 80rpx;
   padding: 0;
+  font-size: 28rpx;
+  line-height: 32rpx;
 }
 
 .fixed-placeholder {

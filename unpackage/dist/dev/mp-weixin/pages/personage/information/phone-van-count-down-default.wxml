@@ -1,1 +1,0 @@
-<view class="tf-phone-code-btn data-v-5b4726c6">{{timeData.seconds+"s"}}</view>

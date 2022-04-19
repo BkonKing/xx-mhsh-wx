@@ -83,7 +83,6 @@
       <view v-if="item.complete" class="task-item__number"> +{{ item.credits }} </view>
       <button
         v-else
-        v-preventReClick
         :loading="signLoading && item.task_type == 1"
         class="task-item__btn"
         :disabled="signinToday === 2 && item.task_type == 1"
@@ -105,6 +104,8 @@
 <script>
 import SignRuleV2Dialog from './SignRuleV2Dialog'
 import { getYxlpList } from '@/api/personage'
+import { throttle } from '@/utils/util';
+
 export default {
   name: 'TaskList',
   components: {
@@ -137,6 +138,7 @@ export default {
       signLoading: false,
       signRuleVisible: false,
       yxlpNum: 0, // 推荐购房楼盘列表
+      complete: throttle(this.handleComplete)
     }
   },
   computed: {
@@ -179,7 +181,7 @@ export default {
       })
     },
     // 幸福币任务去完成跳转
-    complete({ task_type: type, source_id: id }) {
+    handleComplete({ task_type: type, source_id: id }) {
       switch (type) {
         case '1':
           this.$emit('signIn')
@@ -256,10 +258,12 @@ export default {
   margin-bottom: 20rpx;
   font-size: 28rpx;
   font-weight: bold;
+  line-height: 1;
   color: #000000;
 }
 .task-item__remarks {
   font-size: 24rpx;
+  line-height: 1;
   color: #bbbbbb;
   + .task-item__remarks {
     margin-top: 10rpx;

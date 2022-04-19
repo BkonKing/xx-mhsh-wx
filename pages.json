@@ -1,14 +1,17 @@
 {
-  "pages": [ {
+  "pages": [{
     "path": "pages/tabBar/home/home"
   }, {
     "path": "pages/index/login"
   }, {
     "path": "pages/index/agreement"
-  },{
+  }, {
     "path": "pages/tabBar/personage/personage"
   }, {
-    "path": "pages/tabBar/credit/credit"
+    "path": "pages/tabBar/credit/credit",
+    "style": {
+      "enablePullDownRefresh": true
+    }
   }],
   "subPackages": [{
     "root": "pages/personage",
@@ -44,11 +47,7 @@
     }, {
       "path": "information/index"
     }, {
-      "path": "information/phone"
-    }, {
       "path": "information/paymentCode"
-    }, {
-      "path": "information/loginPassword"
     }, {
       "path": "information/forgetCode"
     }, {
@@ -58,7 +57,7 @@
     }, {
       "path": "house/selectCommunity"
     }, {
-      "path": "house/selectHoust"
+      "path": "house/selectHouse"
     }, {
       "path": "shop/introduce"
     }, {

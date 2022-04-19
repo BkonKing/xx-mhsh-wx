@@ -42,7 +42,7 @@
       </view>
     </view>
     <view v-if="addStatus" class="btn-placeholder">
-      <button class="tf-btn" type="warn" @click="goAttestation">
+      <button class="tf-btn tf-btn-primary" @click="goAttestation">
         新增房产
       </button>
     </view>

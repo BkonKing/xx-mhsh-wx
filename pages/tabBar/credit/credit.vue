@@ -1,6 +1,7 @@
 <template>
   <view>
     <uni-nav-bar
+      title="幸福币"
       class="credit-nav-bar"
       statusBar="true"
       backgroundColor="#f2f2f4"
@@ -22,11 +23,10 @@
             <text v-if="freezeCredit">不可用{{ freezeCredit }}</text>
           </view>
           <button
-            v-preventReClick
-            :loading="signLoading"
             class="sign-tag tf-flex-center"
+            :loading="signLoading"
             :class="{ 'sign-tag--complete': signinToday !== 0 }"
-            @click="handleSignIn"
+            @click="throttleSignIn"
           >
             <image
               class="sign-img"
@@ -83,12 +83,12 @@
         :userType="userType"
         :entranceStatus="entranceStatus"
         :show-unfinished="true"
-        @signIn="handleSignIn"
+        @signIn="throttleSignIn"
       ></task-list>
     </view>
     <view class="tf-mt-30">
       <van-tabs
-        v-if="userInfo"
+        v-if="hasLogIn"
         v-model="tabActive"
         class="credit-tabs"
         sticky
@@ -98,6 +98,7 @@
       >
         <van-tab v-if="showCouponCentre" title="领券中心">
           <get-coupon-list
+            ref="getCouponList"
             @getSuccess="init"
             @noData="showCouponCentre = false"
           ></get-coupon-list>
@@ -112,18 +113,18 @@
             :signinToday="signinToday"
             :userType="userType"
             :entranceStatus="entranceStatus"
-            @signIn="handleSignIn"
+            @signIn="throttleSignIn"
           ></task-list>
         </van-tab>
       </van-tabs>
     </view>
     <tf-calendar v-model="showCalendar"></tf-calendar>
     <sign-rule-dialog v-model="signRuleVisible"></sign-rule-dialog>
-    <sign-alert
+    <sign-in-alert
       v-model="signAlertVisible"
       :message="signMessage"
       :credits="signOwnerCredits"
-    ></sign-alert>
+    ></sign-in-alert>
   </view>
 </template>
 
@@ -131,17 +132,18 @@
 import { mapGetters } from 'vuex';
 import { signin, getCreditsAccount } from '@/api/personage';
 import { getShopCouponBanner } from '@/api/personage/shop';
-import TfCalendar from '@/components/TfCalendar';
+import TfCalendar from '@/modules/TfCalendar';
 import GetCouponList from './components/GetCouponList';
 import TaskList from './components/TaskList';
-import SignAlert from './components/SignAlert';
+import SignInAlert from '@/modules/SignInAlert';
 import SignRuleDialog from './components/SignRuleDialog';
+import { throttle } from '@/utils/util';
 import { handlePermission } from '@/utils/permission';
 
 export default {
   components: {
     TfCalendar,
-    SignAlert,
+    SignInAlert,
     SignRuleDialog,
     GetCouponList,
     TaskList
@@ -164,7 +166,8 @@ export default {
       tabActive: 0,
       offsetTop: 0,
       shopBannerInfo: {},
-      showCouponCentre: true
+      showCouponCentre: true,
+      throttleSignIn: throttle(this.handleSignIn)
     };
   },
   computed: {
@@ -191,6 +194,9 @@ export default {
     },
     freezeCredit() {
       return +this.sd_credits;
+    },
+    hasLogIn() {
+      return this.userInfo && this.userInfo.id;
     }
   },
   onLoad() {
@@ -198,24 +204,17 @@ export default {
   },
   onShow() {
     this.init();
-    if (this.userInfo) {
-    } else {
-      // uni.login({
-      //   provider: 'weixin',
-      //   success: function(loginRes) {
-      //     console.log(loginRes.code);
-      //   }
-      // });
-    }
-    // 安卓下部分需要添加顶部安全距离
-    // if (process.env.VUE_APP_IS_APP === '1') {
-    //   this.offsetTop = api.safeArea.top + this.$refs.navBar.height
-    // }
+  },
+  onPullDownRefresh() {
+    this.init();
   },
   methods: {
     init() {
-      this.getCreditsAccount();
-      this.getShopCouponBanner();
+      if (this.hasLogIn) {
+        this.getCreditsAccount();
+        this.getShopCouponBanner();
+        this.$refs.getCouponList && this.$refs.getCouponList.init();
+      }
     },
     // 获取幸福币信息
     getCreditsAccount() {
@@ -236,6 +235,10 @@ export default {
     },
     // 签到事件
     handleSignIn() {
+      if (!this.hasLogIn) {
+        this.$router.push('/pages/index/login')
+        return
+      }
       if (this.signinToday === 1) {
         // 已签到，则打开签到日历
         this.showCalendar = true;
@@ -289,10 +292,10 @@ export default {
     // 菜单悬挂顶部，tab切换到“领券中心”
     openCouponCentre() {
       this.tabActive = 1;
-      // this.$refs.container.scrollTop =
-      //   document.getElementById('tabs').offsetTop -
-      //   this.$refs.navBar.height -
-      //   api.safeArea.top;
+      uni.pageScrollTo({
+      	selector: '.credit-tabs',
+      	duration: 300
+      });
     }
   }
 };

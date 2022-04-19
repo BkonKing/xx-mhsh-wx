@@ -4,12 +4,13 @@ import qs from 'qs'
 import {
 	clearUserInfo
 } from '@/utils/util'
+import apiConfig from '@/api/config'
 
 const service = ajax.create({
 	headers: {
 		'Content-Type': 'application/x-www-form-urlencoded'
 	},
-	baseURL: 'https://develop.mhshjy.com/app/api/v1',
+	baseURL: `${apiConfig.baseUrl}/app/api/v1`,
 	// withCredentials: true, // send cookies when cross-domain requests
 	timeout: 30000 // request timeout
 })
@@ -17,9 +18,9 @@ const service = ajax.create({
 // 请求拦截器
 service.interceptors.request.use(
 	config => {
-    !config.noLoading && uni.showLoading({
-    	title: '加载中'
-    });
+		!config.noLoading && uni.showLoading({
+			title: '加载中'
+		});
 		// 请求发送前
 		const token = uni.getStorageSync('access_token')
 		// 转换参数格式
@@ -37,7 +38,7 @@ service.interceptors.request.use(
 				config.headers.ProjectId = userInfo.project_id
 			}
 		}
-    config.header = config.headers
+		config.header = config.headers
 		return config
 	},
 	error => {
@@ -57,12 +58,16 @@ service.interceptors.response.use(
 			code,
 			message
 		} = data
-    !config.noLoading && uni.hideLoading();
+			!config.noLoading && uni.hideLoading();
 		if (status == 401 || code == 401) {
+      if (store.state.loginModal) {
+        return Promise.reject(code)
+      }
+      store.commit('setLoginModal', true)
 			uni.showModal({
 				title: '提示',
 				content: '登录信息已经过期了，请重新登录',
-				success: function(res) {
+				success: function (res) {
 					if (res.confirm) {
 						clearUserInfo()
 						uni.reLaunch({
@@ -71,14 +76,17 @@ service.interceptors.response.use(
 					} else if (res.cancel) {
 						console.log('用户点击取消');
 					}
-				}
+				},
+        complete() {
+          store.commit('setLoginModal', false)
+        }
 			});
 			return Promise.reject(code)
 		} else if (code != 200) {
 			if (!config.headers.noToast) {
 				uni.showToast({
 					title: message,
-          icon: 'none',
+					icon: 'none',
 					duration: 2000
 				});
 			}

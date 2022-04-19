@@ -16,25 +16,12 @@ Vue.use(Vuex)
 
 const store = {
   state: {
-    userInfo: uni.getStorage('openid') || '',
-    hasLogin: false,
-    loginProvider: '',
-    openId: null,
-    colorList: ['#FF0000', '#00FF00', '#0000FF'],
-    visitorList: null,
-    houseSelected: null,
-    current_project: null,
-    keepAliveList: ['mainIndex'],
-    paddingTop: 0,
-    paddingBottom: 0,
-    temporaryType: undefined,
-    mobile_info: '',
-    map_info: '',
-    share_params: '',
-    groupInfo: '',
-    winResize: false,
-    taskFinishStatus: false,
+    userInfo: '',
+    openId: uni.getStorageSync('openid') || '',
+    current_project: uni.getStorageSync('currentProject') || null,
+    mobileInfo: '',
     tempData: null,
+    loginModal: false
   },
   mutations: {
     setUserInfo(state, value) {
@@ -43,52 +30,22 @@ const store = {
       state.userInfo = val
       uni.setStorageSync('userInfo', val)
     },
-    setVisitorList(state, list) {
-      state.visitorList = list
-    },
-    setHouseSelected(state, obj) {
-      state.houseSelected = obj
+    setOpenId(state, value) {
+      state.openId = value
+      uni.setStorageSync('openId', value)
     },
     setCurrentProject(state, obj) {
       state.current_project = obj
       uni.setStorageSync('currentProject', obj);
     },
-    deleteKeepAlive(state, name) {
-      const index = state.keepAliveList.indexOf(name)
-      if (index !== -1) {
-        state.keepAliveList.splice(index, 1)
-      }
-    },
-    clearKeepAlive(state) {
-      state.keepAliveList = []
-    },
-    setPaddingTop(state, value) {
-      state.paddingTop = value
-    },
-    setPaddingBottom(state, value) {
-      state.paddingBottom = value
-    },
-    setTemporaryType(state, value) {
-      state.temporaryType = value
-    },
-    setMobile_info(state, value) {
-      state.mobile_info = value
-    },
-    setMap_info(state, value) {
-      state.map_info = value
-    },
-    setShare_params(state, value) {
-      state.share_params = value
-    },
-    setWinResize(state, value) {
-      state.winResize = value
+    setMobileInfo(state, value) {
+      state.mobileInfo = value
     },
     setTempData(state, value) {
       state.tempData = value
     },
-    setOpenId(state, value) {
-      state.openId = value
-      uni.setStorageSync('openId', value)
+    setLoginModal(state, value) {
+      state.loginModal = value
     }
   },
   getters: {

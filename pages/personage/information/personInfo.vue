@@ -59,16 +59,18 @@
       <view class="tf-uni-list tf-mt-30">
         <uni-list-item title="姓名" direction="row">
           <template v-slot:footer>
-            <input
-              v-model="realname"
-              class="text-right"
-              :disabled="userInfo.idcard"
-              @change="setRealname"
-            />
-            <text
-              v-if="userInfo.idcard"
-              class="tf-icon tf-icon-yishiming n1"
-            ></text>
+            <view class="tf-row-items-center">
+              <input
+                v-model="realname"
+                class="text-right"
+                :disabled="isRealNameAuth"
+                @change="setRealname"
+              />
+              <text
+                v-if="isRealNameAuth"
+                class="tf-icon tf-icon-yishiming n1"
+              ></text>
+            </view>
           </template>
         </uni-list-item>
         <picker
@@ -76,11 +78,12 @@
           :value="birthday"
           :start="minDate"
           :end="maxDate"
+          :disabled="isRealNameAuth"
           @change="setBirthday"
         >
           <uni-list-item
             title="生日"
-            :showArrow="!userInfo.idcard"
+            :showArrow="!isRealNameAuth"
             :rightText="birthday || '选择日期'"
           ></uni-list-item>
         </picker>
@@ -119,6 +122,9 @@ export default {
     ...mapGetters(['userInfo']),
     gender() {
       return +this.userInfo.gender - 1;
+    },
+    isRealNameAuth() {
+      return +this.userInfo.idcard
     }
   },
   onLoad() {
@@ -128,7 +134,7 @@ export default {
       this.realname = this.userInfo.realname;
       if (this.userInfo.idcard) {
         this.birthday = this.getBirthdayFromIdCard(this.userInfo.idcard);
-        this.setBirthday();
+        this.editBirthday();
       }
     });
   },
@@ -175,7 +181,7 @@ export default {
       await editRealname({
         realname: this.realname
       });
-      if (!this.userInfo.idcard) {
+      if (!this.isRealNameAuth) {
         uni.showToast({
           title: '姓名设置成功',
           icon: 'success'
@@ -198,16 +204,19 @@ export default {
       this.$store.dispatch('getMyAccount');
     },
     // 设置生日
-    async setBirthday({ detail }) {
+    setBirthday({ detail }) {
       const value = detail.value;
       if (value === this.birthday) {
         return;
       }
       this.birthday = value;
+      this.editBirthday()
+    },
+    async editBirthday() {
       await editBirthday({
         birthday: this.birthday
       });
-      if (!this.userInfo.idcard) {
+      if (!this.isRealNameAuth) {
         uni.showToast({
           title: '生日设置成功',
           icon: 'success'

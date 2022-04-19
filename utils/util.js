@@ -1,4 +1,5 @@
 import store from '../store'
+import apiConfig from '@/api/config'
 
 /**
  * 获取当前地址信息
@@ -131,7 +132,7 @@ export function chooseImage(params) {
 }
 
 export function uploadImage(filePath, index) {
-  const baseUrl = 'https://develop.mhshjy.com';
+  const baseUrl = apiConfig.baseUrl;
   return new Promise((resolve, reject) => {
     uni.uploadFile({
       url: `${baseUrl}/app/api/v1/ulogin/login/upload_img`,
@@ -162,4 +163,30 @@ export function uploadImage(filePath, index) {
       }
     });
   })
+}
+
+// 防抖函数
+export function debounce(fn, delay = 500) {
+  let timer
+  return function() {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    const args = arguments
+    timer = setTimeout(() => {
+      fn.apply(this, args) // 改变this指向为调用debounce所指的对象
+    }, delay)
+  }
+}
+
+export function throttle(func, delay = 1000) {
+  var timer = null;
+  return function() {
+    if (!timer) {
+      func.apply(this, arguments);
+      timer = setTimeout(() => {
+        timer = null;
+      }, delay);
+    }
+  }
 }

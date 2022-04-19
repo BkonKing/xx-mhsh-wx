@@ -1,7 +1,7 @@
 {
   "usingComponents": {
     "uni-nav-bar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
-    "user-info": "/components/UserInfo/index",
+    "tf-user-info": "/modules/TfUserInfo/index",
     "tf-dialog": "/components/TfDialog/index",
     "tf-password-input": "/components/TfPasswordInput/index"
   }

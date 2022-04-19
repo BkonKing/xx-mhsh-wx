@@ -2,18 +2,21 @@
   <uni-popup ref="dialog">
     <view class="sign-popup">
       <view class="sign-header">
-        签到规则<i class="tf-icon tf-icon-guanbi" @click="visible = false"></i>
+        签到规则
+        <i class="tf-icon tf-icon-guanbi" @click="visible = false"></i>
       </view>
       <view class="sign-rule-dialog">
         <view class="sign-rule-title">“家庭签到”规则：</view>
         <view class="sign-rule-text">
           1、同个房间号下绑定业主、业主成员、租户、租户成员等，当前每日签到均可得5幸福币；
         </view>
-        <view class="sign-rule-text"> 2、每个房间号的“家庭签到”当前每日额度最高为15幸福币； </view>
+        <view class="sign-rule-text">
+          2、每个房间号的“家庭签到”当前每日额度最高为15幸福币；
+        </view>
         <view class="sign-rule-text">
           3、成员签到规则如下：按签到先后顺序，A房间下业主张先生签到得5幸福币，业主成员老张，小张签到各得5幸福币，租户小王再签到提示“明天早点来哦”；
         </view>
-        <view class="sign-rule-text"> 4、若签到规则调整以新规则说明为准。 </view>
+        <view class="sign-rule-text">4、若签到规则调整以新规则说明为准。</view>
       </view>
       <button class="sign-btn" @click="visible = false">确定</button>
     </view>
@@ -26,42 +29,42 @@ export default {
   props: {
     value: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
-      visible: this.value,
-    }
+      visible: this.value
+    };
   },
   methods: {
     operate(val) {
       if (val) {
-        this.open()
+        this.open();
       } else {
-        this.close()
+        this.close();
       }
     },
     open() {
-      this.$refs['dialog'].open(this.type)
+      this.$refs['dialog'].open(this.type);
     },
     close() {
-      this.$refs['dialog'].close()
-      this.$emit('closed')
-    },
+      this.$refs['dialog'].close();
+      this.$emit('closed');
+    }
   },
   watch: {
     value(val) {
       if (this.visible !== val) {
-        this.visible = val
+        this.visible = val;
       }
     },
     visible(val) {
-      this.$emit('input', val)
-      this.operate(val)
-    },
-  },
-}
+      this.$emit('input', val);
+      this.operate(val);
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -72,6 +75,7 @@ export default {
   .sign-btn {
     width: 560rpx;
     height: 80rpx;
+    line-height: 80rpx;
     background: #febf00;
     border-radius: 10rpx;
     font-size: 28rpx;

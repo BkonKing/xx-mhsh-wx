@@ -4,12 +4,11 @@
       <image src="@/static/main/login_header.png" mode="aspectFill"></image>
     </view>
     <uni-icons
-      v-if="status"
       type="left"
       size="20"
       color="#fff"
       class="uni-icon-left"
-      @click="$router.go(-1)"
+      @click="goBack"
     ></uni-icons>
     <view class="logo-container">
       <image class="logo" src="@/static/main/login_logo.png" />
@@ -72,14 +71,16 @@
         {{ loginType === 1 ? '密码登录' : '验证码登录' }}
       </text>
       <view class="agreement">
-        <view class="agreement-checkbox-input" @click="agree = !agree">
-          <text
-            class="tf-icon checkbox-icon"
-            :class="{ 'tf-icon-gou': agree }"
-          ></text>
+        <view class="tf-p-10" @click="agree = !agree">
+          <view class="agreement-checkbox-input">
+            <text
+              class="tf-icon checkbox-icon"
+              :class="{ 'tf-icon-gou': agree }"
+            ></text>
+          </view>
         </view>
         <view class="agreement-text">
-          <text @click="agree = !agree">已阅读并同意</text>
+          <text class="tf-ptb-10" @click="agree = !agree">已阅读并同意</text>
           <navigator
             class="agreement-link"
             url="/pages/index/agreement?articleType=1"
@@ -141,7 +142,7 @@
 import { yzmLogin, pwdLogin, verifCode, cancelLogout } from '@/api/user';
 import { validEmpty, bMapGetLocationInfo } from '@/utils/util';
 import { getAllAgreement } from '@/api/user';
-import AgreePopup from '@/module/AgreePopup/index';
+import AgreePopup from './components/AgreePopup';
 import TfDialog from '@/components/TfDialog/index';
 
 export default {
@@ -168,9 +169,10 @@ export default {
       privacyAgreementTitle: '隐私协议', // 隐私协议标题
       logoutAgreementTitle: '注销重要提示', // 注销协议标题
       agreePopup: false, // 登录协议弹窗
-      logoutDialog: true,
+      logoutDialog: false,
       cancelLogoutDialog: false,
-      loginData: {} // 注销用户保护期登录保存登录成功数据,确认取消申请后登录使用
+      loginData: {}, // 注销用户保护期登录保存登录成功数据,确认取消申请后登录使用
+      isCanBack: false
     };
   },
   onLoad(options) {
@@ -183,6 +185,7 @@ export default {
     // if (this.status) {
     //   this.agree = true
     // }
+    this.isCanBack = getCurrentPages().length > 1;
     this.getAllAgreement();
   },
   methods: {
@@ -207,7 +210,6 @@ export default {
     // 提交登录验证
     submitLogin() {
       if (!this.agree) {
-        console.log(3333);
         this.agreePopup = true;
         return;
       }
@@ -302,6 +304,7 @@ export default {
       this.setToken(data);
 
       this.$store.commit('setUserInfo', data);
+      this.$store.dispatch('getMyAccount');
       await this.$store.dispatch('getHouse');
       // 第一次登录成功后，下次不进入自动勾选协议
       // if (!this.firstStatus) {
@@ -314,7 +317,7 @@ export default {
     },
     // 保存token和tokenList(多账号切换)
     setToken(data) {
-      console.log(data.access_token);
+      // console.log(data.access_token);
       uni.setStorageSync('access_token', data.access_token);
       uni.setStorageSync('refresh_token', data.refresh_token);
       // let tokenList = uni.getStorageSync('tokenList') || {};
@@ -367,6 +370,13 @@ export default {
     countFinish() {
       this.countDownTime = 60000;
       this.codeStatus = false;
+    },
+    goBack() {
+      if (this.isCanBack) {
+        this.$router.go(-1);
+      } else {
+        this.$router.push('/pages/tabBar/home/home');
+      }
     }
   }
 };
@@ -386,6 +396,7 @@ export default {
     position: fixed;
     left: 20rpx;
     top: 52rpx;
+    margin-top: var(--status-bar-height);
   }
 
   .logo-header {
@@ -417,6 +428,11 @@ export default {
       width: 140rpx;
       height: 140rpx;
     }
+  }
+  
+  .tf-ptb-10 {
+    padding-top: 10rpx;
+    padding-bottom: 10rpx;
   }
 }
 
@@ -503,10 +519,17 @@ export default {
   }
 }
 
+::v-deep .uni-easyinput .content-clear-icon {
+  padding: 0;
+  .uni-icons {
+    padding: 10rpx 0;
+  }
+}
+
 .agreement {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 20rpx 0;
   margin-top: 160rpx;
 
@@ -518,7 +541,6 @@ export default {
     width: 30rpx;
     height: 28rpx;
     margin-top: 2rpx;
-    margin-right: 10rpx;
     border: 2rpx solid #aaa;
 
     .tf-icon-gou {
@@ -536,9 +558,6 @@ export default {
       color: #8f8f94;
     }
   }
-}
-.password-icon {
-  position: absolute;
 }
 </style>
 

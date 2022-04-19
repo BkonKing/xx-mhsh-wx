@@ -24,33 +24,13 @@
         <!-- 旧密码 -->
         <template v-if="updateStatus && steps === 1">
           <tf-password-input
-            :value="old_paypassword"
-            :gutter="10"
-            :focused="showKeyboard"
-            @focus="focusPasswordInput"
-          />
-          <input
             v-model="old_paypassword"
-            type="number"
-            maxlength="6"
-            :focus="showKeyboard"
-            :style="{ width: 0 }"
             @input="validPassword"
           />
         </template>
         <template v-else>
           <tf-password-input
-            :value="paypassword"
-            :gutter="10"
-            :focused="showKeyboard"
-            @focus="focusPasswordInput"
-          />
-          <input
             v-model="paypassword"
-            type="number"
-            maxlength="6"
-            :focus="showKeyboard"
-            :style="{ width: 0 }"
             @input="setPassword"
           />
         </template>
@@ -78,7 +58,6 @@ export default {
   },
   data() {
     return {
-      showKeyboard: true, // 数字键盘控制
       updateStatus: undefined, // 是否为修改状态
       steps: 1, // 步骤，1为设置，2为忘记密码后设置
       forgetStatus: 0, // 是否忘记密码后状态
@@ -88,7 +67,8 @@ export default {
   },
   onLoad(options) {
     const { status, forget, steps } = options;
-    this.updateStatus = parseInt(status) || 1;
+    console.log(options);
+    this.updateStatus = parseInt(status);
     this.forgetStatus = parseInt(forget);
     this.steps = parseInt(steps) || 1;
   },
@@ -103,12 +83,6 @@ export default {
           this.steps = 2;
         });
       }
-    },
-    focusPasswordInput() {
-      this.showKeyboard =false
-      this.$nextTick(() => {
-        this.showKeyboard = true
-      })
     },
     // 判断修改还是设置密码
     setPassword() {
