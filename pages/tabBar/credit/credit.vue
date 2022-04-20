@@ -108,7 +108,7 @@
           v-if="taskData && taskData.length"
           title="任务中心"
           class="task-tab"
-           name="2"
+          name="2"
         >
           <task-list
             :data="taskData"
@@ -234,6 +234,9 @@ export default {
         shops_id: this.shopId
       });
       this.shopBannerInfo = data || {};
+      if (!+this.shopBannerInfo.z_money) {
+        this.tabActive = '2'
+      }
     },
     // 签到事件
     handleSignIn() {

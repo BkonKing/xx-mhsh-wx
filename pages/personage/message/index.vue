@@ -8,7 +8,7 @@
       :border="false"
       @click-left="$router.go(-1)"
     ></uni-nav-bar>
-    <van-tabs sticky :active="current" @change="onTabChange">
+    <van-tabs sticky :active="current" :ellipsis="false" @change="onTabChange">
       <van-tab
         v-if="userInfo.swrole == 1"
         name="1"
