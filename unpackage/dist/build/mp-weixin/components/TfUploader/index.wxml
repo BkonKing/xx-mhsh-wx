@@ -1,0 +1,1 @@
+<uni-file-picker vue-id="6ffbd3e8-1" file-mediatype="image" multiple="{{true}}" limit="{{maxCount}}" value="{{fileList}}" data-event-opts="{{[['^select',[['afterRead']]],['^delete',[['handleDelete']]],['^input',[['__set_model',['','fileList','$event',[]]]]]]}}" bind:select="__e" bind:delete="__e" bind:input="__e" bind:__l="__l"></uni-file-picker>

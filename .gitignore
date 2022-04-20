@@ -1,9 +1,7 @@
 .DS_Store
-apiCloud
 node_modules
 unpackage/dist/build/.automator
 unpackage/dist/dev
-build
 
 # local env files
 .env.local

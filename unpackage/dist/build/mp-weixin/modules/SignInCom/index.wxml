@@ -1,0 +1,1 @@
+<view class="sign-in-container data-v-30d185ac"><slot></slot><sign-alert bind:input="__e" vue-id="738a93ac-1" message="{{signMessage}}" credits="{{signOwnerCredits}}" value="{{signAlertVisible}}" data-event-opts="{{[['^input',[['__set_model',['','signAlertVisible','$event',[]]]]]]}}" class="data-v-30d185ac" bind:__l="__l"></sign-alert></view>

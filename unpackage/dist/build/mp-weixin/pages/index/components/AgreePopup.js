@@ -1,0 +1,10 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/index/components/AgreePopup"],{"10a9":function(e,t,n){"use strict";var i;n.d(t,"b",(function(){return a})),n.d(t,"c",(function(){return r})),n.d(t,"a",(function(){return i}));var a=function(){var e=this,t=e.$createElement;e._self._c},r=[]},"448d":function(e,t,n){"use strict";n.r(t);var i=n("10a9"),a=n("e543");for(var r in a)"default"!==r&&function(e){n.d(t,e,(function(){return a[e]}))}(r);n("c03a");var u,c=n("f0c5"),o=Object(c["a"])(a["default"],i["b"],i["c"],!1,null,"21354305",null,!1,i["a"],u);t["default"]=o.exports},"7a14":function(e,t,n){},a810:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var i=n("fb11"),a=function(){n.e("components/TfDialog/index").then(function(){return resolve(n("187d"))}.bind(null,n)).catch(n.oe)},r={name:"agree-popup",components:{TfDialog:a},props:{value:{type:Boolean,default:!1}},data:function(){return{visible:this.value,userAgreementTitle:"用户协议",privacyAgreementTitle:"隐私协议"}},watch:{visible:function(e){this.$emit("input",e)},value:function(e){this.visible=e}},created:function(){this.getAllAgreement()},methods:{getAllAgreement:function(){var e=this;(0,i.getAllAgreement)().then((function(t){var n=t.data;n.forEach((function(t){"1"===t.article_type&&(e.userAgreementTitle=t.title),"6"===t.article_type&&(e.privacyAgreementTitle=t.title)}))}))},handleAgree:function(){this.$emit("handleAgree"),this.visible=!1},close:function(){this.visible=!1}}};t.default=r},c03a:function(e,t,n){"use strict";var i=n("7a14"),a=n.n(i);a.a},e543:function(e,t,n){"use strict";n.r(t);var i=n("a810"),a=n.n(i);for(var r in i)"default"!==r&&function(e){n.d(t,e,(function(){return i[e]}))}(r);t["default"]=a.a}}]);
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'pages/index/components/AgreePopup-create-component',
+    {
+        'pages/index/components/AgreePopup-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('543d')['createComponent'](__webpack_require__("448d"))
+        })
+    },
+    [['pages/index/components/AgreePopup-create-component']]
+]);
