@@ -1,7 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "tf-popup": "/components/TfPopup/index",
-    "coupon-item": "/pages/tabBar/credit/components/CouponItem"
-  }
-}

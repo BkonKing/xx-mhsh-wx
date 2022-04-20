@@ -1,8 +1,0 @@
-{
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "uni-nav-bar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
-    "uni-load-more": "/uni_modules/uni-load-more/components/uni-load-more/uni-load-more",
-    "coupon-order-card": "/pages/personage/coupon/components/CouponOrderCard"
-  }
-}

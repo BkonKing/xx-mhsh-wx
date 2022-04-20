@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "uni-nav-bar": "/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
-    "uni-list-item": "/uni_modules/uni-list/components/uni-list-item/uni-list-item",
-    "tf-uploader": "/components/TfUploader/index"
-  }
-}

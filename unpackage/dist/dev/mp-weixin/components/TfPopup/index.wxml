@@ -1,1 +1,0 @@
-<uni-popup class="vue-ref" vue-id="6a014f34-1" type="{{type}}" animation="{{animation}}" backgroundColor="{{backgroundColor}}" maskBackgroundColor="{{maskBackgroundColor}}" data-ref="popup" data-event-opts="{{[['^change',[['handleChange']]]]}}" bind:change="__e" bind:__l="__l" vue-slots="{{['default']}}"><slot></slot></uni-popup>

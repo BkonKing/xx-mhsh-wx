@@ -1,1 +1,0 @@
-<uni-list-item class="{{['data-v-b7dae60e',($root.m0>0)?'credit-number-primary':'']}}" vue-id="4380d9a6-1" clickable="{{true}}" title="{{data.title}}" note="{{data.ctime}}" rightText="{{creditNum}}" data-event-opts="{{[['^click',[['goDetails',['$0'],['data']]]]]}}" bind:click="__e" bind:__l="__l"></uni-list-item>

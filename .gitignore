@@ -1,8 +1,8 @@
 .DS_Store
 apiCloud
 node_modules
-unpackage/dist/dev/.automator
-unpackage/dist/dev/.sourcemap
+unpackage/dist/build/.automator
+unpackage/dist/dev
 build
 
 # local env files
