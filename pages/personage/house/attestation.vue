@@ -81,7 +81,7 @@
                 color="#EB5841"
                 :checked="checked"
                 :disabled="checked"
-                style="transform:scale(0.7)"
+                style="transform: scale(0.7)"
                 @change="bindingDefault"
               />
             </template>
@@ -371,24 +371,40 @@ export default {
         realname: this.realname,
         mobile: this.mobile,
         house_role: this.house_role
-      }).then(res => {
-        if (res.success) {
-          uni.showModal({
-            content: '添加成功',
-            showCancel: false,
-            success: res => {
-              if (res.confirm) {
-                this.$router.go(-1);
+      })
+        .then(res => {
+          if (res.success) {
+            uni.showModal({
+              content: '添加成功',
+              showCancel: false,
+              success: res => {
+                if (res.confirm) {
+                  this.$router.go(-1);
+                }
               }
-            }
-          });
-        } else {
-          uni.showToast({
-            title: '保存失败',
-            icon: 'error'
-          });
-        }
-      });
+            });
+          } else {
+            uni.showToast({
+              title: '保存失败',
+              icon: 'error'
+            });
+          }
+        })
+        .catch(error => {
+          if (+error.code === 202) {
+            uni.showModal({
+              content:
+                '一个房产最多只能绑定10个人（包括业主），超过只能解除后再添加',
+              showCancel: false
+            });
+          } else {
+            uni.showToast({
+              title: error.message,
+              icon: 'none',
+              duration: 2000
+            });
+          }
+        });
     },
     // 更新成员
     updateMember() {
@@ -457,9 +473,6 @@ export default {
             setTimeout(() => {
               this.$router.go(-1);
             }, 1000);
-            this.mtjEvent({
-              eventId: 24
-            });
           } else {
             uni.showToast({
               title: '提交失败',
@@ -504,6 +517,7 @@ export default {
     // 设置当前房间
     bindingDefault(e) {
       const { value } = e.detail;
+      this.checked = value
       if (value) {
         bindingDefault({
           binding_id: this.bindingId

@@ -27,6 +27,9 @@
 .credit-nav-bar.data-v-991f8892  .uni-navbar__header {
   display: none;
 }
+.credit-page.data-v-991f8892 {
+  background-color: #f7f7f7;
+}
 .page-bg.data-v-991f8892 {
   margin: 30rpx 20rpx 0;
 }
@@ -104,12 +107,10 @@
 .scan-box.data-v-991f8892 {
   display: flex;
   justify-content: space-around;
-  padding: 100rpx 30rpx 60rpx;
-  margin-top: -40rpx;
+  width: 710rpx;
+  padding: 120rpx 30rpx 60rpx;
+  margin-top: -60rpx;
   background: #fff;
-}
-.scan-box .function-box.data-v-991f8892 {
-  padding: 0 46rpx;
 }
 .scan-box .function-box__text.data-v-991f8892 {
   font-size: 26rpx;
@@ -158,6 +159,9 @@
 .credit-tabs.data-v-991f8892  .van-tabs__wrap .van-tabs__nav {
   background: linear-gradient(0deg, #f7f7f7 0%, #ffffff 100%);
   border-radius: 20rpx 20rpx 0rpx 0rpx;
+}
+.credit-tabs.data-v-991f8892  .van-tabs__wrap .van-tabs__scroll {
+  background-color: initial;
 }
 .credit-tabs.data-v-991f8892  .van-tabs__wrap .van-tab {
   flex: initial;

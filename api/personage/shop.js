@@ -5,6 +5,7 @@ export function getShopInformation (data) {
   return request({
     url: '/shops/shops_coupon/shops_see_info',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -32,6 +33,7 @@ export function receiveCoupon (data) {
   return request({
     url: '/shops/shops_coupon/receive_shops_coupon',
     method: 'post',
+    loading: true,
     data
   })
 }

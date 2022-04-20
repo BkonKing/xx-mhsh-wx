@@ -144,7 +144,10 @@
             @click="$router.push('/pages/personage/message/index')"
           >
             <template v-slot:header>
-              <text class="tf-icon tf-icon-xiaoxi list-item-image"></text>
+              <image
+                class="list-item-image"
+                src="@/static/personage/personage_message.png"
+              />
             </template>
           </uni-list-item>
           <uni-list-item
@@ -180,7 +183,10 @@
             @click="$router.push('/pages/personage/setting/index')"
           >
             <template v-slot:header>
-              <text class="tf-icon tf-icon-shezhi list-item-image"></text>
+              <image
+                class="list-item-image"
+                src="@/static/personage/personage_setting.png"
+              />
             </template>
           </uni-list-item>
         </uni-list>

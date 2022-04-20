@@ -48,12 +48,14 @@
   left: 20rpx;
   right: 20rpx;
 }
-.data-v-b31fec34 .uni-card__header-content-title {
-  font-weight: 600;
+.data-v-b31fec34 .uni-card__header-content {
+  padding: 4rpx 0;
 }
-.data-v-b31fec34 .van-uploader__upload,.data-v-b31fec34 .van-uploader__preview {
-  width: 114rpx;
-  height: 114rpx;
+.data-v-b31fec34 .uni-card__header-content-title {
+  font-weight: bold;
+}
+.data-v-b31fec34 .uni-card__content {
+  padding: 10rpx 0;
 }
 .feedback-form.data-v-b31fec34  .radio-btn__item {
   margin-bottom: 0;

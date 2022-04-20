@@ -11,8 +11,8 @@
     <view>
       <view v-for="item in listData" :key="item.id">
         <view class="list-item-time">{{ item.ctime }}</view>
-        <uni-card :title="item.info_type" @click="goDetail(item)">
-          <view class="tf-card-content">{{ item.content }}</view>
+        <uni-card :title="item.info_type" :is-shadow="false" @click="goDetail(item)">
+          <view class="tf-text-sm">{{ item.content }}</view>
           <template #actions>
             <view v-if="item.reply" class="reply-box">
               <view class="reply-title">回复:</view>

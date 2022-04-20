@@ -8,7 +8,7 @@
       :border="false"
       @click-left="$router.go(-1)"
     ></uni-nav-bar>
-    <uni-card :title="info_type" :extra="ctime">
+    <uni-card :title="info_type" :extra="ctime" :is-shadow="false">
       {{ content }}
       <template #actions>
         <tf-image-list
@@ -19,7 +19,7 @@
         ></tf-image-list>
       </template>
     </uni-card>
-    <uni-card v-if="reply" title="回复">
+    <uni-card v-if="reply" title="回复" :is-shadow="false">
       {{ reply }}
     </uni-card>
   </view>
@@ -66,26 +66,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.padding {
-  padding: 10rpx 30rpx;
-}
-.tf-row-justify-between {
-  align-items: center;
-  padding-bottom: 30rpx;
-  border-bottom: 2rpx solid $border-color;
-}
-.tf-text-lg {
-  font-weight: bold;
-}
-.image {
-  width: 210rpx;
-  height: 210rpx;
-  margin-bottom: 20rpx;
-}
-.tf-auxiliary-content {
-  font-size: 28rpx;
-  line-height: 52rpx;
-  color: #666;
-  word-break: break-all;
-}
+
 </style>

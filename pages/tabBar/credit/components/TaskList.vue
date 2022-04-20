@@ -51,7 +51,7 @@
             </view>
           </view>
           <!-- 其他 -->
-          <view class="tf-flex-row" v-else>
+          <view class="tf-row-items-center" v-else>
             <!-- 签到 -->
             <template v-if="item.task_type === '1'">
               <view class="task-item__remarks">
@@ -275,6 +275,7 @@ export default {
 .task-item__remarks--gold {
   margin-left: 22rpx;
   font-size: 26rpx;
+  line-height: 1;
   color: #febf00;
 }
 .task-item__number {

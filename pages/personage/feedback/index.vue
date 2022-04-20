@@ -14,10 +14,10 @@
       历史反馈
       <text class="tf-icon tf-icon-right"></text>
     </view>
-    <uni-card title="选择反馈类型">
+    <uni-card title="选择反馈类型" :is-shadow="false">
       <tf-radio-btn v-model="infoType" :data="items"></tf-radio-btn>
     </uni-card>
-    <uni-card title="内容描述">
+    <uni-card title="内容描述" :is-shadow="false">
       <textarea
         v-model="content"
         class="uni-input"
@@ -30,7 +30,7 @@
         {{content.length || 0}} / 300
       </view>
     </uni-card>
-    <uni-card title="图片上传">
+    <uni-card title="图片上传" :is-shadow="false">
       <tf-uploader v-model="images" max-count="6"></tf-uploader>
     </uni-card>
     <view class="fixed-placeholder">
@@ -151,14 +151,16 @@ export default {
   right: 20rpx;
 }
 
-::v-deep .uni-card__header-content-title {
-  font-weight: 600;
+::v-deep .uni-card__header-content {
+  padding: 4rpx 0;
 }
 
-::v-deep .van-uploader__upload,
-::v-deep .van-uploader__preview {
-  width: 114rpx;
-  height: 114rpx;
+::v-deep .uni-card__header-content-title {
+  font-weight: bold;
+}
+
+::v-deep .uni-card__content {
+  padding: 10rpx 0;
 }
 
 .feedback-form ::v-deep .radio-btn__item {

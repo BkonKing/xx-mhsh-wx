@@ -6,10 +6,8 @@ export function yzmLogin (data) {
   return request({
     url: '/ulogin/login/yzmLogin',
     method: 'post',
-    data,
-    headers: {
-      noToast: true
-    }
+    noToast: true,
+    data
   })
 }
 
@@ -30,10 +28,8 @@ export function pwdLogin (data) {
   return request({
     url: '/ulogin/login/pwdLogin',
     method: 'post',
-    data,
-    headers: {
-      noToast: true
-    }
+    noToast: true,
+    data
   })
 }
 
@@ -46,8 +42,7 @@ export function outLogin () {
 export function getMyAccount () {
   return request({
     url: '/my/account/myAccount',
-    method: 'get',
-    noLoading: true
+    method: 'get'
   })
 }
 
@@ -64,8 +59,7 @@ export function getAgreementContent (data) {
 export function getAllAgreement () {
   return request({
     url: '/ulogin/agreement/allAgreement',
-    method: 'get',
-    noLoading: true
+    method: 'get'
   })
 }
 
@@ -83,6 +77,7 @@ export function cancelLogout (data) {
   return request({
     url: '/user/cancel/cancel_apply',
     method: 'post',
+    loading: true,
     data
   })
 }

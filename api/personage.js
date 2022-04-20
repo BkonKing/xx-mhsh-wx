@@ -6,6 +6,7 @@ export function getEqList (params) {
   return request({
     url: '/my/server/getEqList',
     method: 'get',
+    loading: true,
     params
   })
 }
@@ -25,6 +26,7 @@ export function addFeedback (data) {
   return request({
     url: '/my/server/addFeedback',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -34,6 +36,7 @@ export function getFeedbackInfo (params) {
   return request({
     url: '/my/server/getFeedbackInfo',
     method: 'get',
+    loading: true,
     params
   })
 }
@@ -45,6 +48,7 @@ export function setPayPassword (data) {
   return request({
     url: '/my/password/setPayPassword',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -54,6 +58,7 @@ export function yzPayPassword (data) {
   return request({
     url: '/my/password/yzPayPassword',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -63,6 +68,7 @@ export function updatePayPassword (data) {
   return request({
     url: '/my/password/updatePayPassword',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -72,6 +78,7 @@ export function resetPayPassword (data) {
   return request({
     url: '/my/password/resetPayPassword',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -83,6 +90,7 @@ export function resetPassword (data) {
   return request({
     url: '/my/password/resetPassword',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -92,6 +100,7 @@ export function setPassword (data) {
   return request({
     url: '/my/password/setPassword',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -101,6 +110,7 @@ export function updatePassword (data) {
   return request({
     url: '/my/password/updatePassword',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -121,6 +131,8 @@ export function addMember (data) {
   return request({
     url: '/my/member/addMember',
     method: 'post',
+    loading: true,
+    noToast: true,
     data
   })
 }
@@ -130,6 +142,7 @@ export function updateMember (data) {
   return request({
     url: '/my/member/updateMember',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -139,6 +152,7 @@ export function deleteMember (data) {
   return request({
     url: '/my/member/deleteMember',
     method: 'post',
+    loading: true,
     data
   })
 }
@@ -165,40 +179,60 @@ export function yzHouse (params) {
 
 // 房间认证
 export function roomAttest (data) {
-  return request.post('/room/binding/roomAttest', data)
+  return request({
+    url: '/room/binding/roomAttest',
+    method: 'post',
+    loading: true,
+    data
+  })
 }
 
-/* 认证房间详情 */
+// 认证房间详情
 export function bindingRoomInfo (params) {
   return request({
     url: '/room/binding/bindingRoomInfo',
+    method: 'get',
+    loading: true,
+    params
+  })
+}
+
+// 设置当前房间
+export function bindingDefault (data) {
+  return request({
+    url: '/room/binding/bindingDefault',
+    method: 'post',
+    loading: true,
+    data
+  })
+}
+
+// 解除绑定房间
+export function unBinding (data) {
+  return request({
+    url: '/room/binding/unBinding',
+    method: 'post',
+    loading: true,
+    data
+  })
+}
+
+// 检索小区
+export function searchProject (params) {
+  return request({
+    url: '/room/binding/searchProject',
     method: 'get',
     params
   })
 }
 
-/* 设置当前房间 */
-export function bindingDefault (data) {
-  return request({
-    url: '/room/binding/bindingDefault',
-    method: 'post',
-    data
-  })
-}
-
-/* 解除绑定房间 */
-export function unBinding (data) {
-  return request.post('/room/binding/unBinding', data)
-}
-
-/* 检索小区 */
-export function searchProject (params) {
-  return request.get('/room/binding/searchProject', { params })
-}
-
-/* 检索楼栋 */
+// 检索楼栋
 export function searchBuilding (params) {
-  return request.get('/room/binding/searchBuilding', { params })
+  return request({
+    url: '/room/binding/searchBuilding',
+    method: 'get',
+    params
+  })
 }
 
 // 检索单元
@@ -258,7 +292,6 @@ export function paymentStatus (data) {
   return request({
     url: '/credits/qrcode/paymentStatus',
     method: 'post',
-    noLoading: true,
     data
   })
 }
@@ -267,7 +300,6 @@ export function collectStatus (data) {
   return request({
     url: '/credits/qrcode/new_collectStatus',
     method: 'post',
-    noLoading: true,
     data,
   })
 }
@@ -276,10 +308,9 @@ export function paymentCredits (data) {
   return request({
     url: '/credits/qrcode/paymentCredits',
     method: 'post',
-    data,
-    headers: {
-      noToast: true
-    }
+    loading: true,
+    noToast: true,
+    data
   })
 }
 // 收款码支付
@@ -287,10 +318,9 @@ export function collectCredits (data) {
   return request({
     url: '/credits/qrcode/collectCredits',
     method: 'post',
-    data,
-    headers: {
-      noToast: true
-    }
+    loading: true,
+    noToast: true,
+    data
   })
 }
 // 收款方提交收款金额
@@ -355,7 +385,6 @@ export function recommendClient (data) {
     data
   })
 }
-
 // 推荐客户列表
 export function clientList (params) {
   return request({
@@ -406,7 +435,6 @@ export function messageAllRead (data) {
     method: 'post',
     data
   })
-  return request.post('/my/message/messageAllRead', data)
 }
 // 获取APP系统消息详情接口
 export function getAppMsgDetail (data) {
@@ -481,6 +509,7 @@ export function getOrderDetail (data) {
   return request({
     url: '/life/my_order/order_project_info',
     method: 'post',
+    loading: true,
     data
   })
 }

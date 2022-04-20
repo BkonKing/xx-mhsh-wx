@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "sign-alert": "/modules/SignInAlert/index"
+  }
+}

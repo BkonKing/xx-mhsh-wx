@@ -1,7 +1,7 @@
 <template>
   <view class="login-page">
     <view class="logo-header">
-      <image src="@/static/main/login_header.png" mode="aspectFill"></image>
+      <image src="@/static/main/login_header.jpg" mode="aspectFill"></image>
     </view>
     <uni-icons
       type="left"
@@ -35,7 +35,6 @@
         <button
           class="query-code-btn"
           :class="{ 'code-count-down': codeStatus }"
-          :loading="codeLoading"
           :disabled="codeStatus"
           @click="verifCode"
         >
@@ -160,7 +159,6 @@ export default {
       loginType: 1, // 1:验证码登录 2：密码登陆
       agree: false, // 同意协议
       // showPassword: false,
-      codeLoading: false, // 获取验证loading状态
       codeStatus: false, // 验证码发送状态
       countDownTime: 60000,
       status: 0, // 1：换个账号登录 0：登录
@@ -270,6 +268,7 @@ export default {
       const loginUrl = this.loginType === 1 ? yzmLogin : pwdLogin;
       loginUrl(newParams)
         .then(res => {
+          uni.hideLoading();
           const { data, success } = res;
           if (success) {
             if (+data.is_popup) {
@@ -288,6 +287,7 @@ export default {
           }
         })
         .catch(res => {
+          uni.hideLoading();
           uni.showToast({
             title: res.message,
             icon: 'none'
@@ -295,7 +295,6 @@ export default {
         })
         .finally(() => {
           this.loginLoading = false;
-          uni.hideLoading();
         });
     },
     // 成功登录
@@ -344,7 +343,13 @@ export default {
     },
     // 发送验证码
     verifCode() {
-      this.codeLoading = true;
+      if (this.mobile.length < 11) {
+        uni.showToast({
+          title: '请正确输入手机号',
+          icon: 'none'
+        })
+        return
+      }
       verifCode({
         mobile: this.mobile
       })
@@ -353,7 +358,6 @@ export default {
             title: '验证码发送成功，请注意查收',
             icon: 'none'
           });
-          this.codeLoading = false;
           this.codeStatus = true;
         })
         .catch(err => {

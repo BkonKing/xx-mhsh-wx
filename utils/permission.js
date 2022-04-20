@@ -67,7 +67,7 @@ export function handlePermission({
                   }
                 })
               } else if (res.cancel) {
-                reject(new Error(false))
+                reject(false)
               }
             }
           });
@@ -121,6 +121,6 @@ function getCurrentLocation(resolve, reject) {
     })
     .catch(() => {
       console.log('error')
-      reject(new Error(false))
+      reject(false)
     })
 }

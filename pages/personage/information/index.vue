@@ -47,7 +47,7 @@
                     </view>
                     <view class="r-left">
                       <view class="name">
-                        {{ userInfo.realname }}
+                        {{ userInfo.realname || '' }}
                         <text
                           v-if="userInfo.idcard"
                           class="tf-icon tf-icon-yishiming n1"
@@ -115,7 +115,7 @@
             goAttestation(item.house_role === '1' ? 1 : 0, 1, item.id, item)
           "
         >
-          <uni-card :title="`${item.project_name} ${item.fc_info}`">
+          <uni-card :title="`${item.project_name} ${item.fc_info}`" :is-shadow="false">
             <view class="tf-flex-row">
               <van-tag
                 class="user-role tf-mr-30"
@@ -258,14 +258,7 @@ export default {
     },
     // 添加成员
     addMember() {
-      if (this.memberList.length >= 10) {
-        uni.showModal({
-          content: '一个房产最多只能绑定10个人（包括业主），超过只能解除后再添加',
-          showCancel: false
-        })
-      } else {
-        this.goAttestation(0, 0);
-      }
+      this.goAttestation(0, 0);
     },
     /**
      * 房屋认证（成员添加修改）

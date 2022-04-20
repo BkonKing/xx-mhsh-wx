@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view class="tf-bg-white">
     <uni-nav-bar
       :statusBar="true"
       left-icon="left"

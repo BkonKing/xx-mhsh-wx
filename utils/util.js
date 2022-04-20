@@ -8,8 +8,8 @@ import apiConfig from '@/api/config'
  */
 export function bMapGetLocationInfo(type = 1) {
   return new Promise((resolve, reject) => {
-    wx.getLocation({
-      type: 'gcj02', //返回可以用于wx.openLocation的经纬度
+    uni.getLocation({
+      type: 'gcj02',
       success(res) {
         resolve(res)
       },

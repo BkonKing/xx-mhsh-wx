@@ -9,11 +9,11 @@
       @click-left="goBack"
     />
     <van-tabs sticky :active="current" @change="onTabChange">
-      <van-tab title="全部"></van-tab>
-      <van-tab title="获得"></van-tab>
-      <van-tab title="使用"></van-tab>
-      <van-tab v-if="isShowWithdraw" title="提现"></van-tab>
-      <van-tab title="不可用"></van-tab>
+      <van-tab title="全部" name="0"></van-tab>
+      <van-tab title="获得" name="1"></van-tab>
+      <van-tab title="使用" name="2"></van-tab>
+      <van-tab v-if="isShowWithdraw" title="提现" name="3"></van-tab>
+      <van-tab title="不可用" name="4"></van-tab>
     </van-tabs>
     <view class="tf-p-30-20">
       <uni-list class="tf-uni-list" :border="false">
@@ -54,7 +54,7 @@ export default {
     const tab = options.tab;
     if (tab) {
       this.tabParam = tab;
-      this.current = +tab;
+      this.current = tab;
     }
     this.isShowWithdraw = +this.userInfo.is_shops;
     this.getWithdrawList();
@@ -78,7 +78,7 @@ export default {
       const haveData = data && data.length;
       this.isShowWithdraw = haveData || +this.userInfo.is_shops;
       if (!haveData && this.tabParam) {
-        this.current = 0;
+        this.current = '0';
       }
     },
     goBack() {

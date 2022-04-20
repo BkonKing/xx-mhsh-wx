@@ -63,6 +63,7 @@
 .task-item__remarks--gold.data-v-34834b24 {
   margin-left: 22rpx;
   font-size: 26rpx;
+  line-height: 1;
   color: #febf00;
 }
 .task-item__number.data-v-34834b24 {

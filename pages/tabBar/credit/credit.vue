@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view class="credit-page">
     <uni-nav-bar
       title="幸福币"
       class="credit-nav-bar"
@@ -62,7 +62,7 @@
         <view class="function-box" @click="goCreditRecord">
           <image
             class="function-box__icon"
-            src="@/static/personage/credits_withdraw.png"
+            src="@/static/personage/credits_record.png"
           />
           <view class="function-box__text">明细</view>
         </view>
@@ -89,14 +89,15 @@
     <view class="tf-mt-30">
       <van-tabs
         v-if="hasLogIn"
-        v-model="tabActive"
+        :active="tabActive"
         class="credit-tabs"
         sticky
         :z-index="2"
         :offset-top="offsetTop"
         :lazy-render="false"
+        @change="onTabChange"
       >
-        <van-tab v-if="showCouponCentre" title="领券中心">
+        <van-tab v-if="showCouponCentre" title="领券中心" name="1">
           <get-coupon-list
             ref="getCouponList"
             @getSuccess="init"
@@ -107,6 +108,7 @@
           v-if="taskData && taskData.length"
           title="任务中心"
           class="task-tab"
+           name="2"
         >
           <task-list
             :data="taskData"
@@ -163,7 +165,7 @@ export default {
       signAlertVisible: false, // 游客认证提醒弹窗
       signMessage: '', // 签到成功提醒
       signOwnerCredits: '', // 业主签到幸福币
-      tabActive: 0,
+      tabActive: '1',
       offsetTop: 0,
       shopBannerInfo: {},
       showCouponCentre: true,
@@ -236,8 +238,8 @@ export default {
     // 签到事件
     handleSignIn() {
       if (!this.hasLogIn) {
-        this.$router.push('/pages/index/login')
-        return
+        this.$router.push('/pages/index/login');
+        return;
       }
       if (this.signinToday === 1) {
         // 已签到，则打开签到日历
@@ -289,13 +291,18 @@ export default {
     goCreditRecord() {
       this.$router.push('/pages/credit/creditRecord');
     },
+    onTabChange(event) {
+      this.tabActive = event.detail.name;
+    },
     // 菜单悬挂顶部，tab切换到“领券中心”
     openCouponCentre() {
-      this.tabActive = 1;
-      uni.pageScrollTo({
-      	selector: '.credit-tabs',
-      	duration: 300
-      });
+      this.tabActive = '1';
+      this.$nextTick(() => {
+        uni.pageScrollTo({
+          selector: '.credit-tabs',
+          duration: 300
+        });
+      })
     }
   }
 };
@@ -306,6 +313,10 @@ export default {
   ::v-deep .uni-navbar__header {
     display: none;
   }
+}
+
+.credit-page {
+  background-color: #f7f7f7;
 }
 
 .page-bg {
@@ -398,13 +409,10 @@ export default {
 .scan-box {
   display: flex;
   justify-content: space-around;
-  padding: 100rpx 30rpx 60rpx;
-  margin-top: -40rpx;
+  width: 710rpx;
+  padding: 120rpx 30rpx 60rpx;
+  margin-top: -60rpx;
   background: #fff;
-
-  .function-box {
-    padding: 0 46rpx;
-  }
 
   .function-box__text {
     font-size: 26rpx;
@@ -461,6 +469,10 @@ export default {
     .van-tabs__nav {
       background: linear-gradient(0deg, #f7f7f7 0%, #ffffff 100%);
       border-radius: 20rpx 20rpx 0rpx 0rpx;
+    }
+    
+    .van-tabs__scroll {
+      background-color: initial;
     }
 
     .van-tab {

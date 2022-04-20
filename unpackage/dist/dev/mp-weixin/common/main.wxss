@@ -629,6 +629,7 @@ page  .uni-navbar .uni-nav-bar-text {
   font-size: 32rpx;
 }
 page  .is-add .icon-add {
+  width: 80rpx;
   height: 6rpx;
 }
 
