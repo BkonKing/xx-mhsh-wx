@@ -58,8 +58,11 @@ export function handlePermission({
                     if (res.authSetting[
                         'scope.userLocation']) {
                       getCurrentLocation(resolve, reject)
-                    } else {
+                    }
+                    if (res.authSetting[scope]) {
                       resolve()
+                    } else {
+                      reject()
                     }
                   },
                   fail(e) {
