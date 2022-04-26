@@ -15,10 +15,13 @@ export default {
     }
   },
   onShow: function() {
-    // console.log('App Show');
+    uni.login({
+      success: (res) => {
+        this.$store.commit('setWxCode', res.code)
+      }
+    })
   },
   onHide: function() {
-    // console.log('App Hide');
   }
 };
 </script>

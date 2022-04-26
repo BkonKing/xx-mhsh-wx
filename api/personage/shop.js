@@ -37,3 +37,30 @@ export function receiveCoupon (data) {
     data
   })
 }
+
+// 是否扫码核销优惠券权限 接口
+export function getShopScanPermission (data) {
+  return request({
+    url: '/shops/shops_coupon/is_scan',
+    method: 'post',
+    data
+  })
+}
+
+// 商铺 扫码 优惠券详情 接口
+export function getScanCouponInfo (data) {
+  return request({
+    url: '/shops/shops_coupon/shops_coupon_scan',
+    method: 'post',
+    data
+  })
+}
+
+// 核销商铺优惠券 接口
+export function verificationCoupon (data) {
+  return request({
+    url: '/shops/shops_coupon/shops_coupon_operation',
+    method: 'post',
+    data
+  })
+}

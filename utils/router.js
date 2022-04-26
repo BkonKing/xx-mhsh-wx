@@ -1,5 +1,6 @@
 import {
-  goApp
+  goApp,
+  toLogin
 } from './util'
 import {
   appPathToWxPath,
@@ -36,9 +37,7 @@ export default {
     }
     const token = uni.getStorageSync('access_token')
     if (!token && !whiteListPaths.includes(path)) {
-      uni.navigateTo({
-        url: '/pages/index/login'
-      })
+      toLogin()
       return
     }
     const routerParams = {

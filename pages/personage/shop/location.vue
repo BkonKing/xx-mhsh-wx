@@ -35,8 +35,8 @@ export default {
       return [
         {
           id: 1,
-          longitude: this.mapInfo.longitude,
-          latitude: this.mapInfo.latitude,
+          longitude: this.mapInfo.longitude || 0,
+          latitude: this.mapInfo.latitude || 0,
           width: 20,
           height: 20,
           iconPath: '/static/main/annotation.png'
@@ -45,8 +45,8 @@ export default {
     }
   },
   onLoad(options) {
-    this.mapInfo = options;
-    Object.assign(this.mapInfo, this.convert2TecentMap(this.mapInfo))
+    const mapInfo = Object.assign(options, this.convert2TecentMap(options))
+    this.mapInfo = mapInfo;
     uni.showLoading({
       title: '加载中'
     });
@@ -56,19 +56,16 @@ export default {
     }, 500);
   },
   methods: {
-    // getMapInfo () {
-    //   this.mapInfo = this.$route.query
-    // }
     convert2TecentMap({longitude, latitude}){
     	if (longitude == '' && latitude == '') {
     		return {
-    			longitude: '',
-    			latitude: ''
+    			longitude: 0,
+    			latitude: 0
     		}
     	}
     	var x_pi = 3.14159265358979324 * 3000.0 / 180.0
-    	var x = longitude - 0.0065
-    	var y = latitude - 0.006
+    	var x = +longitude - 0.0065
+    	var y = +latitude - 0.006
     	var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi)
     	var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi)
     	var qqLongitude = z * Math.cos(theta)

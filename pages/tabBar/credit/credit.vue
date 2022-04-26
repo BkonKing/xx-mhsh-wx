@@ -100,6 +100,8 @@
         <van-tab v-if="showCouponCentre" title="领券中心" name="1">
           <get-coupon-list
             ref="getCouponList"
+            :creditPayVisible.sync="showPayCredit"
+            @handleCreditPay="openCreditPay"
             @getSuccess="init"
             @noData="showCouponCentre = false"
           ></get-coupon-list>
@@ -127,20 +129,43 @@
       :message="signMessage"
       :credits="signOwnerCredits"
     ></sign-in-alert>
+    <tf-popup
+      v-model="showPayCredit"
+      closeable
+      type="bottom"
+      class="credit-popup"
+      :isMaskClick="true"
+    >
+      <view class="credit-title">付款</view>
+      <view class="credit-content">
+        <text class="tf-icon tf-icon-xingfubi1"></text>
+        {{ activeCoupon.pay_money }}
+      </view>
+      <button class="credit-confirm-btn" @click="receiveCoupon">
+        确定付款
+      </button>
+    </tf-popup>
+    <mobile-login-popup
+      v-model="loginVisible"
+      @success="init"
+    ></mobile-login-popup>
   </view>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import apiConfig from '@/api/config';
 import { signin, getCreditsAccount } from '@/api/personage';
 import { getShopCouponBanner } from '@/api/personage/shop';
+import TfPopup from '@/components/TfPopup/index';
 import TfCalendar from '@/modules/TfCalendar';
-import GetCouponList from './components/GetCouponList';
-import TaskList from './components/TaskList';
+import MobileLoginPopup from '@/modules/MobileLoginPopup/index';
 import SignInAlert from '@/modules/SignInAlert';
-import SignRuleDialog from './components/SignRuleDialog';
 import { throttle } from '@/utils/util';
 import { handlePermission } from '@/utils/permission';
+import GetCouponList from './components/GetCouponList';
+import TaskList from './components/TaskList';
+import SignRuleDialog from './components/SignRuleDialog';
 
 export default {
   components: {
@@ -148,7 +173,9 @@ export default {
     SignInAlert,
     SignRuleDialog,
     GetCouponList,
-    TaskList
+    TaskList,
+    TfPopup,
+    MobileLoginPopup
   },
   data() {
     return {
@@ -169,7 +196,10 @@ export default {
       offsetTop: 0,
       shopBannerInfo: {},
       showCouponCentre: true,
-      throttleSignIn: throttle(this.handleSignIn)
+      throttleSignIn: throttle(this.handleSignIn),
+      showPayCredit: false,
+      activeCoupon: {},
+      loginVisible: false
     };
   },
   computed: {
@@ -203,12 +233,23 @@ export default {
   },
   onLoad() {
     this.offsetTop = uni.getSystemInfoSync().statusBarHeight;
+    !this.hasLogIn && (this.loginVisible = true);
   },
   onShow() {
     this.init();
   },
+  onHide() {
+    this.loginVisible = false
+  },
   onPullDownRefresh() {
     this.init();
+  },
+  onShareAppMessage() {
+    return {
+      title: '美好生活 一键抵达',
+      path: '/pages/tabBar/credit/credit',
+      imageUrl: `${apiConfig.baseUrl}/library/img/wx/share.jpg`
+    };
   },
   methods: {
     init() {
@@ -235,7 +276,7 @@ export default {
       });
       this.shopBannerInfo = data || {};
       if (!+this.shopBannerInfo.z_money) {
-        this.tabActive = '2'
+        this.tabActive = '2';
       }
     },
     // 签到事件
@@ -282,6 +323,12 @@ export default {
           });
       });
     },
+    openCreditPay(data) {
+      this.activeCoupon = data;
+    },
+    receiveCoupon() {
+      this.$refs.getCouponList && this.$refs.getCouponList.receiveCoupon();
+    },
     // 扫一扫
     goScanCode(current) {
       this.$router.push({
@@ -305,7 +352,7 @@ export default {
           selector: '.credit-tabs',
           duration: 300
         });
-      })
+      });
     }
   }
 };
@@ -473,7 +520,7 @@ export default {
       background: linear-gradient(0deg, #f7f7f7 0%, #ffffff 100%);
       border-radius: 20rpx 20rpx 0rpx 0rpx;
     }
-    
+
     .van-tabs__scroll {
       background-color: initial;
     }
@@ -511,6 +558,45 @@ export default {
 
 .task-tab ::v-deep .van-tab__pane {
   padding: 0 20rpx 30rpx;
+}
+
+::v-deep .uni-popup .vue-ref {
+  z-index: 999;
+}
+
+.credit-popup {
+  height: 330rpx;
+
+  .credit-title {
+    padding: 30rpx;
+    font-size: 32rpx;
+    color: #000;
+    text-align: center;
+  }
+
+  ::v-deep .van-icon-cross {
+    top: 30rpx;
+    right: 30rpx;
+    font-size: 34rpx;
+  }
+
+  .credit-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .credit-confirm-btn {
+    width: 410rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    margin: 50rpx 170rpx 30rpx;
+    background: #ff6555;
+    border-radius: 40rpx;
+    border: none;
+    font-size: 28rpx;
+    color: #ffffff;
+  }
 }
 </style>
 

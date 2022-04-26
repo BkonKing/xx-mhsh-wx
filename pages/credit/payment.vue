@@ -136,6 +136,7 @@ export default {
       const params = {
         credits: this.value,
         code_id: this.codeId,
+        remarks: this.remarks,
         paypassword: this.paypassword,
       }
       paymentCredits(params)

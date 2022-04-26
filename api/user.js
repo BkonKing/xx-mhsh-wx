@@ -91,3 +91,14 @@ export function wxLogin (data) {
     data
   })
 }
+
+// 获取微信绑定手机号
+export function getWxMobile (data) {
+  return request({
+    url: '/wxLogin/xcx_mobile_token',
+    baseURL: `${apiConfig.baseUrl}/xcx/api/v1`,
+    method: 'post',
+    noToast: true,
+    data
+  })
+}

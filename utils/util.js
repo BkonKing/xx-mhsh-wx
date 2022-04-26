@@ -102,6 +102,13 @@ export function goApp(data) {
   });
 }
 
+export function toLogin(data) {
+  uni.navigateTo({
+    url: '/pages/index/login'
+  })
+  return
+}
+
 export function chooseImage(params) {
   return new Promise((resolve, reject) => {
     uni.chooseImage({
@@ -163,6 +170,43 @@ export function uploadImage(filePath, index) {
       }
     });
   })
+}
+
+export function openLocation(data) {
+  const {
+    latitude,
+    longitude,
+    ...params
+  } = data
+  const newLocation = convert2TecentMap({
+    latitude,
+    longitude
+  })
+  uni.openLocation({
+    longitude: +newLocation.longitude,
+    latitude: +newLocation.latitude,
+    ...params
+  })
+}
+
+export function convert2TecentMap({longitude, latitude}) {
+  if (longitude == '' && latitude == '') {
+    return {
+      longitude: 0,
+      latitude: 0
+    }
+  }
+  var x_pi = 3.14159265358979324 * 3000.0 / 180.0
+  var x = +longitude - 0.0065
+  var y = +latitude - 0.006
+  var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi)
+  var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi)
+  var qqLongitude = z * Math.cos(theta)
+  var qqLatitude = z * Math.sin(theta)
+  return {
+    longitude: qqLongitude,
+    latitude: qqLatitude
+  }
 }
 
 // 防抖函数

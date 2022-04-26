@@ -61,7 +61,7 @@
                 <template v-else>
                   <text
                     class="tf-icon tf-icon-zhushishuoming"
-                    @click="signRuleVisible = true"
+                    @click="openSignRule"
                   ></text>
                   <!-- 签到幸福币已达上限，不可签到 -->
                   <template v-if="signinToday === 2">明天要早点来哦</template>
@@ -179,6 +179,9 @@ export default {
       getYxlpList().then(({ data }) => {
         this.yxlpNum = (data && data.length) || 0
       })
+    },
+    openSignRule() {
+      this.signRuleVisible = true
     },
     // 幸福币任务去完成跳转
     handleComplete({ task_type: type, source_id: id }) {

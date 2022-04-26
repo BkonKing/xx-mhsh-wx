@@ -62,6 +62,7 @@ import {
   paymentStatus,
   collectStatus
 } from '@/api/personage';
+import { getShopScanPermission } from '@/api/personage/shop.js';
 import { handlePermission } from '@/utils/permission';
 export default {
   data() {
@@ -119,17 +120,40 @@ export default {
     },
     // 扫码成功
     scanSuccess(value) {
-      const values = value.split('|');
-      switch (values[0]) {
-        case 'shoukuan':
-          this.collectScan(value, values);
-          break;
-        case 'fukuan':
-          this.paymentScan(value, values);
-          break;
-        default:
-          break;
-      }
+      const valueArray = value.split('|');
+      const key = valueArray[0];
+      const methodNames = {
+        shoukuan: 'collectScan',
+        fukuan: 'paymentScan',
+        shangpuyhq: 'getShopScanPermission'
+      };
+      const methodName = methodNames[key];
+      methodName && this[methodName](value, valueArray);
+    },
+    getShopScanPermission(codeInfo) {
+      this.shopId &&
+        getShopScanPermission({
+          shops_id: this.shopId
+        })
+          .then(({ data }) => {
+            if (+data.is_scan) {
+              this.goShopCouponVerification(codeInfo);
+            }
+          })
+          .catch(() => {
+            uni.showToast({
+              title: '您没有核销权限',
+              icon: 'none'
+            });
+          });
+    },
+    goShopCouponVerification(codeInfo) {
+      this.$router.push({
+        path: '/pages/personage/shop/verification',
+        query: {
+          codeInfo
+        }
+      });
     },
     // 获取付款码二维码
     getPaymentCode() {

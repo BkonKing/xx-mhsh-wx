@@ -16,29 +16,14 @@
           class="btn-click"
           @click.stop="receive(coupon, index, i)"
         >
-          <i
+          <text
             v-if="coupon.pay_type === '1'"
             class="tf-icon tf-icon-xingfubi1"
-          ></i>
+          ></text>
           {{ coupon | btnText }}
         </button>
       </coupon-item>
     </view>
-    <tf-popup
-      v-model="showPayCredit"
-      closeable
-      type="bottom"
-      class="credit-popup"
-    >
-      <view class="credit-title">付款</view>
-      <view class="credit-content">
-        <text class="tf-icon tf-icon-xingfubi1"></text>
-        {{ activeCoupon.pay_money }}
-      </view>
-      <button class="credit-confirm-btn" @click="receiveCoupon">
-        确定付款
-      </button>
-    </tf-popup>
   </view>
 </template>
 
@@ -54,9 +39,14 @@ export default {
     TfPopup,
     CouponItem
   },
+  props:{
+    creditPayVisible: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
-      showPayCredit: false,
       activeCoupon: {},
       orderId: '',
       payAmount: 0, // 支付金额
@@ -97,7 +87,9 @@ export default {
       this.activeShopIndex = shopIndex;
       this.activeCouponIndex = couponIndex;
       if (+coupon.pay_type === 1) {
-        this.showPayCredit = true;
+        // this.showPayCredit = true;
+        this.$emit('update:creditPayVisible', true)
+        this.$emit('handleCreditPay', coupon)
         return;
       }
       this.receiveCoupon();
@@ -129,7 +121,8 @@ export default {
         pay_type: payType
       } = this.activeCoupon;
       if (+payType === 1) {
-        this.showPayCredit = false;
+        // this.showPayCredit = false;
+        this.$emit('update:creditPayVisible', false)
       }
       const content = +couponType === 1 ? `用${miane}元` : `享${miane}折`;
       uni.showToast({

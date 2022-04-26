@@ -74,6 +74,7 @@
 
 <script>
 import { getShopInformation } from '@/api/personage/shop';
+import { openLocation } from '@/utils/util';
 
 export default {
   name: 'shopIntroduce',
@@ -103,16 +104,13 @@ export default {
     },
     goLocation() {
       if (this.formData.address) {
-        this.$router.push({
-          path: '/pages/personage/shop/location',
-          query: {
-            name: this.formData.address,
-            address: `${this.formData.address_province}${
-              this.formData.address_city
-            }${this.formData.address_area}${this.formData.address}`,
-            longitude: this.formData.longitude,
-            latitude: this.formData.latitude
-          }
+        openLocation({
+          name: this.formData.address,
+          address: `${this.formData.address_province}${
+            this.formData.address_city
+          }${this.formData.address_area}${this.formData.address}`,
+          longitude: this.formData.longitude,
+          latitude: this.formData.latitude
         });
       }
     }

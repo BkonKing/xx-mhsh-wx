@@ -1,5 +1,5 @@
 <template>
-  <uni-popup ref="sign-alert" class="tf-van-popup" is-mask-click="false" @click-overlay="close">
+  <tf-popup v-model="visible" class="tf-van-popup">
     <view class="sign-alert-container">
       <view class="sign-alert-header">
         <image class="sign-alert-header-bg" src="@/static/main/sign-alert-bg.png" mode="aspectFill"></image>
@@ -14,11 +14,15 @@
         </view>
       </view>
     </view>
-  </uni-popup>
+  </tf-popup>
 </template>
 
 <script>
+  import TfPopup from '@/components/TfPopup/index'
   export default {
+    components: {
+      TfPopup
+    },
     props: {
       value: {
         type: Boolean,
@@ -38,9 +42,6 @@
         visible: this.value
       }
     },
-    mounted() {
-      this.operate(this.visible)
-    },
     methods: {
       cancel() {
         this.handleClose()
@@ -55,21 +56,7 @@
       },
       handleClose() {
         this.visible = false
-      },
-      operate(val) {
-        if (val) {
-          this.open()
-        } else {
-          this.close()
-        }
-      },
-      open() {
-        this.$refs['sign-alert'].open(this.type)
-      },
-      close() {
-        this.$refs['sign-alert'].close()
-        this.$emit('closed')
-      },
+      }
     },
     watch: {
       value(val) {
@@ -79,7 +66,6 @@
       },
       visible(val) {
         this.$emit('input', val)
-        this.operate(val)
       }
     }
   }

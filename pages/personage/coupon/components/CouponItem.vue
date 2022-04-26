@@ -64,7 +64,11 @@
                   【{{ data.new_shops_name }}】
                 </text>
               </text>
-              <uni-icons class="tf-text-strong" type="right" size="12"></uni-icons>
+              <uni-icons
+                class="tf-text-strong"
+                type="right"
+                size="12"
+              ></uni-icons>
             </template>
             <text v-else>优惠说明：{{ data.coupon_explain }}</text>
           </view>
@@ -94,6 +98,8 @@
 </template>
 
 <script>
+import { openLocation } from '@/utils/util';
+
 export default {
   name: 'CouponItem',
   props: {
@@ -157,15 +163,12 @@ export default {
       });
     },
     goLocation() {
-      this.$router.push({
-        path: '/pages/personage/shop/location',
-        query: {
-          name: this.data.shops_address,
-          address: this.shopsAddress,
-          lon: this.data.shops_longitude,
-          lat: this.data.shops_latitude
-        }
-      });
+      openLocation({
+        name: this.data.shops_address,
+        address: this.shopsAddress,
+        longitude: +this.data.shops_longitude,
+        latitude: +this.data.shops_latitude
+      })
     }
   }
 };

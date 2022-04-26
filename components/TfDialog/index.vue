@@ -3,7 +3,7 @@
     ref="tf-dialog"
     :class="['tf-van-popup', popupClass]"
     is-mask-click="isMaskClick"
-    @click-overlay="close"
+    @change="handleChange"
   >
     <view class="tf-dialog__wrapper-box">
       <text
@@ -114,6 +114,10 @@ export default {
     this.operate(this.visible);
   },
   methods: {
+    handleChange({ show }) {
+      this.visible = show;
+      this.$emit('change', show);
+    },
     cancel() {
       this.$emit('cancel');
       this.handleClose();

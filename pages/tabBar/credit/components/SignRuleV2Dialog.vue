@@ -1,5 +1,5 @@
 <template>
-  <uni-popup ref="dialog">
+  <tf-popup v-model="visible" :isMaskClick="true">
     <view class="sign-popup">
       <view class="sign-header">
         签到规则
@@ -20,12 +20,16 @@
       </view>
       <button class="sign-btn" @click="visible = false">确定</button>
     </view>
-  </uni-popup>
+  </tf-popup>
 </template>
 
 <script>
+import TfPopup from '@/components/TfPopup/index';
 export default {
   name: 'SignRuleV2Dialog',
+  components: {
+    TfPopup
+  },
   props: {
     value: {
       type: Boolean,
@@ -38,20 +42,6 @@ export default {
     };
   },
   methods: {
-    operate(val) {
-      if (val) {
-        this.open();
-      } else {
-        this.close();
-      }
-    },
-    open() {
-      this.$refs['dialog'].open(this.type);
-    },
-    close() {
-      this.$refs['dialog'].close();
-      this.$emit('closed');
-    }
   },
   watch: {
     value(val) {
@@ -61,7 +51,6 @@ export default {
     },
     visible(val) {
       this.$emit('input', val);
-      this.operate(val);
     }
   }
 };

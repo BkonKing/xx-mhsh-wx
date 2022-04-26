@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import { openLocation } from '@/utils/util';
 export default {
   name: 'CouponItem',
   props: {
@@ -118,14 +119,11 @@ export default {
       });
     },
     goLocation() {
-      this.$router.push({
-        path: '/pages/personage/shop/location',
-        query: {
-          name: this.data.shops_address,
-          address: this.shopsAddress,
-          longitude: this.data.shops_longitude,
-          latitude: this.data.shops_latitude
-        }
+      openLocation({
+        name: this.data.shops_address,
+        address: this.shopsAddress,
+        longitude: this.data.shops_longitude,
+        latitude: this.data.shops_latitude
       });
     }
   }

@@ -14,7 +14,8 @@
       :maxlength="length"
       :focus="showKeyboard"
       :style="{ width: 0 }"
-      @blur="showKeyboard = false"
+      :hold-keyboard="false"
+      @blur="handleInputBlur"
     />
   </view>
 </template>
@@ -55,14 +56,19 @@ export default {
       if (newValue !== this.inputValue) {
         this.value = newValue
       }
-    },
+    }
   },
   methods: {
     focusPasswordInput() {
-      !this.showKeyboard && (this.showKeyboard = true)
+      setTimeout(() => {
+        !this.showKeyboard && (this.showKeyboard = true)
+      }, 100)
     },
     focus() {
       this.focusPasswordInput()
+    },
+    handleInputBlur() {
+      this.showKeyboard = false
     }
   },
 }

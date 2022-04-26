@@ -62,6 +62,8 @@
       "path": "shop/introduce"
     }, {
       "path": "shop/location"
+    }, {
+      "path": "shop/verification"
     }]
   }, {
     "root": "pages/credit",
@@ -196,6 +198,11 @@
       {
         "name": "支付密码",
         "path": "pages/personage/information/paymentCode",
+        "query": ""
+      },
+      {
+        "name": "核销店铺券",
+        "path": "pages/personage/shop/verification",
         "query": ""
       }
     ]

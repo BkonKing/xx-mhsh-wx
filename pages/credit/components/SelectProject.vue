@@ -1,5 +1,5 @@
 <template>
-  <uni-popup v-model="visible" ref="popup" type="bottom">
+  <tf-popup v-model="visible" type="bottom">
     <view class="select-project-popup">
       <template v-if="yxlpList && yxlpList.length">
         <uni-search-bar v-if="yxlpList.length >= 10" v-model="searchValue" />
@@ -40,13 +40,17 @@
         class="tf-icon tf-icon-guanbi1 guanbi"
       ></text>
     </view>
-  </uni-popup>
+  </tf-popup>
 </template>
 
 <script>
+import TfPopup from '@/components/TfPopup/index';
 import { getYxlpList } from '@/api/personage';
 
 export default {
+  components: {
+    TfPopup
+  },
   props: {
     value: {
       type: Boolean,
@@ -83,7 +87,6 @@ export default {
     },
     visible(val) {
       this.$emit('input', val);
-      this.operate(val);
     }
   },
   async created() {
@@ -100,21 +103,7 @@ export default {
     // 确定
     confirm() {
       this.visible = false;
-      this.$emit('confirm', this.houseActive)
-    },
-    operate(val) {
-      if (val) {
-        this.open();
-      } else {
-        this.close();
-      }
-    },
-    open() {
-      this.$refs.popup.open();
-    },
-    close() {
-      this.$refs.popup.close();
-      this.$emit('closed');
+      this.$emit('confirm', this.houseActive);
     }
   }
 };

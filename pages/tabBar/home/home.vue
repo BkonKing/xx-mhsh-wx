@@ -31,6 +31,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import SignInCom from '@/modules/SignInCom';
+import apiConfig from '@/api/config'
 import { getHomeSpecial, getSpecial } from '@/api/personage';
 import { throttle } from '@/utils/util';
 
@@ -50,11 +51,19 @@ export default {
   computed: {
     ...mapGetters(['userType', 'userInfo', 'currentProject']),
     projectId() {
-      return (this.currentProject && this.currentProject.project_id) || ''
+      return (this.currentProject && this.currentProject.project_id) || '';
     }
   },
   onShow() {
     this.getHomeSpecial();
+  },
+  onShareAppMessage() {
+    console.log(`${apiConfig.baseUrl}/library/img/wx/share.jpg`);
+    return {
+      title: '美好生活 一键抵达',
+      path: '/pages/tabBar/home/home',
+      imageUrl: `${apiConfig.baseUrl}/library/img/wx/share.jpg`
+    };
   },
   methods: {
     async getHomeSpecial() {

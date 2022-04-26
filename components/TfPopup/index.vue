@@ -3,11 +3,11 @@
     ref="popup"
     :type="type"
     :animation="animation"
+    :isMaskClick="isMaskClick"
     :backgroundColor="backgroundColor"
     :maskBackgroundColor="maskBackgroundColor"
     @change="handleChange"
   >
-    <!-- <scroll-view><slot></slot></scroll-view> -->
     <slot></slot>
   </uni-popup>
 </template>

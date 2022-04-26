@@ -21,7 +21,8 @@ const store = {
     current_project: uni.getStorageSync('currentProject') || null,
     mobileInfo: '',
     tempData: null,
-    loginModal: false
+    loginModal: false,
+    wxCode: ''
   },
   mutations: {
     setUserInfo(state, value) {
@@ -46,6 +47,9 @@ const store = {
     },
     setLoginModal(state, value) {
       state.loginModal = value
+    },
+    setWxCode(state, value) {
+      state.wxCode = value
     }
   },
   getters: {
@@ -111,11 +115,35 @@ const store = {
         })
       })
     },
+    getWxLoginCode({
+      state,
+      commit
+    }) {
+      return new Promise((resolve, reject) => {
+        uni.checkSession({
+          success(message) {
+            console.log(message)
+            resolve(state.wxCode)
+          },
+          fail() {
+            uni.login({
+              success(res) {
+                const {
+                  code
+                } = res
+                commit('setWxCode', code)
+                resolve(code)
+              }
+            })
+          }
+        })
+      })
+    },
     wxLogin({
       commit
     }) {
       return new Promise((resolve, reject) => {
-        wx.login({
+        uni.login({
           success(res) {
             const {
               code
@@ -124,7 +152,9 @@ const store = {
               //发起网络请求
               wxLogin({
                 xcx_code: code
-              }).then(({data}) => {
+              }).then(({
+                data
+              }) => {
                 commit('setOpenId', data.openid)
                 resolve(data)
               })

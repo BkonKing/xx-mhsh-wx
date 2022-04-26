@@ -198,13 +198,19 @@
         :message="signMessage"
         :credits="signOwnerCredits"
       ></sign-in-alert>
+      <mobile-login-popup
+        v-model="loginVisible"
+        @success="init"
+      ></mobile-login-popup>
     </view>
   </view>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import apiConfig from '@/api/config';
 import TfCalendar from '@/modules/TfCalendar';
+import MobileLoginPopup from '@/modules/MobileLoginPopup/index';
 import SignRuleDialog from '@/pages/tabBar/credit/components/SignRuleDialog';
 import SignInAlert from '@/modules/SignInAlert';
 import { signin } from '@/api/personage';
@@ -213,6 +219,7 @@ import { handlePermission } from '@/utils/permission';
 export default {
   name: 'PersonagePage',
   components: {
+    MobileLoginPopup,
     SignRuleDialog,
     TfCalendar,
     SignInAlert
@@ -229,7 +236,8 @@ export default {
       signMessage: '', // 签到成功提醒
       signOwnerCredits: '', // 业主签到幸福币
       shopData: {},
-      sign: throttle(this.handleSign)
+      sign: throttle(this.handleSign),
+      loginVisible: false
     };
   },
   computed: {
@@ -246,23 +254,38 @@ export default {
       return this.userInfo && this.userInfo.id;
     }
   },
-  onLoad() {},
+  onLoad() {
+    !this.hasLogIn && (this.loginVisible = true);
+  },
   onShow() {
-    // 重新获取用户信息
-    this.hasLogIn &&
-      this.$store
-        .dispatch('getMyAccount')
-        .then(({ order_data, hb_banner_data, shops_data }) => {
-          this.orderData = order_data;
-          this.shopData = shops_data || {};
-        });
+    this.init()
+  },
+  onHide() {
+    this.loginVisible = false
+  },
+  onShareAppMessage() {
+    return {
+      title: '美好生活 一键抵达',
+      path: '/pages/tabBar/personage/personage',
+      imageUrl: `${apiConfig.baseUrl}/library/img/wx/share.jpg`
+    };
   },
   methods: {
+    init() {
+      // 重新获取用户信息
+      this.hasLogIn &&
+        this.$store
+          .dispatch('getMyAccount')
+          .then(({ order_data, hb_banner_data, shops_data }) => {
+            this.orderData = order_data;
+            this.shopData = shops_data || {};
+          });
+    },
     // 签到
     handleSign() {
       if (!this.hasLogIn) {
-        this.goLogin()
-        return
+        this.goLogin();
+        return;
       }
       if (this.userInfo.signin_status === 0) {
         // 签到一定要开启定位
@@ -311,7 +334,7 @@ export default {
       this.$router.push('/pages/personage/coupon/list');
     },
     goLogin() {
-      this.$router.push('/pages/index/login')
+      this.$router.push('/pages/index/login');
     }
   },
   filters: {

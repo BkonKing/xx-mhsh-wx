@@ -232,10 +232,7 @@ export default {
   margin-left: 20rpx;
 }
 .btn-placeholder {
-  height: 70rpx;
-  margin-top: 30rpx;
-  margin-bottom: env(safe-area-inset-bottom);
-  margin-bottom: constant(safe-area-inset-bottom);
+  height: calc(100rpx + env(safe-area-inset-bottom));  height: calc(100rpx + constant(safe-area-inset-bottom));
 }
 .tf-btn {
   width: 710rpx;

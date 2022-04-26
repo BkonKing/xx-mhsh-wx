@@ -115,7 +115,10 @@
             goAttestation(item.house_role === '1' ? 1 : 0, 1, item.id, item)
           "
         >
-          <uni-card :title="`${item.project_name} ${item.fc_info}`" :is-shadow="false">
+          <uni-card
+            :title="`${item.project_name} ${item.fc_info}`"
+            :is-shadow="false"
+          >
             <view class="tf-flex-row">
               <van-tag
                 class="user-role tf-mr-30"
@@ -392,10 +395,7 @@ export default {
 }
 
 .btn-placeholder {
-  height: 70rpx;
-  margin-top: 30rpx;
-  margin-bottom: env(safe-area-inset-bottom);
-  margin-bottom: constant(safe-area-inset-bottom);
+  height: calc(100rpx + env(safe-area-inset-bottom));  height: calc(100rpx + constant(safe-area-inset-bottom));
 }
 
 .tf-btn {

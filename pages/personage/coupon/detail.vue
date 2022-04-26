@@ -134,6 +134,7 @@
 <script>
 import ExplainPopover from './components/ExplainPopover';
 import { getOrderDetail } from '@/api/personage.js';
+import { openLocation } from '@/utils/util';
 export default {
   components: {
     ExplainPopover
@@ -185,16 +186,13 @@ export default {
       });
     },
     goLocation() {
-      this.$router.push({
-        path: '/pages/personage/shop/location',
-        query: {
-          name: this.shopInfo.shops_address,
-          address: `${this.shopInfo.shops_address_province}${
-            this.shopInfo.shops_address_city
-          }${this.shopInfo.shops_address_area}${this.shopInfo.shops_address}`,
-          lon: this.shopInfo.shops_longitude,
-          lat: this.shopInfo.shops_latitude
-        }
+      openLocation({
+        name: this.shopInfo.shops_address,
+        address: `${this.shopInfo.shops_address_province}${
+          this.shopInfo.shops_address_city
+        }${this.shopInfo.shops_address_area}${this.shopInfo.shops_address}`,
+        longitude: this.shopInfo.shops_longitude,
+        latitude: this.shopInfo.shops_latitude
       });
     },
     copy() {
@@ -220,11 +218,11 @@ export default {
 }
 .order-bar {
   ::v-deep .uni-navbar__header,
-  ::v-deep .uni-navbar__content{
+  ::v-deep .uni-navbar__content {
     background-image: linear-gradient(to right, #f9866b, #eb5841) !important;
   }
   ::v-deep .uni-icons,
-  ::v-deep .uni-nav-bar-text{
+  ::v-deep .uni-nav-bar-text {
     color: #fff !important;
   }
 }
