@@ -59,7 +59,6 @@
             "minifyWXML" : true
         },
         "usingComponents" : true,
-        "lazyCodeLoading" : "requiredComponents",
         "permission" : {
             "scope.userLocation" : {
                 "desc" : "因当前业务涉及当地社区服务，需获取用户地理位置"
