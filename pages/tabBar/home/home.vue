@@ -1,7 +1,8 @@
 <template>
   <view>
     <uni-nav-bar
-      title="美好用户服务中心"
+      title="美好生活家园"
+      leftWidth="0"
       statusBar="true"
       :fixed="true"
       :border="false"
@@ -31,7 +32,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import SignInCom from '@/modules/SignInCom';
-import apiConfig from '@/api/config'
+import apiConfig from '@/api/config';
 import { getHomeSpecial, getSpecial } from '@/api/personage';
 import { throttle } from '@/utils/util';
 
@@ -58,7 +59,6 @@ export default {
     this.getHomeSpecial();
   },
   onShareAppMessage() {
-    console.log(`${apiConfig.baseUrl}/library/img/wx/share.jpg`);
     return {
       title: '美好生活 一键抵达',
       path: '/pages/tabBar/home/home',
@@ -150,6 +150,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .uni-navbar {
+  .uni-navbar__header-container {
+    padding: 0;
+  }
+  .uni-navbar__header-container-inner {
+    padding: 0;
+    justify-content: flex-start;
+  }
+}
 .mobile-image-box {
   display: flex;
   .mobile-image {
