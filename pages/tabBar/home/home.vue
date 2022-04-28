@@ -25,6 +25,9 @@
         </template>
       </view>
     </view>
+    <button open-type="share" class="share-btn">
+      <image class="share-image" src="@/static/main/home_share.png"></image>
+    </button>
     <sign-in-com ref="sign" :show-loading="false"></sign-in-com>
   </view>
 </template>
@@ -58,12 +61,21 @@ export default {
   onShow() {
     this.getHomeSpecial();
   },
-  onShareAppMessage() {
-    return {
-      title: '美好生活 一键抵达',
-      path: '/pages/tabBar/home/home',
-      imageUrl: `${apiConfig.baseUrl}/library/img/wx/share.jpg`
-    };
+  onShareAppMessage({from}) {
+    if (from === 'menu') {
+      return {
+        title: '美好生活 一键抵达',
+        path: '/pages/tabBar/home/home',
+        imageUrl: `${apiConfig.baseUrl}/library/img/wx/share.jpg`
+      };
+    }
+    if (from === 'button') {
+      return {
+        title: this.specialData.wechat_title,
+        path: '/pages/tabBar/home/home',
+        imageUrl: this.specialData.wechat_xcx_img
+      }
+    }
   },
   methods: {
     async getHomeSpecial() {
@@ -167,6 +179,18 @@ export default {
   }
   .mobile-image:nth-child(even) {
     height: auto !important;
+  }
+}
+.share-btn {
+  width: 88rpx;
+  padding: 0;
+  position: fixed;
+  right: 50rpx;
+  bottom: 100rpx;
+  background: none;
+  .share-image {
+    width: 88rpx;
+    height: 88rpx;
   }
 }
 </style>
