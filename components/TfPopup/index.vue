@@ -48,7 +48,7 @@ export default {
     };
   },
   mounted() {
-    this.operate(this.visible);
+    this.visible && this.operate(this.visible);
   },
   methods: {
     handleChange({ show }) {

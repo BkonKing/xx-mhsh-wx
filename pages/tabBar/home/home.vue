@@ -28,6 +28,12 @@
     <button open-type="share" class="share-btn">
       <image class="share-image" src="@/static/main/home_share.png"></image>
     </button>
+    <image
+      class="award-image"
+      src="@/static/main/award/icon.png"
+      @click="goAwardIndex"
+    ></image>
+    <award-alert v-model="awardVisible" :data="awardData"></award-alert>
     <sign-in-com ref="sign" :show-loading="false"></sign-in-com>
   </view>
 </template>
@@ -35,13 +41,16 @@
 <script>
 import { mapGetters } from 'vuex';
 import SignInCom from '@/modules/SignInCom';
+import AwardAlert from './components/AwardAlert';
 import apiConfig from '@/api/config';
+import { getAwardPopupInfo } from '@/api/award';
 import { getHomeSpecial, getSpecial } from '@/api/personage';
 import { throttle } from '@/utils/util';
 
 export default {
   name: 'home',
   components: {
+    AwardAlert,
     SignInCom
   },
   data() {
@@ -49,7 +58,9 @@ export default {
       operate: throttle(this.handleOperate, 1000),
       specialId: '',
       specialData: {},
-      specialList: []
+      specialList: [],
+      awardVisible: false,
+      awardData: []
     };
   },
   computed: {
@@ -58,10 +69,13 @@ export default {
       return (this.currentProject && this.currentProject.project_id) || '';
     }
   },
+  onLoad() {
+    this.getAwardPopupInfo();
+  },
   onShow() {
     this.getHomeSpecial();
   },
-  onShareAppMessage({from}) {
+  onShareAppMessage({ from }) {
     if (from === 'menu') {
       return {
         title: '美好生活 一键抵达',
@@ -74,7 +88,7 @@ export default {
         title: this.specialData.wechat_title,
         path: '/pages/tabBar/home/home',
         imageUrl: this.specialData.wechat_xcx_img
-      }
+      };
     }
   },
   methods: {
@@ -98,6 +112,13 @@ export default {
       if (+data.state === 1) {
         this.specialData = data;
         this.specialList = child;
+      }
+    },
+    async getAwardPopupInfo() {
+      const { data, state } = await getAwardPopupInfo();
+      if (+state === 1) {
+        this.awardVisible = true;
+        this.awardData = data || [];
       }
     },
     handleOperate(data) {
@@ -124,6 +145,11 @@ export default {
             id: goodsId
           }
         });
+    },
+    goAwardIndex() {
+      this.$router.push({
+        path: '/pages/activity/award/index'
+      })
     },
     goPage({ block_content: url }) {
       if (url) {
@@ -182,15 +208,22 @@ export default {
   }
 }
 .share-btn {
-  width: 88rpx;
+  width: 100rpx;
   padding: 0;
   position: fixed;
   right: 50rpx;
-  bottom: 100rpx;
+  bottom: 270rpx;
   background: none;
   .share-image {
     width: 88rpx;
     height: 88rpx;
   }
+}
+.award-image {
+  width: 100rpx;
+  height: 125rpx;
+  position: fixed;
+  right: 50rpx;
+  bottom: 100rpx;
 }
 </style>

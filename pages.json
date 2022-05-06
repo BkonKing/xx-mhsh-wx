@@ -84,6 +84,13 @@
     }, {
       "path": "payment"
     }]
+  }, {
+    "root": "pages/activity",
+    "pages": [{
+      "path": "award/index"
+    }, {
+      "path": "award/record"
+    }]
   }],
   "globalStyle": {
     "navigationBarTextStyle": "black",
@@ -203,6 +210,16 @@
       {
         "name": "核销店铺券",
         "path": "pages/personage/shop/verification",
+        "query": ""
+      },
+      {
+        "name": "转盘抽奖",
+        "path": "pages/activity/award/index",
+        "query": ""
+      },
+      {
+        "name": "抽奖记录",
+        "path": "pages/activity/award/record",
         "query": ""
       }
     ]
