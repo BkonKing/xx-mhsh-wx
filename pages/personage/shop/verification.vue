@@ -9,14 +9,10 @@
         <view class="coupon-info-box">
           <view class="coupon-content">
             <view class="coupon-number">
-              <template v-if="infoData.coupon_type == 1">
-                <text>￥</text>
-                {{ infoData.denomination }}
-              </template>
-              <template v-else>
-                {{ infoData.denomination }}
-                <text>折</text>
-              </template>
+              <text v-if="infoData.coupon_type == 1">￥</text>
+              <text v-if="infoData.coupon_type == 3">{{ infoData.denomination }}</text>
+              <template v-else>{{ infoData.denomination }}</template>
+              <text v-if="infoData.coupon_type == 2">折</text>
             </view>
             <view>
               <view class="coupon-text">{{ infoData.coupon_name }}</view>
@@ -94,7 +90,7 @@ export default {
         .catch(() => {
           setTimeout(() => {
             this.$router.go(-1);
-          }, 1000)
+          }, 1000);
         });
     },
     handleConfirm() {
@@ -183,6 +179,7 @@ export default {
         justify-content: center;
         align-items: flex-end;
         width: 170rpx;
+        padding: 0 20rpx;
         font-size: 40rpx;
         color: #ffffff;
         text {

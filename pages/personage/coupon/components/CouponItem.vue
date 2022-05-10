@@ -15,10 +15,11 @@
             {{ isPenny ? Number(data[priceKey]) / 100 : data[priceKey] }}
           </text>
         </template>
-        <template v-else>
+        <template v-else-if="data.type == 2">
           <text class="coupon-money-number">{{ data[discountKey] }}</text>
           <text class="coupon-money-icon">折</text>
         </template>
+        <template v-else><text class="coupon-money-give">{{ data.give }}</text></template>
         <view v-if="data.i_img" class="coupon-icon-bg">
           <image :src="data.i_img" />
         </view>

@@ -23,8 +23,10 @@
   }
   .coupon-money {
     display: flex;
+    flex-grow: 0;
     justify-content: center;
-    min-width: 170rpx;
+    width: 170rpx;
+    padding: 0 20rpx;
     position: relative;
     font-size: 40rpx;
     font-weight: 600;
@@ -56,13 +58,18 @@
       color: #ff6555;
       z-index: 1;
     }
+    &-give {
+      font-size: 32rpx;
+      font-weight: 600;
+      z-index: 1;
+    }
   }
 
   .coupon-info {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 50rpx 24rpx 0 12rpx;
+    padding: 50rpx 24rpx 0 0;
 
     .coupon-name {
       margin-bottom: 30rpx;

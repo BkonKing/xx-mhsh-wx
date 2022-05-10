@@ -10,10 +10,13 @@
           <text class="coupon-money-icon">￥</text>
           <text class="coupon-money-number">{{ data.miane }}</text>
         </template>
-        <template v-else>
+        <template v-else-if="data.coupon_type == 2">
           <text class="coupon-money-number">{{ data.miane }}</text>
           <text class="coupon-money-icon">折</text>
         </template>
+        <template v-else
+          ><text class="coupon-money-give">{{ data.give }}</text></template
+        >
       </view>
       <view class="coupon-info">
         <view class="tf-row-justify-between">
