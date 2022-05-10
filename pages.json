@@ -90,6 +90,8 @@
       "path": "award/index"
     }, {
       "path": "award/record"
+    }, {
+      "path": "award/verification"
     }]
   }],
   "globalStyle": {
@@ -220,6 +222,11 @@
       {
         "name": "抽奖记录",
         "path": "pages/activity/award/record",
+        "query": ""
+      },
+      {
+        "name": "奖品核销",
+        "path": "pages/activity/award/verification",
         "query": ""
       }
     ]

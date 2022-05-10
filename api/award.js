@@ -25,7 +25,7 @@ export function luckDraw (data) {
     url: '/award/award/luckDraw',
     method: 'post',
     data,
-    noToast: false
+    noToast: true,
   })
 }
 
@@ -42,6 +42,24 @@ export function getAwardLogList (data) {
 export function getAwardLogInfo (data) {
   return request({
     url: '/award/award/awardLogInfo',
+    method: 'post',
+    data
+  })
+}
+
+// 奖品 扫码 核销详情 接口
+export function getAwardScan (data) {
+  return request({
+    url: '/award/award/awardScan',
+    method: 'post',
+    data
+  })
+}
+
+// 核销 奖品 接口
+export function awardOperation (data) {
+  return request({
+    url: '/award/award/awardOperation',
     method: 'post',
     data
   })

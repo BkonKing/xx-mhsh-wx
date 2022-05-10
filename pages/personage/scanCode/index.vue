@@ -64,6 +64,7 @@ import {
 } from '@/api/personage';
 import { getShopScanPermission } from '@/api/personage/shop.js';
 import { handlePermission } from '@/utils/permission';
+import { getAwardScan } from '@/api/award.js';
 export default {
   data() {
     return {
@@ -120,12 +121,14 @@ export default {
     },
     // 扫码成功
     scanSuccess(value) {
+      console.log(value);
       const valueArray = value.split('|');
       const key = valueArray[0];
       const methodNames = {
         shoukuan: 'collectScan',
         fukuan: 'paymentScan',
-        shangpuyhq: 'getShopScanPermission'
+        shangpuyhq: 'getShopScanPermission',
+        awardLogCode: 'getAwardScan',
       };
       const methodName = methodNames[key];
       methodName && this[methodName](value, valueArray);
@@ -154,6 +157,23 @@ export default {
           codeInfo
         }
       });
+    },
+    async getAwardScan(value, valueArray) {
+      const id = valueArray[1]
+      const { data } = await getAwardScan({
+        award_log_id: id
+      });
+      if (data.is_power) {
+        this.goAwardVerification(id)
+      }
+    },
+    goAwardVerification(id) {
+      this.$router.push({
+        path: '/pages/activity/award/verification',
+        query: {
+          id
+        }
+      })
     },
     // 获取付款码二维码
     getPaymentCode() {

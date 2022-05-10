@@ -80,6 +80,11 @@
     flex-direction: column;
     justify-content: center;
   }
+  .tf-column-items-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .tf-flex-center {
     display: flex;
     align-items: center;
@@ -196,4 +201,9 @@
   .tf-btn-primary {
     background-color: $uni-color-primary;
     color: #fff;
+  }
+  
+  // 边框圆角
+  .tf-rounded-10 {
+    border-radius: 10rpx;
   }

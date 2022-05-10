@@ -51,6 +51,7 @@
         ></image>
         <view
           class="award-circle"
+          :class="{ 'award-no-img': !isHaveImage }"
           :style="allRotateStyle"
           @transitionend="finishRotate"
         >
@@ -59,7 +60,7 @@
             :key="index"
             class="award-item"
             :style="{
-              transform: `rotate(${rotateDeg * (index - 1)}deg)`
+              transform: `rotate(${rotateDeg * index}deg)`
             }"
           >
             <view
@@ -67,14 +68,23 @@
               :style="{
                 transform: `translateX(-250rpx) rotate(${360 / len}deg)`
               }"
+            ></view>
+            <template v-if="isHaveImage">
+              <view class="dingwei" :style="noImageTextStyle">
+                <text class="award-name">{{ item.award_name }}</text>
+                <image
+                  :src="item.img"
+                  class="award-image"
+                  mode="widthFix"
+                ></image>
+              </view>
+            </template>
+            <view
+              v-if="!isHaveImage"
+              class="award-name"
+              :style="noImageTextStyle"
             >
-              <text class="award-name">{{ item.award_name }}</text>
-              <image
-                v-if="item.img"
-                :src="item.img"
-                class="award-image"
-                mode="aspectFill"
-              ></image>
+              {{ item.award_name }}
             </view>
           </view>
         </view>
@@ -82,7 +92,7 @@
           class="award-btn"
           src="@/static/main/award/start-btn.png"
           mode="aspectFill"
-          @click="startPlay"
+          @click="handlePlay"
         ></image>
       </view>
     </view>
@@ -93,15 +103,6 @@
         mode="aspectFill"
       ></image>
       <view class="award-explain-content">
-        <view class="award-explain-title">活动奖品</view>
-        <view class="award-explain-text">
-          <view v-for="(item, index) in awardList" :key="index">
-            · {{ item.source_text }}
-          </view>
-        </view>
-        <view class="award-explain-title tf-mt-46">活动时间</view>
-        <view class="award-explain-text">{{ infoData.state_text }}</view>
-        <view class="award-explain-title tf-mt-46">活动规则</view>
         <rich-text
           class="award-explain-text"
           :nodes="activityExplain.replace(/\r\n|\n/g, '<br/>')"
@@ -126,7 +127,7 @@ export default {
       config: {
         duration: 7000, // 总旋转时间 ms级
         mode: 'ease-in-out', // 由快到慢 惯性效果都省了
-        circle: 7 // 旋转圈数
+        circle: 12 // 旋转圈数
       }
     };
   },
@@ -157,6 +158,88 @@ export default {
     },
     allRotateStyle() {
       return `${this.normalRotateStyle} ${this.run ? this.rotateStyle : ''}`;
+    },
+    isHaveImage() {
+      return this.awardList.some(obj => obj.img);
+    },
+    noImageTextStyle() {
+      return `${this.noImageTextLeft}`;
+    },
+    noImageTextLeft() {
+      // 文字旋转角度，将其旋转成正的
+      var textDeg = this.rotateDeg / 2;
+      var bDeg = 90 - textDeg;
+      var height = this.isHaveImage ? 250 : 110;
+      // 第三边对应的sin值
+      var sinOther = Math.sin(((2 * Math.PI) / 360) * bDeg);
+      // 扇形圆心角一半角对应的sin值
+      var sinTextDeg = Math.sin(((2 * Math.PI) / 360) * textDeg);
+      // 直角对应的sin值,值为1
+      var sinZhijiao = Math.sin(((2 * Math.PI) / 360) * 90);
+      // 一半的扇形底边三角的长
+      var hudi = sinTextDeg * (250 / sinZhijiao);
+      var width = this.isHaveImage ? (hudi * 2) : 24;
+
+      // 旋转后的偏移量
+      var a =
+        (width * Math.cos(((2 * Math.PI) / 360) * textDeg) +
+          height * sinTextDeg -
+          width) /
+        2;
+      a = (a / sinOther) * sinZhijiao;
+
+      // 一半的扇形底边三角的长 减去 文字本身宽度的一半
+      var b = hudi - width / 2;
+
+      if (this.isHaveImage) {
+        var j = sinOther * (250 / sinZhijiao);
+        // 定位top最小值
+        var topLen = ((250 - j) / sinOther) * sinZhijiao;
+        c = sinTextDeg * (topLen / sinZhijiao)
+        return `transform: translateX(-${a + c}rpx) translateY(${topLen}rpx) rotate(${this.rotateDeg /
+          2}deg);width: ${hudi * 2}rpx;left: 0;top: 0;`;
+      }
+
+      // 实际移动应该为一半边组成直角三角形的斜边
+      var d = (b / sinOther) * sinZhijiao - a;
+
+      console.log('d:', d);
+
+      var firstTop = (d / sinZhijiao) * sinTextDeg;
+      // 有旋转如果也会产生偏移量，实际移动的值应该为斜边
+      var topLen = (firstTop / sinOther) * sinZhijiao;
+
+      // 底边到圆弧最长点的距离
+      // var j = sinOther * (250 / sinZhijiao);
+      // 定位top最小值
+      // var topLen = ((250 - j) / sinOther) * sinZhijiao;
+
+      // topLen = firstTop + topLen
+
+      var c = 0;
+      var topb = topLen;
+      // 加入top定位，会产生left向右的偏移量
+      while (topb > 1 || topb < 0) {
+        c = sinTextDeg * (topb / sinZhijiao);
+
+        c = (c / sinOther) * sinZhijiao;
+
+        d = d - c;
+
+        topb = -(((c / sinZhijiao) * sinTextDeg) / sinOther) * sinZhijiao;
+
+        topLen = topLen + topb;
+        console.log('topb:', topb);
+      }
+
+      var f = Math.ceil(d);
+
+      var left = (f % 2) + f;
+
+      var result = `transform: rotate(${this.rotateDeg /
+        2}deg);left: ${left}rpx;top: ${topLen}rpx;`;
+
+      return result;
     }
   },
   onLoad() {
@@ -165,40 +248,73 @@ export default {
   methods: {
     async getAwardInfo() {
       const { data, award_list } = await getAwardInfo();
-      this.infoData = data;
-      this.awardList = award_list || [];
-    },
-    async luckDraw() {
-      const { award_id, message } = await luckDraw();
-      const index = this.awardList.findIndex(obj => {
-        return (obj.id = award_id);
-      });
-      this.activeIndex = index;
-      this.activeMessage = message;
+      if (+data.state === 1) {
+        this.infoData = data;
+        this.awardList = award_list || [];
+      } else {
+        uni.showModal({
+          content: '活动已结束',
+          showCancel: false,
+          confirmText: '知道了',
+          success: res => {
+            if (res.confirm) {
+              this.$router.go(-1);
+            }
+          }
+        });
+      }
     },
     // 开始转动
+    handlePlay() {
+      if (+this.rotateAngle > 0) {
+        return;
+      }
+      if (+this.infoData.chance_num < 1) {
+        uni.showModal({
+          content: '您今天已经没有抽奖机会了明天再来吧',
+          showCancel: false,
+          confirmText: '知道了',
+          success: res => {
+            if (res.confirm) {
+            }
+          }
+        });
+        return;
+      }
+      if (!+this.infoData.consume) {
+        this.startPlay();
+        return 
+      }
+      uni.showModal({
+        content: `使用${this.infoData.consume}幸福币抽奖`,
+        success: ({ confirm }) => {
+          if (confirm) {
+            this.startPlay();
+          }
+        }
+      });
+    },
     async startPlay() {
-      if (this.validPlay()) return;
       await this.luckDraw();
       this.run = true;
       this.rotateAngle =
         this.config.circle * 360 -
         (this.activeIndex * this.rotateDeg + this.rotateDeg / 2);
     },
-    validPlay() {
-      if (+this.rotateAngle > 0) {
-        return true;
-      }
-      if (+this.infoData.chance_num === 0) {
+    async luckDraw() {
+      const { award_id, message } = await luckDraw().catch(({ message }) => {
         uni.showModal({
-          content: '您今天已经没有抽奖机会了明天再来吧',
+          content: message,
           showCancel: false,
-          confirmText: '知道了',
-          success: res => {}
+          confirmText: '知道了'
         });
-        return true;
-      }
-      return false;
+      });
+      const index = this.awardList.findIndex(obj => {
+        return obj.id == award_id;
+      });
+      console.log(index);
+      this.activeIndex = index;
+      this.activeMessage = message;
     },
     // 完成旋转之后,弹起弹框
     async finishRotate() {
@@ -345,6 +461,19 @@ export default {
       width: 500rpx;
       border-radius: 72rpx;
     }
+    .award-no-img {
+      .award-name {
+        position: absolute;
+        left: 60rpx;
+        top: 20rpx;
+        width: 24rpx;
+        height: 110rpx;
+        overflow: initial;
+        text-overflow: initial;
+        white-space: initial;
+        word-break: break-all;
+      }
+    }
     .award-btn {
       width: 189rpx;
       height: 217rpx;
@@ -363,7 +492,7 @@ export default {
     .award-item-inner {
       width: 250rpx;
       height: 500rpx;
-      padding: 20rpx 10rpx 0 120rpx;
+      // padding: 20rpx 10rpx 0 140rpx;
       transform: translateX(-250rpx);
       transform-origin: right center;
       border-radius: 250rpx 0 0 250rpx;
@@ -375,13 +504,35 @@ export default {
         rgba(255, 247, 232, 0) 100%
       );
     }
+    .dingwei {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 250rpx;
+      position: absolute;
+      .award-name {
+        width: 100%;
+        padding: 0px 20rpx;
+        text-align: center;
+      }
+    }
     .award-name {
       display: block;
       transform-origin: center;
-      transform: rotate(-19deg);
+      // transform: rotate(-19deg);
       font-size: 24rpx;
       color: #222222;
       @include text-ellipsis;
+    }
+    .award-image {
+      width: 50%;
+      max-width: 72rpx;
+      max-height: 72rpx;
+      // height: 72rpx;
+      margin-top: 20rpx;
+      border-radius: 50%;
+      image {
+      }
     }
   }
 }
@@ -402,17 +553,8 @@ export default {
     padding: 50rpx 30rpx;
     background: #db1e03;
     border-radius: 10rpx;
-  }
-  .award-explain-title {
-    font-size: 32rpx;
-    color: #fff;
-  }
-  .award-explain-text {
     font-size: 26rpx;
     color: #fff;
-  }
-  .tf-mt-46 {
-    margin-top: 46rpx;
   }
 }
 </style>

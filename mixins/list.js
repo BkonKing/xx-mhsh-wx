@@ -3,6 +3,7 @@ export default {
     return {
       listData: [],
       pageNum: 1,
+      pageSize: 10,
       isFinish: false,
       loadMoreStatus: '',
     }
@@ -38,7 +39,7 @@ export default {
       if (data && data.length > 0) {
         this.listData.push(...data);
       }
-      this.isFinish = !data || data.length < 10;
+      this.isFinish = !data || data.length < this.pageSize;
       !this.isFinish && isContinuous && this.getNextPage()
     },
     refreshLoad() {
