@@ -191,6 +191,12 @@
           </uni-list-item>
         </uni-list>
       </view>
+      <image
+        v-if="isHaveAward"
+        class="award-image"
+        :src="`${baseUrl}/library/img/wx/award/icon.png`"
+        @click="goAwardIndex"
+      ></image>
       <tf-calendar v-model="showCalendar"></tf-calendar>
       <sign-rule-dialog v-model="signRuleVisible"></sign-rule-dialog>
       <sign-in-alert
@@ -209,15 +215,17 @@
 <script>
 import { mapGetters } from 'vuex';
 import apiConfig from '@/api/config';
+import { signin } from '@/api/personage';
+import awardMixin from '@/mixins/award';
 import TfCalendar from '@/modules/TfCalendar';
 import MobileLoginPopup from '@/modules/MobileLoginPopup/index';
 import SignRuleDialog from '@/pages/tabBar/credit/components/SignRuleDialog';
 import SignInAlert from '@/modules/SignInAlert';
-import { signin } from '@/api/personage';
 import { throttle } from '@/utils/util';
 import { handlePermission } from '@/utils/permission';
 export default {
   name: 'PersonagePage',
+  mixins: [awardMixin],
   components: {
     MobileLoginPopup,
     SignRuleDialog,
@@ -494,5 +502,13 @@ export default {
   width: 44rpx;
   height: 44rpx;
   margin-right: 20rpx;
+}
+.award-image {
+  width: 100rpx;
+  height: 125rpx;
+  position: fixed;
+  right: 50rpx;
+  bottom: 100rpx;
+  z-index: 99999;
 }
 </style>

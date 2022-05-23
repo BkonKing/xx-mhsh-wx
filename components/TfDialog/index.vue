@@ -1,8 +1,8 @@
 <template>
   <uni-popup
     ref="tf-dialog"
-    :class="['tf-van-popup', popupClass]"
-    is-mask-click="isMaskClick"
+    :class="['tf-van-popup', popupClass, { 'compact-popup': isCompact }]"
+    :is-mask-click="isMaskClick"
     @change="handleChange"
   >
     <view class="tf-dialog__wrapper-box">
@@ -30,7 +30,7 @@
             <view
               v-if="showCancel"
               class="tf-dialog-footer__btn tf-dialog-footer__btn--grey"
-              style="margin-right: 30rpx;"
+              :class="{ 'tf-mr-30': !isCompact }"
               @click="cancel"
             >
               {{ cancelText }}
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { throttle } from '@/utils/util.js'
 export default {
   props: {
     value: {
@@ -103,6 +104,11 @@ export default {
     headerBorder: {
       type: Boolean,
       default: true
+    },
+    // 紧凑模式
+    isCompact: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -111,7 +117,7 @@ export default {
     };
   },
   mounted() {
-    this.operate(this.visible);
+    this.visible && this.operate(this.visible);
   },
   methods: {
     handleChange({ show }) {
@@ -139,9 +145,9 @@ export default {
       this.$refs['tf-dialog'].close();
       this.$emit('closed');
     },
-    confirm() {
+    confirm: throttle(function() {
       this.$emit('confirm');
-    }
+    }, 1000)
   },
   watch: {
     value(val) {
@@ -226,5 +232,43 @@ export default {
   border: 2rpx solid $red-dark;
   color: #fff;
   background-color: $red-dark;
+}
+
+.compact-popup {
+  .tf-dialog {
+    padding: 0;
+  }
+  .tf-dialog-header {
+    padding-top: 30rpx;
+    height: 62rpx;
+    .tf-dialog-header__title {
+      line-height: 1;
+    }
+  }
+  .tf-dialog-content {
+    padding: 30rpx 0;
+  }
+  .tf-dialog-header__title {
+    font-size: 32rpx;
+  }
+  .tf-dialog-footer {
+    padding-bottom: 0;
+  }
+  .tf-dialog-footer__btn {
+    height: 88rpx;
+    line-height: 88rpx;
+    border: 0;
+    border-radius: 0;
+    font-size: 28rpx;
+    &:first-child {
+      border-bottom-left-radius: 10rpx;
+    }
+    &:last-child {
+      border-bottom-right-radius: 10rpx;
+    }
+  }
+  .tf-dialog-footer__btn--grey {
+    background: #eeeeee;
+  }
 }
 </style>

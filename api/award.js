@@ -52,7 +52,8 @@ export function getAwardScan (data) {
   return request({
     url: '/award/award/awardScan',
     method: 'post',
-    data
+    data,
+    noToast: true
   })
 }
 

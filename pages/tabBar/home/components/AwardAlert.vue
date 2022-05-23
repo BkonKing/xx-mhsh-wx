@@ -8,12 +8,12 @@
     <view class="award-container">
       <image
         class="award-bg"
-        src="@/static/main/award/bg.png"
+        :src="`${baseUrl}/library/img/wx/award/bg.png`"
         mode="aspectFit"
       ></image>
       <image
         class="award-close"
-        src="@/static/main/award/close.png"
+        :src="`${baseUrl}/library/img/wx/award/close.png`"
         mode="aspectFit"
         @click="close"
       ></image>
@@ -24,12 +24,17 @@
           class="award-item"
           :class="[`award-item-${item.award_type}`]"
         >
-          <image
-            v-if="item.award_type === '1'"
-            :src="item.img"
-            class="tf-w-full tf-h-full"
-            mode="scaleToFill"
-          ></image>
+          <template v-if="item.award_type === '1'">
+            <image
+              v-if="item.img"
+              :src="item.img"
+              class="tf-w-full tf-h-full"
+              mode="aspectFill"
+            ></image>
+            <view v-else class="tf-flex-col">
+              <text class="award-text">{{ item.award_name }}</text>
+            </view>
+          </template>
           <view
             v-else-if="['2', '3'].includes(item.award_type)"
             class="tf-flex-col"
@@ -44,7 +49,7 @@
         <button class="footer-btn footer-btn-1" @click="close">
           <image
             class="footer-btn-bg"
-            src="@/static/main/award/btn1.png"
+            :src="`${baseUrl}/library/img/wx/award/btn1.png`"
             mode="aspectFit"
           ></image>
           <text>放弃抽奖</text>
@@ -52,7 +57,7 @@
         <button class="footer-btn footer-btn-2" @click="goAwardIndex">
           <image
             class="footer-btn-bg"
-            src="@/static/main/award/btn2.png"
+            :src="`${baseUrl}/library/img/wx/award/btn2.png`"
             mode="aspectFit"
           ></image>
           <text>开启福气</text>
@@ -63,6 +68,7 @@
 </template>
 
 <script>
+import apiConfig from '@/api/config.js';
 import TfPopup from '@/components/TfPopup';
 export default {
   name: 'AwardAlert',
@@ -81,6 +87,7 @@ export default {
   },
   data() {
     return {
+      baseUrl: apiConfig.baseUrl,
       visible: false
     };
   },
@@ -96,9 +103,10 @@ export default {
   },
   methods: {
     goAwardIndex() {
+      this.close();
       this.$router.push({
         path: '/pages/activity/award/index'
-      })
+      });
     },
     close() {
       this.visible = false;
@@ -140,9 +148,9 @@ export default {
     align-items: center;
     width: 146rpx;
     height: 146rpx;
-    padding: 20rpx;
     background: #ffffff;
     border-radius: 6rpx;
+    word-break: break-all;
     .tf-flex-col {
       align-items: center;
     }
@@ -156,13 +164,27 @@ export default {
     }
   }
   .award-item-1 {
-    background-color: #fff;
+    .tf-flex-col{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(0deg, #ffe9c7 0%, #ffffff 100%)
+    }
+    .tf-w-full {
+      border-radius: 6rpx;
+    }
   }
-  .award-item-2, .award-item-3 {
-    background: linear-gradient(0deg, #FFD2C7 0%, #FFFFFF 100%);
+  .award-item-2,
+  .award-item-3 {
+    padding: 20rpx;
+    background: linear-gradient(0deg, #ffd2c7 0%, #ffffff 100%);
   }
-  .award-item-4, .award-item-5 {
-    background: linear-gradient(0deg, #FFE9C7 0%, #FFFFFF 100%);
+  .award-item-4,
+  .award-item-5 {
+    padding: 20rpx;
+    background: linear-gradient(0deg, #ffe9c7 0%, #ffffff 100%);
   }
 }
 .award-footer {

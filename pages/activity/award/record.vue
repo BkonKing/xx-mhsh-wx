@@ -69,7 +69,7 @@
                   <view class="tf-mb-20 tf-text-strong">
                     兑换时请出示二维码给工作人员
                   </view>
-                  <view class="xx-card-text">活动方：滑县美好生活家园</view>
+                  <view class="xx-card-text">活动方：{{ item.project_name }}</view>
                   <image
                     class="xx-card-qrcode"
                     :src="item.awardLogCode"
@@ -82,13 +82,13 @@
               <view class="tf-p-0-30">
                 <view class="xx-card">
                   <view class="xx-card-text">兑换成功：{{ item.etime }}</view>
-                  <view class="xx-card-text">核销人：{{ admin_text }}</view>
+                  <view class="xx-card-text">核销人：{{ item.admin_text }}</view>
                   <view class="xx-card-text">
                     活动方：{{ item.project_name }}
                   </view>
                   <image
                     class="xx-card-image"
-                    src="@/static/main/award/success.png"
+                    :src="`${baseUrl}/library/img/wx/award/success.png`"
                     mode="widthFix"
                   ></image>
                 </view>
@@ -100,7 +100,7 @@
       <view v-if="listData.length === 0" class="tf-column-items-center">
         <image
           class="empty-image"
-          src="@/static/main/award/empty.png"
+          :src="`${baseUrl}/library/img/wx/award/empty.png`"
           mode="aspectFill"
         ></image>
         <text class="tf-mt-30 tf-text-gray-9">暂无记录</text>
@@ -110,12 +110,14 @@
 </template>
 
 <script>
+import apiConfig from '@/api/config.js'
 import ListMixins from '@/mixins/list';
 import { getAwardLogList, getAwardLogInfo } from '@/api/award.js';
 export default {
   mixins: [ListMixins],
   data() {
     return {
+      baseUrl: apiConfig.baseUrl,
       pageSize: 20,
       collapseValue: '',
       timer: null
@@ -136,7 +138,6 @@ export default {
       const { is_convert: isConvert, is_select: isSelect } = this.listData[
         index
       ];
-      console.log(this.listData[index]);
       if (+isSelect && !+isConvert) {
         this.getAwardLogInfo(index);
       }
@@ -146,7 +147,10 @@ export default {
         award_log_id: this.listData[index].id
       });
       if (+data.is_convert) {
-        this.listData[index] = data;
+        this.$set(this.listData, index, data)
+        this.$nextTick(() => {
+          this.$refs.collapse.resize()
+        })
       } else {
         this.timer = setTimeout(() => {
           this.getAwardLogInfo(index);

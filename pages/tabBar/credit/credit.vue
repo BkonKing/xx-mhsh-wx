@@ -122,6 +122,12 @@
         </van-tab>
       </van-tabs>
     </view>
+    <image
+      v-if="isHaveAward"
+      class="award-image"
+      :src="`${baseUrl}/library/img/wx/award/icon.png`"
+      @click="goAwardIndex"
+    ></image>
     <tf-calendar v-model="showCalendar"></tf-calendar>
     <sign-rule-dialog v-model="signRuleVisible"></sign-rule-dialog>
     <sign-in-alert
@@ -153,10 +159,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import apiConfig from '@/api/config';
+import { mapGetters } from 'vuex';
 import { signin, getCreditsAccount } from '@/api/personage';
 import { getShopCouponBanner } from '@/api/personage/shop';
+import { getAwardPopupInfo } from '@/api/award';
+import awardMixin from '@/mixins/award';
 import TfPopup from '@/components/TfPopup/index';
 import TfCalendar from '@/modules/TfCalendar';
 import MobileLoginPopup from '@/modules/MobileLoginPopup/index';
@@ -168,6 +176,7 @@ import TaskList from './components/TaskList';
 import SignRuleDialog from './components/SignRuleDialog';
 
 export default {
+  mixins: [awardMixin],
   components: {
     TfCalendar,
     SignInAlert,
@@ -597,6 +606,14 @@ export default {
     font-size: 28rpx;
     color: #ffffff;
   }
+}
+.award-image {
+  width: 100rpx;
+  height: 125rpx;
+  position: fixed;
+  right: 50rpx;
+  bottom: 100rpx;
+  z-index: 99999;
 }
 </style>
 

@@ -41,6 +41,7 @@ export default {
       }
       this.isFinish = !data || data.length < this.pageSize;
       !this.isFinish && isContinuous && this.getNextPage()
+      uni.stopPullDownRefresh()
     },
     refreshLoad() {
       this.pageNum = 1;

@@ -199,6 +199,7 @@ export default {
     async getClientCount() {
       const res = await clientCount();
       this.clientInfo = res;
+      uni.stopPullDownRefresh()
     },
     getListData() {
       return clientList({

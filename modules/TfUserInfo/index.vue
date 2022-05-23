@@ -74,6 +74,7 @@
     .tf-avatar {
       width: 88rpx;
       height: 88rpx;
+      flex-shrink: 0;
       border-radius: 50%;
       margin-right: 20rpx;
     }

@@ -17,8 +17,8 @@
         </view>
         <view class="tf-row-justify-between">
           <text class="card-text-gray-4">联系手机</text>
-          <view class="tf-row-items-center" @click="callPhone(infoData.admin_mobile)">
-            <text class="card-text-gray-4">18620124745</text>
+          <view class="tf-row-items-center" @click="callPhone(infoData.mobile)">
+            <text class="card-text-gray-4">{{infoData.mobile}}</text>
             <image class="phone-icon" src="@/static/main/phone.png"></image>
           </view>
         </view>
@@ -64,7 +64,7 @@
       </view>
     </view>
     <view class="fixed-placeholder">
-      <button class="fixed-btn" :class="btnClassName" @click="getAwardScan">
+      <button class="fixed-btn" :class="btnClassName" @click="awardOperation">
         {{ infoData.type | typeText }}
       </button>
     </view>
@@ -92,13 +92,13 @@ export default {
     }
   },
   onLoad({ id }) {
-    this.id = id || '40';
+    this.id = id;
     this.getAwardScan();
   },
   filters: {
     typeText(value) {
       const text = {
-        1: '未核销',
+        1: '确定核销',
         2: '已核销',
         3: '奖品不属于我方'
       };
@@ -113,7 +113,7 @@ export default {
       this.infoData = data;
     },
     async awardOperation() {
-      if (+this.infoData.is_convert || +this.infoData.is_power) {
+      if (!+this.infoData.is_convert && +this.infoData.is_power) {
         const { success } = await awardOperation({
           award_log_id: this.id
         });

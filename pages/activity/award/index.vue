@@ -4,19 +4,27 @@
       :title="title"
       statusBar="true"
       left-icon="left"
-      backgroundColor="false"
+      backgroundColor="#52ccfa"
       :fixed="true"
       :border="false"
       @click-left="$router.go(-1)"
     />
     <image
       class="bg"
-      src="@/static/main/award/index-bg.png"
+      :src="`${baseUrl}/library/img/wx/award/index-bg.png`"
       mode="aspectFill"
     ></image>
     <view class="user-info-container" @click="goCredit">
-      <image class="user-info-bg" src="@/static/main/award/user-bg.png"></image>
-      <image class="user-info-avatar" :src="userInfo.avatar"></image>
+      <image
+        class="user-info-bg"
+        :src="`${baseUrl}/library/img/wx/award/user-bg.png`"
+      ></image>
+      <image
+        v-if="userInfo.avatar"
+        class="user-info-avatar"
+        :src="userInfo.avatar"
+      ></image>
+      <image v-else class="user-info-avatar" src="@/static/main/touxiang.png" />
       <view class="user-info-box">
         <view class="tf-mb-20">
           <text class="tf-icon tf-icon-xingfubi1"></text>
@@ -36,17 +44,15 @@
     <view class="award-container">
       <image
         class="award-container-bg"
-        src="@/static/main/award/turntable-bn-2.png"
+        :src="`${baseUrl}/library/img/wx/award/turntable-bn-2.png`"
         mode="aspectFill"
       ></image>
       <view class="award-text-1">{{ infoData.award_text || '-' }}</view>
-      <view class="award-text-2">
-        今天还有 {{ infoData.chance_num }} 次机会
-      </view>
+      <view class="award-text-2">今天还有 {{ residueNum }} 次机会</view>
       <view class="award-box">
         <image
           class="award-box-bg"
-          src="@/static/main/award/turntable-bg-1.png"
+          :src="`${baseUrl}/library/img/wx/award/turntable-bg-1.png`"
           mode="aspectFill"
         ></image>
         <view
@@ -70,7 +76,7 @@
               }"
             ></view>
             <template v-if="isHaveImage">
-              <view class="dingwei" :style="noImageTextStyle">
+              <view class="award-image-box" :style="noImageTextStyle">
                 <text class="award-name">{{ item.award_name }}</text>
                 <image
                   :src="item.img"
@@ -90,7 +96,7 @@
         </view>
         <image
           class="award-btn"
-          src="@/static/main/award/start-btn.png"
+          :src="`${baseUrl}/library/img/wx/award/start-btn.png`"
           mode="aspectFill"
           @click="handlePlay"
         ></image>
@@ -99,7 +105,7 @@
     <view class="award-explain-container">
       <image
         class="award-explain-title-image"
-        src="@/static/main/award/title.png"
+        :src="`${baseUrl}/library/img/wx/award/title.png`"
         mode="aspectFill"
       ></image>
       <view class="award-explain-content">
@@ -109,32 +115,66 @@
         ></rich-text>
       </view>
     </view>
+    <tf-dialog
+      v-model="visible"
+      confirmText="知道了"
+      closeIconType="hidden"
+      :title="popupTitle"
+      :isCompact="true"
+      :isMaskClick="isMaskClick"
+      :headerBorder="false"
+      :showCancel="showCancel"
+      @confirm="handleConfirm"
+    >
+      <view class="tf-text-align-center tf-p-30">
+        <rich-text :nodes="popupContent"></rich-text>
+      </view>
+    </tf-dialog>
   </view>
 </template>
 
 <script>
+import apiConfig from '@/api/config.js';
 import { mapGetters } from 'vuex';
 import { getAwardInfo, luckDraw } from '@/api/award.js';
+import TfDialog from '@/components/TfDialog/index';
+
 export default {
+  components: {
+    TfDialog
+  },
   data() {
     return {
+      baseUrl: apiConfig.baseUrl,
+      id: '', // 预览
       infoData: {},
       awardList: [],
       run: false, // 是否在转动
       activeIndex: 0, // 中奖索引 转盘图片排序 顺时针开始
       activeMessage: '',
       rotateAngle: 0, // 旋转角度
+      width: 500,
       config: {
-        duration: 7000, // 总旋转时间 ms级
+        duration: 8000, // 总旋转时间 ms级
         mode: 'ease-in-out', // 由快到慢 惯性效果都省了
         circle: 12 // 旋转圈数
-      }
+      },
+      visible: false,
+      popupTitle: '',
+      popupContent: '',
+      handleConfirm: '',
+      showCancel: false,
+      isMaskClick: false
     };
   },
   computed: {
     ...mapGetters(['userInfo']),
     title() {
       return this.infoData.title || '转盘抽奖';
+    },
+    residueNum() {
+      const num = +this.infoData.chance_num;
+      return num > 0 ? num : 0;
     },
     activityExplain() {
       return this.infoData.explain || '';
@@ -153,144 +193,113 @@ export default {
             -webkit-transform: rotate(${this.rotateAngle}deg);
                 transform: rotate(${this.rotateAngle}deg);`;
     },
-    normalRotateStyle() {
-      return `transform: rotate(${this.normalRotateAngle}deg);`;
-    },
     allRotateStyle() {
-      return `${this.normalRotateStyle} ${this.run ? this.rotateStyle : ''}`;
+      return `${this.run ? this.rotateStyle : ''}`;
     },
     isHaveImage() {
       return this.awardList.some(obj => obj.img);
     },
     noImageTextStyle() {
-      return `${this.noImageTextLeft}`;
-    },
-    noImageTextLeft() {
+      // PY：偏移，DB：底边
+      // 半径
+      const radius = this.width / 2;
       // 文字旋转角度，将其旋转成正的
-      var textDeg = this.rotateDeg / 2;
-      var bDeg = 90 - textDeg;
-      var height = this.isHaveImage ? 250 : 110;
+      const textDeg = this.rotateDeg / 2;
+      // 直角三角形另一个角
+      const bDeg = 90 - textDeg;
       // 第三边对应的sin值
-      var sinOther = Math.sin(((2 * Math.PI) / 360) * bDeg);
+      const sinOther = Math.sin(((2 * Math.PI) / 360) * bDeg);
       // 扇形圆心角一半角对应的sin值
-      var sinTextDeg = Math.sin(((2 * Math.PI) / 360) * textDeg);
+      const sinTextDeg = Math.sin(((2 * Math.PI) / 360) * textDeg);
       // 直角对应的sin值,值为1
-      var sinZhijiao = Math.sin(((2 * Math.PI) / 360) * 90);
-      // 一半的扇形底边三角的长
-      var hudi = sinTextDeg * (250 / sinZhijiao);
-      var width = this.isHaveImage ? (hudi * 2) : 24;
+      const sinZhijiao = Math.sin(((2 * Math.PI) / 360) * 90);
+      // 一半的扇形弧线两点直线距离（底边的一半）
+      // 这个三角形为圆心到底边、一半底边和一条半径组成的直角三角形
+      const halfDB = sinTextDeg * (radius / sinZhijiao);
+      // 文本框的宽度
+      const width = halfDB * 2;
+      const textWidth = 24;
 
-      // 旋转后的偏移量
-      var a =
+      // 实际移动距离（斜边）：和偏移量形成的直角三角形来计算
+      function getRealityNum(value) {
+        return (value / sinOther) * sinZhijiao;
+      }
+
+      // 文本框旋转到居中,原本的文本框跟随扇形会产生偏移，宽度不是实际宽度
+      // 旋转后宽度会变小，所以产生left偏移量，左右两边移动时只需计算一边，所以除以2
+      var textPYWidth =
         (width * Math.cos(((2 * Math.PI) / 360) * textDeg) +
-          height * sinTextDeg -
+          radius * sinTextDeg -
           width) /
         2;
-      a = (a / sinOther) * sinZhijiao;
+      // 实际移动距离（斜边）：和偏移量形成的直角三角形来计算
+      textPYWidth = getRealityNum(textPYWidth);
 
-      // 一半的扇形底边三角的长 减去 文字本身宽度的一半
-      var b = hudi - width / 2;
-
+      // 圆心到底边的直角边：和半径、底边一半组成直角三角形
+      var top = sinOther * (radius / sinZhijiao);
+      // 定位top最小值：半径 - 圆心到底边的直角边
+      top = getRealityNum(radius - top);
+      top = Math.ceil(top);
+      top = (top % 2) + top;
+      var left = sinTextDeg * (top / sinZhijiao);
+      left = textPYWidth + left;
+      left = Math.ceil(left);
+      left = (left % 2) + left;
+      const transformStyle = `transform: translateX(-${left}rpx) translateY(${top}rpx) rotate(${textDeg}deg);`;
       if (this.isHaveImage) {
-        var j = sinOther * (250 / sinZhijiao);
-        // 定位top最小值
-        var topLen = ((250 - j) / sinOther) * sinZhijiao;
-        c = sinTextDeg * (topLen / sinZhijiao)
-        return `transform: translateX(-${a + c}rpx) translateY(${topLen}rpx) rotate(${this.rotateDeg /
-          2}deg);width: ${hudi * 2}rpx;left: 0;top: 0;`;
+        // 图片模式：文本框宽度与底边宽度一样，并且是居中显示，所以只要旋转一下，位移调整一下位置就行
+        return `${transformStyle}width: ${width}rpx;`;
+      } else {
+        // 将宽度设置得跟底边一样长，内容宽度为字体宽度，通过padding来只显示一行，则跟图片模式一样
+        var padding = (width - textWidth) / 2;
+        return `${transformStyle}width: ${width}rpx;padding: 0 ${padding}rpx;height: ${radius}rpx;`;
       }
-
-      // 实际移动应该为一半边组成直角三角形的斜边
-      var d = (b / sinOther) * sinZhijiao - a;
-
-      console.log('d:', d);
-
-      var firstTop = (d / sinZhijiao) * sinTextDeg;
-      // 有旋转如果也会产生偏移量，实际移动的值应该为斜边
-      var topLen = (firstTop / sinOther) * sinZhijiao;
-
-      // 底边到圆弧最长点的距离
-      // var j = sinOther * (250 / sinZhijiao);
-      // 定位top最小值
-      // var topLen = ((250 - j) / sinOther) * sinZhijiao;
-
-      // topLen = firstTop + topLen
-
-      var c = 0;
-      var topb = topLen;
-      // 加入top定位，会产生left向右的偏移量
-      while (topb > 1 || topb < 0) {
-        c = sinTextDeg * (topb / sinZhijiao);
-
-        c = (c / sinOther) * sinZhijiao;
-
-        d = d - c;
-
-        topb = -(((c / sinZhijiao) * sinTextDeg) / sinOther) * sinZhijiao;
-
-        topLen = topLen + topb;
-        console.log('topb:', topb);
-      }
-
-      var f = Math.ceil(d);
-
-      var left = (f % 2) + f;
-
-      var result = `transform: rotate(${this.rotateDeg /
-        2}deg);left: ${left}rpx;top: ${topLen}rpx;`;
-
-      return result;
     }
   },
-  onLoad() {
+  onLoad({ id }) {
+    id && (this.id = id);
+  },
+  onShow() {
     this.getAwardInfo();
   },
   methods: {
     async getAwardInfo() {
-      const { data, award_list } = await getAwardInfo();
-      if (+data.state === 1) {
+      const { data, award_list } = await getAwardInfo({
+        project_id: this.id
+      });
+      if (+data.state === 1 || this.id) {
         this.infoData = data;
         this.awardList = award_list || [];
       } else {
-        uni.showModal({
+        this.setPopup({
           content: '活动已结束',
-          showCancel: false,
-          confirmText: '知道了',
-          success: res => {
-            if (res.confirm) {
-              this.$router.go(-1);
-            }
+          isMaskClick: false,
+          success: () => {
+            this.$router.go(-1);
           }
         });
       }
     },
     // 开始转动
     handlePlay() {
-      if (+this.rotateAngle > 0) {
+      if (+this.rotateAngle > 0 || this.id) {
         return;
       }
       if (+this.infoData.chance_num < 1) {
-        uni.showModal({
-          content: '您今天已经没有抽奖机会了明天再来吧',
-          showCancel: false,
-          confirmText: '知道了',
-          success: res => {
-            if (res.confirm) {
-            }
-          }
+        this.setPopup({
+          content: '您今天已经没有抽奖机会了<br/>明天再来吧'
         });
         return;
       }
-      if (!+this.infoData.consume) {
+      if (!+this.infoData.consume || +this.infoData.remaining_free > 0) {
         this.startPlay();
-        return 
+        return;
       }
-      uni.showModal({
+      this.setPopup({
         content: `使用${this.infoData.consume}幸福币抽奖`,
-        success: ({ confirm }) => {
-          if (confirm) {
-            this.startPlay();
-          }
+        showCancel: true,
+        success: () => {
+          this.startPlay();
         }
       });
     },
@@ -303,37 +312,46 @@ export default {
     },
     async luckDraw() {
       const { award_id, message } = await luckDraw().catch(({ message }) => {
-        uni.showModal({
-          content: message,
-          showCancel: false,
-          confirmText: '知道了'
+        this.setPopup({
+          content: message || '请求失败，请稍后重试'
         });
       });
       const index = this.awardList.findIndex(obj => {
         return obj.id == award_id;
       });
-      console.log(index);
       this.activeIndex = index;
       this.activeMessage = message;
     },
     // 完成旋转之后,弹起弹框
     async finishRotate() {
-      await this.sleep(1000);
-      uni.showModal({
+      const data = this.awardList[this.activeIndex];
+      const isFail = +data.award_type === 5;
+      this.setPopup({
+        title: isFail ? '' : '中奖啦',
         content: this.activeMessage,
-        showCancel: false,
-        success: res => {
+        success: () => {
           this.run = false;
           this.rotateAngle = 0;
           this.getAwardInfo();
         }
       });
     },
-    // 等待n秒之后再弹
-    sleep(time) {
-      return new Promise(function(resolve) {
-        setTimeout(resolve, time);
-      });
+    setPopup({
+      title = '',
+      content = '',
+      showCancel = false,
+      isMaskClick = true,
+      success
+    }) {
+      this.popupTitle = title;
+      this.popupContent = content;
+      this.showCancel = showCancel;
+      this.isMaskClick = isMaskClick;
+      this.handleConfirm = () => {
+        this.visible = false;
+        success && success();
+      };
+      this.visible = true;
     },
     goCredit() {
       this.$router.push({
@@ -377,6 +395,7 @@ export default {
   .user-info-avatar {
     width: 88rpx;
     height: 88rpx;
+    border-radius: 44rpx;
   }
   .user-info-right {
     display: flex;
@@ -461,23 +480,16 @@ export default {
       width: 500rpx;
       border-radius: 72rpx;
     }
-    .award-no-img {
-      .award-name {
-        position: absolute;
-        left: 60rpx;
-        top: 20rpx;
-        width: 24rpx;
-        height: 110rpx;
-        overflow: initial;
-        text-overflow: initial;
-        white-space: initial;
-        word-break: break-all;
-      }
-    }
-    .award-btn {
-      width: 189rpx;
-      height: 217rpx;
+    .award-no-img .award-name {
       position: absolute;
+      left: 0;
+      top: 0;
+      width: 24rpx;
+      height: 110rpx;
+      overflow: initial;
+      text-overflow: initial;
+      white-space: initial;
+      word-break: break-all;
     }
     .award-item {
       position: absolute;
@@ -492,24 +504,23 @@ export default {
     .award-item-inner {
       width: 250rpx;
       height: 500rpx;
-      // padding: 20rpx 10rpx 0 140rpx;
       transform: translateX(-250rpx);
       transform-origin: right center;
       border-radius: 250rpx 0 0 250rpx;
-      // background: #fff;
-      text-align: center;
       background: linear-gradient(
         90deg,
         rgba(255, 202, 104, 0.6) 0%,
         rgba(255, 247, 232, 0) 100%
       );
     }
-    .dingwei {
+    .award-image-box {
       display: flex;
       flex-direction: column;
       align-items: center;
       height: 250rpx;
       position: absolute;
+      top: 0;
+      left: 0;
       .award-name {
         width: 100%;
         padding: 0px 20rpx;
@@ -519,7 +530,6 @@ export default {
     .award-name {
       display: block;
       transform-origin: center;
-      // transform: rotate(-19deg);
       font-size: 24rpx;
       color: #222222;
       @include text-ellipsis;
@@ -531,8 +541,11 @@ export default {
       // height: 72rpx;
       margin-top: 20rpx;
       border-radius: 50%;
-      image {
-      }
+    }
+    .award-btn {
+      width: 189rpx;
+      height: 217rpx;
+      position: absolute;
     }
   }
 }

@@ -69,6 +69,7 @@ export default {
         this.listData.push(...listData);
         this.isFinish = listData.length < 10;
       }
+      uni.stopPullDownRefresh()
     },
     refreshLoad() {
       this.pageNum = 1;

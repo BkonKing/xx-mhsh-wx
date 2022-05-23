@@ -84,7 +84,7 @@ service.interceptors.response.use(
       });
       return Promise.reject(code)
     } else if (code != 200) {
-      if (!config.noToast) {
+      if (!config.noToast && message) {
         uni.showToast({
           title: message,
           icon: 'none',

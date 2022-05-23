@@ -17,13 +17,13 @@
       <view class="module-box">
         <view class="clist-item">
           <view class="clist-item__label">
-            <text class="mr60">类</text>型
+            类型<text></text>
           </view>
           <view>{{info.title}}</view>
         </view>
         <view class="clist-item">
           <view class="clist-item__label">
-            <text class="mr60">时</text>间
+            时间<text></text>
           </view>
           <view>{{info.ctime}}</view>
         </view>
@@ -37,7 +37,7 @@
         </view>
         <view class="clist-item">
           <view class="clist-item__label">
-            <text class="mr60">备</text>注
+            备注<text></text>
           </view>
           <view>{{info.source_var}}</view>
         </view>
@@ -135,8 +135,16 @@ export default {
     display: flex;
     font-size: 30rpx;
     &__label {
+      flex-shrink: 0;
+      width: 108rpx;
+      height: 34rpx;
       margin-right: 40rpx;
+      text-align: justify;
       color: #8f8f94;
+      > text {
+        display: inline-block;
+        padding-left: 100%;
+      }
     }
   }
   .clist-item + .clist-item {

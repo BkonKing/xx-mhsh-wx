@@ -129,6 +129,8 @@ export default {
         fukuan: 'paymentScan',
         shangpuyhq: 'getShopScanPermission',
         awardLogCode: 'getAwardScan',
+        awardPreviewCode: 'previewAward',
+        awardCode: 'previewAward',
       };
       const methodName = methodNames[key];
       methodName && this[methodName](value, valueArray);
@@ -163,9 +165,19 @@ export default {
       const { data } = await getAwardScan({
         award_log_id: id
       });
-      if (data.is_power) {
+      if (data.id) {
         this.goAwardVerification(id)
       }
+    },
+    previewAward(value, valueArray) {
+      const id = valueArray[1]
+      this.$router.push({
+        path: '/pages/activity/award/index',
+        query: {
+          id,
+          isPreview: 1
+        }
+      })
     },
     goAwardVerification(id) {
       this.$router.push({
